@@ -29,6 +29,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>GTMSessionFetcher.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>GoogleToolboxForMac.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-HotLikeMe.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -47,7 +57,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>3DE1277BE964E59603FC7A59F20B9346</key>
+		<key>107A9565F9DF88517DFD3E28C05B2B96</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,7 +87,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>757BA09B18F442AC2A0DEFC2C9BDAAE9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>BC723ABAEB95400F52C78BF3C7067385</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C052BEBFBD0AB5218CC64BA3450F6547</key>
 		<dict>
 			<key>primary</key>
 			<true/>

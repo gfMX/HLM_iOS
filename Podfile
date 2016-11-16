@@ -4,9 +4,10 @@
 use_frameworks!
 
 target 'HotLikeMe' do
-
 	pod 'FacebookCore'
 	pod 'FacebookLogin'
+	
+	pod 'Firebase/Auth'
 
 end
 
