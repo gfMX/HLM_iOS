@@ -138,7 +138,19 @@ Copyright 2016 Google
 
 Copyright 2016 Google
 
+## FirebaseDatabase
+
+Copyright 2016 Google
+
 ## FirebaseInstanceID
+
+Copyright 2016 Google
+
+## FirebaseRemoteConfig
+
+Copyright 2016 Google
+
+## FirebaseStorage
 
 Copyright 2016 Google
 
