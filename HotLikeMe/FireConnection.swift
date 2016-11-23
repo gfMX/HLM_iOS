@@ -15,6 +15,7 @@ class FireConnection {
     
     static var fireUser: FIRUser!
     static let sharedInstance = FireConnection()
+    static var databaseReference: FIRDatabaseReference!
     //static var visibleViews = 1
     
     private init(){
@@ -28,6 +29,7 @@ class FireConnection {
             if let user = user {
                 // User is signed in.
                 FireConnection.fireUser = user
+                FireConnection.databaseReference = FIRDatabase.database().reference()
                 //FireConnection.visibleViews = self.minViews
                 print("User Looged: " + FireConnection.fireUser.uid)
             } else {

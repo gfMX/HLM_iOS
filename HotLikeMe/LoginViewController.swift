@@ -13,7 +13,7 @@ import FBSDKLoginKit
 import FBSDKCoreKit
 import Firebase
 
-class LoginViewController: UIViewController, FBSDKLoginButtonDelegate{
+class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFieldDelegate{
     
     @IBOutlet weak var imageFaceProfile: UIImageView!
     @IBOutlet weak var imageHLMProfile: UIImageView!
@@ -51,7 +51,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate{
         imageHLMProfile.layer.cornerRadius = imageHLMProfile.frame.height/1.75
         imageHLMProfile.clipsToBounds = true
         
-        text_displayName.addTarget(self, action: #selector(textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
+        text_displayName.delegate = self
+        text_displayName.addTarget(self, action: #selector(textFieldDidChange(_:)), for: UIControlEvents.editingDidEnd)
    
         updateUI()
     }
@@ -130,7 +131,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate{
     // MARK: Login Button Delegate
     
     func onProfileUpdated(notification: NSNotification){
-       print ("Hello")
+       print ("Facebook Profile Updated")
     }
     
     func loginButton(_ loginButton: FBSDKLoginButton, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
@@ -144,11 +145,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate{
             // Handle cancellations
         }
         else {
-            
-            if result.grantedPermissions.contains("email")
-            {
-                
-            }
         
             let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
             FIRAuth.auth()?.signIn(with: credential) { (user, error) in
@@ -183,7 +179,30 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate{
     func textFieldDidChange(_ sender : UITextField) {
         if fireUser != nil {
             print("Display Name Changed!")
+            let fireRef = FireConnection.databaseReference.child("users").child(fireUser.uid).child("preferences").child("alias")
+            fireRef.setValue(sender.text)
+            
+            //Update Firebase Profile: DisplayName
+            let user = FIRAuth.auth()?.currentUser
+            if let user = user {
+                let changeRequest = user.profileChangeRequest()
+                changeRequest.displayName = sender.text
+                changeRequest.commitChanges { error in
+                    if let error = error {
+                        print("Display name couldn't be updated!")
+                        print(error)
+                    } else {
+                        print ("Display Name Updated!")
+                    }
+                }
+            }
         }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        textField.resignFirstResponder()
+        return true;
     }
     
     func imageTapped(img: AnyObject)
