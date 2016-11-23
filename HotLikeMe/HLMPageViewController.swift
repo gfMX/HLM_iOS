@@ -10,6 +10,8 @@ import UIKit
 
 class HLMPageViewController: UIPageViewController {
     
+    var orderedViewControllersCount = 1
+    
     private(set) lazy var orderedViewControllers: [UIViewController] = {
         return [self.newColoredViewController(color: "Login"),
                 self.newColoredViewController(color: "Users"),
@@ -19,7 +21,11 @@ class HLMPageViewController: UIPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        _ = FireConnection.sharedInstance
+        
+        
         dataSource = self
+        orderedViewControllersCount = orderedViewControllers.count
         
         if let firstViewController = orderedViewControllers.first {
             setViewControllers([firstViewController],
@@ -68,7 +74,7 @@ extension HLMPageViewController: UIPageViewControllerDataSource {
             return nil
         }
         
-        guard orderedViewControllers.count > previousIndex else {
+        guard orderedViewControllersCount > previousIndex else {
             return nil
         }
         
@@ -82,8 +88,7 @@ extension HLMPageViewController: UIPageViewControllerDataSource {
         }
         
         let nextIndex = viewControllerIndex + 1
-        let orderedViewControllersCount = orderedViewControllers.count
-        
+   
         guard orderedViewControllersCount != nextIndex else {
             return nil
         }

@@ -10,6 +10,8 @@
 		3FF500489D0F8511DC297021 /* Pods_HotLikeMeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB6C2DF49E021DB3DBD6EB1B /* Pods_HotLikeMeTests.framework */; };
 		6AEE62CA7E41F99491B3B711 /* Pods_HotLikeMeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844ADF8DDE6C46590D280496 /* Pods_HotLikeMeUITests.framework */; };
 		7601290C5E821D0C45A04353 /* Pods_HotLikeMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F4BFF0CA240A11935FE9A0E /* Pods_HotLikeMe.framework */; };
+		8B1186C01DE5EF93009F5C67 /* FireConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1186BF1DE5EF93009F5C67 /* FireConnection.swift */; };
+		8B1186C41DE63946009F5C67 /* SelectProfilePicCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1186C31DE63946009F5C67 /* SelectProfilePicCollectionViewController.swift */; };
 		8BA016021DDCD2DC0042B165 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA016011DDCD2DC0042B165 /* AppDelegate.swift */; };
 		8BA016041DDCD2DC0042B165 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA016031DDCD2DC0042B165 /* IntroViewController.swift */; };
 		8BA016071DDCD2DC0042B165 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BA016051DDCD2DC0042B165 /* Main.storyboard */; };
@@ -21,6 +23,7 @@
 		8BA0163B1DDCF2010042B165 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA0163A1DDCF2010042B165 /* LoginViewController.swift */; };
 		8BA0163D1DDD080D0042B165 /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA0163C1DDD080D0042B165 /* RatingControl.swift */; };
 		8BEA787E1DDE2E530092B093 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BEA787D1DDE2E530092B093 /* GoogleService-Info.plist */; };
+		8BF453431DE4D88300C43195 /* UploadImageCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF453421DE4D88300C43195 /* UploadImageCollectionViewController.swift */; };
 		8BFB3B321DDE4121005246DB /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFB3B311DDE4121005246DB /* Helper.swift */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +51,8 @@
 		5F4BFF0CA240A11935FE9A0E /* Pods_HotLikeMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HotLikeMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B8952C1F193439A9C944860 /* Pods-HotLikeMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotLikeMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-HotLikeMe/Pods-HotLikeMe.release.xcconfig"; sourceTree = "<group>"; };
 		844ADF8DDE6C46590D280496 /* Pods_HotLikeMeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HotLikeMeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B1186BF1DE5EF93009F5C67 /* FireConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireConnection.swift; sourceTree = "<group>"; };
+		8B1186C31DE63946009F5C67 /* SelectProfilePicCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectProfilePicCollectionViewController.swift; sourceTree = "<group>"; };
 		8BA015FE1DDCD2DC0042B165 /* HotLikeMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotLikeMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BA016011DDCD2DC0042B165 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8BA016031DDCD2DC0042B165 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
@@ -66,6 +71,7 @@
 		8BA0163C1DDD080D0042B165 /* RatingControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
 		8BEA787D1DDE2E530092B093 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8BEA787F1DDE37E10092B093 /* HotLikeMe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HotLikeMe.entitlements; sourceTree = "<group>"; };
+		8BF453421DE4D88300C43195 /* UploadImageCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadImageCollectionViewController.swift; sourceTree = "<group>"; };
 		8BFB3B311DDE4121005246DB /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		A594B99312712018E4869DD4 /* Pods-HotLikeMeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotLikeMeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HotLikeMeTests/Pods-HotLikeMeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AB6C2DF49E021DB3DBD6EB1B /* Pods_HotLikeMeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HotLikeMeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -143,8 +149,11 @@
 				8BEA787D1DDE2E530092B093 /* GoogleService-Info.plist */,
 				8BA016031DDCD2DC0042B165 /* IntroViewController.swift */,
 				8BA0163A1DDCF2010042B165 /* LoginViewController.swift */,
+				8B1186BF1DE5EF93009F5C67 /* FireConnection.swift */,
 				8BA016051DDCD2DC0042B165 /* Main.storyboard */,
+				8BF453421DE4D88300C43195 /* UploadImageCollectionViewController.swift */,
 				8BA016381DDCE4310042B165 /* HLMPageViewController.swift */,
+				8B1186C31DE63946009F5C67 /* SelectProfilePicCollectionViewController.swift */,
 				8BA0163C1DDD080D0042B165 /* RatingControl.swift */,
 				8BFB3B311DDE4121005246DB /* Helper.swift */,
 				8BA016081DDCD2DC0042B165 /* Assets.xcassets */,
@@ -472,8 +481,11 @@
 			files = (
 				8BA0163B1DDCF2010042B165 /* LoginViewController.swift in Sources */,
 				8BA016041DDCD2DC0042B165 /* IntroViewController.swift in Sources */,
+				8B1186C41DE63946009F5C67 /* SelectProfilePicCollectionViewController.swift in Sources */,
 				8BA016021DDCD2DC0042B165 /* AppDelegate.swift in Sources */,
+				8BF453431DE4D88300C43195 /* UploadImageCollectionViewController.swift in Sources */,
 				8BA0163D1DDD080D0042B165 /* RatingControl.swift in Sources */,
+				8B1186C01DE5EF93009F5C67 /* FireConnection.swift in Sources */,
 				8BA016391DDCE4310042B165 /* HLMPageViewController.swift in Sources */,
 				8BFB3B321DDE4121005246DB /* Helper.swift in Sources */,
 			);

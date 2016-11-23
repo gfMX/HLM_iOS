@@ -18,8 +18,15 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate{
     @IBOutlet weak var imageFaceProfile: UIImageView!
     @IBOutlet weak var imageHLMProfile: UIImageView!
     @IBOutlet weak var labelWelcome: UILabel!
+    @IBOutlet weak var button_uploadImages: UIButton!
     @IBOutlet weak var loginButton: FBSDKLoginButton!
+    @IBOutlet weak var switch_userVisible: UISwitch!
+    @IBOutlet weak var switch_gps: UISwitch!
 
+    @IBOutlet weak var text_displayName: UITextField!
+    @IBOutlet weak var label_displayName: UILabel!
+    @IBOutlet weak var label_userVisible: UILabel!
+    @IBOutlet weak var label_gps: UILabel!
     
     var user: FBSDKProfile!
     var fireUser: FIRUser!
@@ -28,15 +35,23 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate{
         super.viewDidLoad()
         
         FBSDKProfile.enableUpdates(onAccessTokenChange: true)
+        
+        fireUser = FireConnection.fireUser
 
         loginButton.readPermissions = ["public_profile", "email"]
         loginButton.delegate = self
         
+        let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(imageTapped(img:)))
+        imageHLMProfile.isUserInteractionEnabled = true
+        imageHLMProfile.addGestureRecognizer(tapGestureRecognizer)
+        
         imageHLMProfile.layer.borderWidth = 10
         imageHLMProfile.layer.masksToBounds = false
         imageHLMProfile.layer.borderColor = UIColor.lightGray.cgColor
-        imageHLMProfile.layer.cornerRadius = imageHLMProfile.frame.height/1.8
+        imageHLMProfile.layer.cornerRadius = imageHLMProfile.frame.height/1.75
         imageHLMProfile.clipsToBounds = true
+        
+        text_displayName.addTarget(self, action: #selector(textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
    
         updateUI()
     }
@@ -52,17 +67,62 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate{
         FIRAuth.auth()?.addStateDidChangeListener { auth, user in
             if let user = user {
                 // User is signed in.
-                self.fireUser = user
+                if (FireConnection.fireUser == nil){
+                    FireConnection.fireUser = user
+                    print("User Assigned from Login Screen")
+                }
+                self.fireUser = FireConnection.fireUser
                 print(self.fireUser.uid)
-                print(self.fireUser.photoURL?.absoluteString ?? "URL Not Found")
                 
                 let profilePicURL = self.fireUser.photoURL ?? nil
+                let profilleName = self.fireUser.displayName ?? nil
+                
+                if profilleName != nil {
+                    self.text_displayName.text = profilleName
+                }
+                
                 if profilePicURL != nil {
                     Helper.loadImageFromUrl(url: (profilePicURL?.absoluteString)!, view: self.imageHLMProfile)
+                    self.imageHLMProfile.contentMode = UIViewContentMode.scaleAspectFill;
                 }
+                let graphRequest:FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"first_name,email, picture.type(large)"])
+                graphRequest.start(completionHandler: { (connection, result, error) -> Void in
+                    let data:[String:AnyObject] = result as! [String : AnyObject]
+                    let strFirstName: String = (data["first_name"]!) as! String
+                    
+                    let picture = data["picture"]! as? NSDictionary
+                    let strPictureURL = ((picture?.object(forKey: "data") as AnyObject).object(forKey: "url")) as! String
+                    
+                    print("Now the data: ")
+                    print(strPictureURL)
+    
+                    self.labelWelcome.text = "Welcome, \(strFirstName)"
+                    Helper.loadImageFromUrl(url: strPictureURL, view: self.imageFaceProfile)
+                    self.imageFaceProfile.contentMode = UIViewContentMode.scaleAspectFit;
+                })
+                
+                self.imageFaceProfile.isHidden = false
+                self.text_displayName.isHidden = false
+                self.label_displayName.isHidden = false
+                
+                self.label_userVisible.isHidden = false
+                self.label_gps.isHidden = false
+                self.switch_gps.isHidden = false
+                self.switch_userVisible.isHidden = false
+                self.button_uploadImages.isHidden = false
             } else {
                 // No user is signed in.
-                self.imageHLMProfile.image = nil
+                self.imageHLMProfile.image = #imageLiteral(resourceName: "defaultPhoto")
+                self.imageFaceProfile.image = nil
+                self.imageFaceProfile.isHidden = true
+                self.text_displayName.isHidden = true
+                self.label_displayName.isHidden = true
+                
+                self.label_userVisible.isHidden = true
+                self.label_gps.isHidden = true
+                self.switch_gps.isHidden = true
+                self.switch_userVisible.isHidden = true
+                self.button_uploadImages.isHidden = true
             }
         }
     }
@@ -70,7 +130,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate{
     // MARK: Login Button Delegate
     
     func onProfileUpdated(notification: NSNotification){
-       print ("Fuck you Swift!")
+       print ("Hello")
     }
     
     func loginButton(_ loginButton: FBSDKLoginButton, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
@@ -100,28 +160,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate{
                 }
                 self.updateUI()
             }
-
-            let graphRequest:FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"first_name,email, picture.type(large)"])
-                graphRequest.start(completionHandler: { (connection, result, error) -> Void in
-                    let data:[String:AnyObject] = result as! [String : AnyObject]
-                  
-                    print(data)
-                    
-                let strFirstName: String = (data["first_name"]!) as! String
-            
-                //let strPictureURL: String = (data["picture"]!.data["data"]!.data["url"]! as? String)!
-                self.labelWelcome.text = "Welcome, \(strFirstName)"
-                //self.imageFaceProfile.image = UIImage(data: NSData(contentsOfURL: NSURL(string: strPictureURL)!)!)
-                })
-            
-            /*if user != nil {
-                let currentProfile = FBSDKProfile.current().imageURL(for: FBSDKProfilePictureMode.normal, size: CGSize(width: 120, height: 120)).absoluteString
-                print("Image URL: " + currentProfile)
-                Helper.loadImageFromUrl(url: currentProfile, view: imageFaceProfile)
-            } else {
-                print("Profile not found")
-            } */
-            
         }
     }
     
@@ -141,5 +179,21 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate{
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func textFieldDidChange(_ sender : UITextField) {
+        if fireUser != nil {
+            print("Display Name Changed!")
+        }
+    }
+    
+    func imageTapped(img: AnyObject)
+    {
+        self.performSegue(withIdentifier: "HLMProfilePic", sender: self)
+    }
+    
+    @IBAction func funcUploadImages(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "HLMUploadImages", sender:self)
+    }
+    
 
 }
