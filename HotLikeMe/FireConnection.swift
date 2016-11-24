@@ -13,9 +13,12 @@ class FireConnection {
     //let minViews = 1
     //let maxViews = 3
     
+    let storage = FIRStorage.storage()
+    
     static var fireUser: FIRUser!
     static let sharedInstance = FireConnection()
     static var databaseReference: FIRDatabaseReference!
+    static var storageReference: FIRStorageReference!
     //static var visibleViews = 1
     
     private init(){
@@ -30,6 +33,7 @@ class FireConnection {
                 // User is signed in.
                 FireConnection.fireUser = user
                 FireConnection.databaseReference = FIRDatabase.database().reference()
+                FireConnection.storageReference = self.storage.reference(forURL: "gs://project-6344486298585531617.appspot.com")
                 //FireConnection.visibleViews = self.minViews
                 print("User Looged: " + FireConnection.fireUser.uid)
             } else {

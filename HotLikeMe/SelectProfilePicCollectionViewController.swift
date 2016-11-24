@@ -108,12 +108,13 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
         ref.child("users").child(userID!).child("thumbs").observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             let value = snapshot.value as? NSDictionary
-            self.thumbUrls = value?.allValues as! [String]
+            let thumbsStorage = value?.allValues as! [String]
             //let username = value?["alias"] as! String
             print("Thumbs found: " + (self.thumbUrls.count.description))
             print(self.thumbUrls)
             
-            self.collectionView?.reloadData()
+            self.getFirePicsUrls(storage: thumbsStorage)
+            //self.collectionView?.reloadData()
             
         }) { (error) in
             print(error.localizedDescription)
@@ -121,7 +122,15 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
     }
     
     func getFirePicsUrls(storage: Array<Any>){
-        
+        for i in 0 ..< storage.count{
+        FireConnection.storageReference.child(storage[i] as! String).downloadURL { (URL, error) -> Void in
+            if (error != nil) {
+                // Handle any errors
+            } else {
+                // Get the download URL for 'images/stars.jpg'
+            }
+        }
+        }
     }
 
     
