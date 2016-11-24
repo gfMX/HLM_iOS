@@ -30,6 +30,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     
     var user: FBSDKProfile!
     var fireUser: FIRUser!
+    var facebookAccessToken: FBSDKAccessToken!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,6 +66,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     // MARK: General Functions
     
     func updateUI(){
+        facebookAccessToken = FBSDKAccessToken.current() ?? nil
+        
         FIRAuth.auth()?.addStateDidChangeListener { auth, user in
             if let user = user {
                 // User is signed in.
@@ -145,7 +148,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
             // Handle cancellations
         }
         else {
-        
             let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
             FIRAuth.auth()?.signIn(with: credential) { (user, error) in
                 if (error != nil){
@@ -205,13 +207,21 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         return true;
     }
     
-    func imageTapped(img: AnyObject)
-    {
-        self.performSegue(withIdentifier: "HLMProfilePic", sender: self)
+    func imageTapped(img: AnyObject){
+        if fireUser != nil {
+            self.performSegue(withIdentifier: "HLMProfilePic", sender: self)
+        } else {
+            print("Missing credentials to Access Fire Images")
+        }
     }
     
     @IBAction func funcUploadImages(_ sender: UIButton) {
-        self.performSegue(withIdentifier: "HLMUploadImages", sender:self)
+        if fireUser != nil && facebookAccessToken != nil {
+            self.performSegue(withIdentifier: "HLMUploadImages", sender:self)
+        } else {
+            print("Missing credentials to Access Facebook Images")
+        }
+        
     }
     
 

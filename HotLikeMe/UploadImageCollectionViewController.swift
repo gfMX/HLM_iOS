@@ -79,16 +79,35 @@ class UploadImageCollectionViewController: UICollectionViewController {
     /*
     // Uncomment this method to specify if the specified item should be highlighted during tracking
     override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.layer.borderColor = UIColor.lightGray.cgColor
+        cell?.layer.borderWidth = 5
+        
         return true
     }
     */
+    
+    /*// change background color when user touches cell
+    override func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.layer.borderColor = UIColor.lightGray.cgColor
+        cell?.layer.borderWidth = 5
+    }*/
+    
+    /*// change background color back when user releases touch
+    override func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.layer.borderColor = nil
+        cell?.layer.borderWidth = 0
+    } */
 
-    /*
     // Uncomment this method to specify if the specified item should be selected
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        
+        print(nsImageId[indexPath.item])
+        
         return true
     }
-    */
 
     /*
     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item

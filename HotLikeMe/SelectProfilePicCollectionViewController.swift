@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import Firebase
 
-private let reuseIdentifier = "thumbImageProfile"
+private let reuseIdentifier = "cellFireView"
 
 class SelectProfilePicCollectionViewController: UICollectionViewController {
-
+    
+    var thumbUrls = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -19,9 +22,10 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        //self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
+        getFirePics()
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,19 +47,23 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 0
+        return self.thumbUrls.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! FireCollectionViewCell
     
         // Configure the cell
+        //Helper.loadImageFromUrl(url: thumbUrls[indexPath.item], view: cell.imageThumb)
+        cell.imageThumb.contentMode = UIViewContentMode.scaleAspectFill;
+        cell.backgroundColor = UIColor.cyan
+        cell.layer.cornerRadius = 8
     
         return cell
     }
@@ -92,6 +100,30 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
     */
     
     // MARK: Actions
+    
+    func getFirePics(){
+        let userID = FIRAuth.auth()?.currentUser?.uid
+        let ref = FIRDatabase.database().reference()
+        
+        ref.child("users").child(userID!).child("thumbs").observeSingleEvent(of: .value, with: { (snapshot) in
+            // Get user value
+            let value = snapshot.value as? NSDictionary
+            self.thumbUrls = value?.allValues as! [String]
+            //let username = value?["alias"] as! String
+            print("Thumbs found: " + (self.thumbUrls.count.description))
+            print(self.thumbUrls)
+            
+            self.collectionView?.reloadData()
+            
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    func getFirePicsUrls(storage: Array<Any>){
+        
+    }
+
     
     @IBAction func goBack(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)

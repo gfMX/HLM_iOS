@@ -23,6 +23,7 @@
 		8BA0163B1DDCF2010042B165 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA0163A1DDCF2010042B165 /* LoginViewController.swift */; };
 		8BA0163D1DDD080D0042B165 /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA0163C1DDD080D0042B165 /* RatingControl.swift */; };
 		8BE6790A1DE75E1700E27182 /* ThumbCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE679091DE75E1700E27182 /* ThumbCollectionViewCell.swift */; };
+		8BE6790E1DE79ACD00E27182 /* FireCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE6790D1DE79ACD00E27182 /* FireCollectionViewCell.swift */; };
 		8BEA787E1DDE2E530092B093 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BEA787D1DDE2E530092B093 /* GoogleService-Info.plist */; };
 		8BF453431DE4D88300C43195 /* UploadImageCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF453421DE4D88300C43195 /* UploadImageCollectionViewController.swift */; };
 		8BFB3B321DDE4121005246DB /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFB3B311DDE4121005246DB /* Helper.swift */; };
@@ -71,6 +72,7 @@
 		8BA0163A1DDCF2010042B165 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8BA0163C1DDD080D0042B165 /* RatingControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
 		8BE679091DE75E1700E27182 /* ThumbCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbCollectionViewCell.swift; sourceTree = "<group>"; };
+		8BE6790D1DE79ACD00E27182 /* FireCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireCollectionViewCell.swift; sourceTree = "<group>"; };
 		8BEA787D1DDE2E530092B093 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8BEA787F1DDE37E10092B093 /* HotLikeMe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HotLikeMe.entitlements; sourceTree = "<group>"; };
 		8BF453421DE4D88300C43195 /* UploadImageCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadImageCollectionViewController.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				8BA016011DDCD2DC0042B165 /* AppDelegate.swift */,
 				8BE679091DE75E1700E27182 /* ThumbCollectionViewCell.swift */,
 				8BEA787D1DDE2E530092B093 /* GoogleService-Info.plist */,
+				8BE6790D1DE79ACD00E27182 /* FireCollectionViewCell.swift */,
 				8BA016031DDCD2DC0042B165 /* IntroViewController.swift */,
 				8BA0163A1DDCF2010042B165 /* LoginViewController.swift */,
 				8B1186BF1DE5EF93009F5C67 /* FireConnection.swift */,
@@ -488,6 +491,7 @@
 				8BA016021DDCD2DC0042B165 /* AppDelegate.swift in Sources */,
 				8BF453431DE4D88300C43195 /* UploadImageCollectionViewController.swift in Sources */,
 				8BA0163D1DDD080D0042B165 /* RatingControl.swift in Sources */,
+				8BE6790E1DE79ACD00E27182 /* FireCollectionViewCell.swift in Sources */,
 				8B1186C01DE5EF93009F5C67 /* FireConnection.swift in Sources */,
 				8BA016391DDCE4310042B165 /* HLMPageViewController.swift in Sources */,
 				8BFB3B321DDE4121005246DB /* Helper.swift in Sources */,
