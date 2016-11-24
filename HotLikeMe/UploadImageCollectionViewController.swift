@@ -7,10 +7,15 @@
 //
 
 import UIKit
+import FBSDKCoreKit
 
-private let reuseIdentifier = "thumbImage"
+private let reuseIdentifier = "cellView"
 
 class UploadImageCollectionViewController: UICollectionViewController {
+    
+    let imageLimit = 120
+    var nsImageId:NSArray = []
+    var nsImageData:NSArray = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,9 +24,9 @@ class UploadImageCollectionViewController: UICollectionViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        //self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
-        // Do any additional setup after loading the view.
+        getFbPhotos()
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,19 +49,27 @@ class UploadImageCollectionViewController: UICollectionViewController {
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 0
+        return self.nsImageData.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ThumbCollectionViewCell
     
         // Configure the cell
+    
+    
+        Helper.loadImageFromUrl(url: nsImageData[indexPath.item] as! String, view: cell.imageView)
+        cell.imageView.contentMode = UIViewContentMode.scaleAspectFill;
+        //cell.backgroundColor = UIColor.cyan
+        //cell.layer.borderColor = UIColor.lightGray.cgColor
+        //cell.layer.borderWidth = 3
+        cell.layer.cornerRadius = 8
     
         return cell
     }
@@ -93,6 +106,28 @@ class UploadImageCollectionViewController: UICollectionViewController {
     */
     
     // MARK: Actions
+    
+    func getFbPhotos(){
+        
+        let graphRequest: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me/photos", parameters:["fields": "picture, images", "limit": "\(imageLimit)"])
+        graphRequest.start(completionHandler: { (connection, result, error) -> Void in
+            if error != nil {
+                //handle error
+                print("graphrequest error")
+            } else {
+                //print(result ?? "Failed to get result")
+                let nsResult = result as! NSDictionary
+                let nsData = nsResult.value(forKey: "data") as! NSArray
+                self.nsImageId = nsData.value(forKey: "id") as! NSArray
+                self.nsImageData = nsData.value(forKey: "picture") as! NSArray
+                print("Thumbs")
+                print("URLs: " + self.nsImageData.count.description + " IDs: " + self.nsImageId.count.description)
+                
+                self.collectionView?.reloadData()
+            }
+        })
+        
+    }
     
     @IBAction func goBack(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)

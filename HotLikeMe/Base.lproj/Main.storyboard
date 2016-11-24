@@ -241,7 +241,6 @@
         <!--ProfileBrowseController-->
         <scene sceneID="M7k-hj-lcx">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4qm-KO-zpQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="SelectProfileImage" title="ProfileBrowseController" id="yBo-eJ-XeC" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="hHT-DL-HaR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -251,13 +250,13 @@
                         <segue destination="VID-Tb-WpG" kind="relationship" relationship="rootViewController" id="6vK-Rf-jkP"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4qm-KO-zpQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-295" y="1677"/>
         </scene>
         <!--ImageBrowserController-->
         <scene sceneID="87Y-3F-7qx">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="duO-22-xl4" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="UploadImages" title="ImageBrowserController" id="eLz-Z7-dX8" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="v7E-gm-YZk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -267,6 +266,7 @@
                         <segue destination="75o-Sh-CcG" kind="relationship" relationship="rootViewController" id="W93-k3-wcN"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="duO-22-xl4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="489" y="1677"/>
         </scene>
@@ -278,20 +278,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="vsF-cz-Ol0">
-                            <size key="itemSize" width="50" height="50"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="8" minimumInteritemSpacing="8" id="vsF-cz-Ol0">
+                            <size key="itemSize" width="90" height="90"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="sectionInset" minX="15" minY="15" maxX="15" maxY="15"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="thumbImage" id="Tw7-fT-s5M">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cellView" id="Tw7-fT-s5M" customClass="ThumbCollectionViewCell" customModule="HotLikeMe" customModuleProvider="target">
+                                <rect key="frame" x="15" y="15" width="90" height="90"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wWj-jd-Z0V">
+                                            <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                    </subviews>
                                 </view>
+                                <connections>
+                                    <outlet property="imageView" destination="wWj-jd-Z0V" id="7Wn-jQ-dp7"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -315,7 +324,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TCV-Lb-0eu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="489" y="2427"/>
+            <point key="canvasLocation" x="488.80000000000001" y="2426.5367316341831"/>
         </scene>
         <!--Chat-->
         <scene sceneID="g8o-YP-dch">
