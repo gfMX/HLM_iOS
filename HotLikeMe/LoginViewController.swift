@@ -54,6 +54,9 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         
         text_displayName.delegate = self
         text_displayName.addTarget(self, action: #selector(textFieldDidChange(_:)), for: UIControlEvents.editingDidEnd)
+        
+        switch_userVisible.addTarget(self, action: #selector(switchUserVisibleChanged), for: UIControlEvents.valueChanged)
+        switch_gps.addTarget(self, action: #selector(switchGPSEnabledChanged), for: UIControlEvents.valueChanged)
    
         updateUI()
     }
@@ -198,6 +201,20 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                     }
                 }
             }
+        }
+    }
+    
+    func switchUserVisibleChanged(sender: UISwitch){
+        print("User Visible: " + sender.isOn.description)
+        if fireUser != nil {
+            FireConnection.databaseReference.child("users").child(fireUser.uid).child("preferences").child("visible").setValue(sender.isOn)
+        }
+    }
+    
+    func switchGPSEnabledChanged(sender: UISwitch){
+        print("GPS Enabled: " + sender.isOn.description)
+        if fireUser != nil {
+            FireConnection.databaseReference.child("users").child(fireUser.uid).child("preferences").child("gps_enabled").setValue(sender.isOn)
         }
     }
     
