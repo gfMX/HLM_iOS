@@ -88,7 +88,7 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
     // Uncomment this method to specify if the specified item should be selected
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         print(indexPath.item)
-        print(imageUrls[indexPath.item])
+        //print(imageUrls[indexPath.item])
     
         currentPicStorage = thumbsStorage[indexPath.item]
         currentPicURL = imageUrls[indexPath.item]
@@ -125,7 +125,7 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
         ref.child("users").child(userID!).child("thumbs").observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             let value = snapshot.value as? NSDictionary
-            print (value ?? "No values found")
+            //print (value ?? "No values found")
             self.thumbsStorage = value?.allKeys as! [String]
             //let username = value?["alias"] as! String
             print("Thumbs found: " + (self.thumbsStorage.count.description))

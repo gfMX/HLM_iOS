@@ -15,8 +15,6 @@ import Firebase
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource{
     
-    
-    
     @IBOutlet weak var imageFaceProfile: UIImageView!
     @IBOutlet weak var imageHLMProfile: UIImageView!
     @IBOutlet weak var labelWelcome: UILabel!
@@ -30,7 +28,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     @IBOutlet weak var label_userVisible: UILabel!
     @IBOutlet weak var label_gps: UILabel!
     
-    @IBOutlet weak var lookingFor: UIPickerView!
     
     var user: FBSDKProfile!
     var fireUser: FIRUser!
@@ -47,8 +44,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         
         lookingData = ["Both", "Girls", "Boys"]
         
-        //self.lookingFor.delegate = self
-        //self.lookingFor.dataSource = self
+        //self.lookingForPicker.delegate = self
+        //self.lookingForPicker.dataSource = self
 
         loginButton.readPermissions = ["public_profile", "email"]
         loginButton.delegate = self
