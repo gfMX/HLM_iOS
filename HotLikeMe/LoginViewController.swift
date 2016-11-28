@@ -13,7 +13,9 @@ import FBSDKLoginKit
 import FBSDKCoreKit
 import Firebase
 
-class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFieldDelegate{
+class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource{
+    
+    
     
     @IBOutlet weak var imageFaceProfile: UIImageView!
     @IBOutlet weak var imageHLMProfile: UIImageView!
@@ -28,9 +30,13 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     @IBOutlet weak var label_userVisible: UILabel!
     @IBOutlet weak var label_gps: UILabel!
     
+    @IBOutlet weak var lookingFor: UIPickerView!
+    
     var user: FBSDKProfile!
     var fireUser: FIRUser!
     var facebookAccessToken: FBSDKAccessToken!
+    
+    var lookingData = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +44,11 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         FBSDKProfile.enableUpdates(onAccessTokenChange: true)
         
         fireUser = FireConnection.fireUser
+        
+        lookingData = ["Both", "Girls", "Boys"]
+        
+        //self.lookingFor.delegate = self
+        //self.lookingFor.dataSource = self
 
         loginButton.readPermissions = ["public_profile", "email"]
         loginButton.delegate = self
@@ -222,6 +233,23 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         if fireUser != nil {
             FireConnection.databaseReference.child("users").child(fireUser.uid).child("preferences").child("gps_enabled").setValue(sender.isOn)
         }
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int{
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int{
+        return lookingData.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return lookingData[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
+        print("Looking for: " + lookingData[row].description)
+        self.view.endEditing(true)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool
