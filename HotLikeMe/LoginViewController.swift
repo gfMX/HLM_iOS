@@ -58,6 +58,12 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         switch_userVisible.addTarget(self, action: #selector(switchUserVisibleChanged), for: UIControlEvents.valueChanged)
         switch_gps.addTarget(self, action: #selector(switchGPSEnabledChanged), for: UIControlEvents.valueChanged)
    
+        //updateUI()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         updateUI()
     }
 
@@ -171,9 +177,9 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
 
     
 
-    /*
+    
     // MARK: - Navigation
-
+    /*
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.

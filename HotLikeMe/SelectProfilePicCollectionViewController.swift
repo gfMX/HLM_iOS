@@ -15,6 +15,11 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
     
     var thumbUrls = [String]()
     var imageUrls = [String]()
+    var thumbsStorage = [String]()
+    
+    var imagesOnCollection = 0
+    var currentPicStorage: String!
+    var currentPicURL: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,13 +41,13 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
 
     
     // MARK: - Navigation
-
+    /*
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
     }
-
+    */
     // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -60,7 +65,9 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! FireCollectionViewCell
     
         // Configure the cell
-        Helper.loadImageFromUrl(url: thumbUrls[indexPath.item], view: cell.imageThumb)
+        if !thumbUrls[indexPath.item].contains(" "){
+            Helper.loadImageFromUrl(url: thumbUrls[indexPath.item], view: cell.imageThumb)
+        }
         cell.imageThumb.contentMode = UIViewContentMode.scaleAspectFill;
         cell.backgroundColor = UIColor.lightGray
         cell.layer.cornerRadius = 8
@@ -83,7 +90,9 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
         print(indexPath.item)
         print(imageUrls[indexPath.item])
     
-        showImage(newUrl: imageUrls[indexPath.item])
+        currentPicStorage = thumbsStorage[indexPath.item]
+        currentPicURL = imageUrls[indexPath.item]
+        showImage(newUrl: currentPicURL)
         
         return true
     }
@@ -110,24 +119,26 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
         let userID = FIRAuth.auth()?.currentUser?.uid
         let ref = FIRDatabase.database().reference()
         
+        self.thumbUrls.removeAll()
+        self.imageUrls.removeAll()
+        
         ref.child("users").child(userID!).child("thumbs").observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             let value = snapshot.value as? NSDictionary
             print (value ?? "No values found")
-            let thumbsStorage = value?.allKeys as! [String]
+            self.thumbsStorage = value?.allKeys as! [String]
             //let username = value?["alias"] as! String
-            print("Thumbs found: " + (thumbsStorage.count.description))
+            print("Thumbs found: " + (self.thumbsStorage.count.description))
             //print(thumbsStorage)
             
             
-            //let nCount = thumbsStorage.count
-            //for _ in 0 ..< nCount {
-                //self.thumbUrls = [String](repeating: " ", count: nCount) //.append("") //
-                //self.imageUrls = [String](repeating: " ", count: nCount)
-            //}
- 
+            let nCount = self.thumbsStorage.count
+            self.thumbUrls = [String](repeating: " ", count: nCount)
+            self.imageUrls = [String](repeating: " ", count: nCount)
             
-            self.getFirePicsUrls(storage: thumbsStorage, imageCount: 0)
+            print ("Size of Arrays: " + self.thumbUrls.count.description + " " + self.imageUrls.count.description)
+            
+            self.getFirePicsUrls(storage: self.thumbsStorage)
             //self.collectionView?.reloadData()
             
         }) { (error) in
@@ -135,48 +146,38 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
         }
     }
     
-    func getFirePicsUrls(storage: Array<Any>, imageCount: Int){
-        var currentImage = imageCount
-        print ("Storage count: " + currentImage.description)
+    func getFirePicsUrls(storage: Array<Any>){
+        //var currentImage = imageCount
+        print ("Storage count: " + storage.count.description)
         
-        //for i in 0 ..< storage.count{
-            //print (storage[i] as! String)
-            FireConnection.storageReference.child(FireConnection.fireUser.uid).child("/images/thumbs/thumb_" + (storage[currentImage] as! String) + ".jpg").downloadURL { (URL, error) -> Void in
+        for i in 0 ..< storage.count {
+            //print ("Query" + i.description)
+            FireConnection.storageReference.child(FireConnection.fireUser.uid).child("/images/thumbs/thumb_" + (storage[i] as! String) + ".jpg").downloadURL { (URL, error) -> Void in
                 if (error != nil) {
                     print ("An error ocurred!")
                 } else {
-                    // Get the download URL for 'images/stars.jpg'
-                    self.thumbUrls.append((URL?.absoluteString)!) //.insert((URL?.absoluteString)!, at: i) //
-                    //print (URL ?? "Not a valid URL was found")
-                    
-                    FireConnection.storageReference.child(FireConnection.fireUser.uid).child("/images/image_" + (storage[currentImage] as! String) + ".jpg").downloadURL { (URL, error) -> Void in
-                        if (error != nil) {
-                            print ("An error ocurred!")
-                        } else {
-                            self.imageUrls.append((URL?.absoluteString)!) //.insert((URL?.absoluteString)!, at: i) //
-                            //print (URL ?? "Not a valid URL was found")
-                        }
-                        /*
-                        if imageCount == (storage.count - 1) {
-                            print("Updating the view")
-                            self.collectionView?.reloadData()
-                        }
-                        */
-                        if imageCount < (storage.count-1){
-                            currentImage += 1
-                            self.collectionView?.reloadData()
-                            self.getFirePicsUrls(storage: storage, imageCount: currentImage)
-                            
-                        }
-                        
+                    self.thumbUrls[i] = (URL?.absoluteString)!
+                    //print (i.description + ": " + (URL?.absoluteString)!)
+                }
+            }
+                
+            FireConnection.storageReference.child(FireConnection.fireUser.uid).child("/images/image_" + (storage[i] as! String) + ".jpg").downloadURL { (URL, error) -> Void in
+                if (error != nil) {
+                    print ("An error ocurred!")
+                } else {
+                    self.imageUrls[i] = (URL?.absoluteString)!
+                    //self.collectionView?.reloadData()
+                    //print (i.description + ": " + (URL?.absoluteString)!)
+                    if i == (storage.count - 1) {
+                        print("    Updating the view")
+                        print("--------------------------")
+                        self.collectionView?.reloadData()
                     }
-                    
                 }
                 
-            //}
-            
-            
+            }
         }
+        
     }
     
     func showImage(newUrl: String){
@@ -199,7 +200,7 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
         
         let btnOk: UIButton = UIButton(frame: CGRect(x: 10, y: (self.view.frame.height-70), width: 100, height: 50))
         btnOk.setTitle("OK", for: .normal)
-        btnOk.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        btnOk.addTarget(self, action: #selector(buttonActionUp), for: .touchUpInside)
         btnOk.tag = 1
         blurEffectView.addSubview(btnOk)
         
@@ -219,8 +220,35 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
         sender.view?.removeFromSuperview()
     }
     
-    func buttonAction(sender: UIButton){
+    func buttonActionUp(sender: UIButton){
+        let fireRef = FireConnection.databaseReference
+            .child("users")
+            .child(FireConnection.fireUser.uid)
+            .child("preferences")
+        
+        fireRef.child("profile_pic_url").setValue(currentPicURL)
+        fireRef.child("profile_pic_storage").setValue(currentPicStorage)
+        
+        //Update Firebase Profile: DisplayName
+        let user = FIRAuth.auth()?.currentUser
+        if let user = user {
+            let changeRequest = user.profileChangeRequest()
+            let newURL = NSURL(string: currentPicURL) as URL?
+            print("New URL for Profile Pic" + (newURL?.absoluteString)!)
+            changeRequest.photoURL = newURL
+            changeRequest.commitChanges { error in
+                if let error = error {
+                    print("Display Picture couldn't be updated!")
+                    print(error)
+                } else {
+                    print ("Display Picture Updated!")
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }
+        }
+        
          self.view.viewWithTag(23)?.removeFromSuperview()
+        
     }
     
     func buttonActionCancel(sender: UIButton){
