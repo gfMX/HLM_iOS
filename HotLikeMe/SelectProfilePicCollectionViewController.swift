@@ -127,7 +127,7 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
             //}
  
             
-            self.getFirePicsUrls(storage: thumbsStorage)
+            self.getFirePicsUrls(storage: thumbsStorage, imageCount: 0)
             //self.collectionView?.reloadData()
             
         }) { (error) in
@@ -135,12 +135,13 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
         }
     }
     
-    func getFirePicsUrls(storage: Array<Any>){
-        print ("Storage count: " + storage.count.description)
+    func getFirePicsUrls(storage: Array<Any>, imageCount: Int){
+        var currentImage = imageCount
+        print ("Storage count: " + currentImage.description)
         
-        for i in 0 ..< storage.count{
+        //for i in 0 ..< storage.count{
             //print (storage[i] as! String)
-            FireConnection.storageReference.child(FireConnection.fireUser.uid).child("/images/thumbs/thumb_" + (storage[i] as! String) + ".jpg").downloadURL { (URL, error) -> Void in
+            FireConnection.storageReference.child(FireConnection.fireUser.uid).child("/images/thumbs/thumb_" + (storage[currentImage] as! String) + ".jpg").downloadURL { (URL, error) -> Void in
                 if (error != nil) {
                     print ("An error ocurred!")
                 } else {
@@ -148,21 +149,33 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
                     self.thumbUrls.append((URL?.absoluteString)!) //.insert((URL?.absoluteString)!, at: i) //
                     //print (URL ?? "Not a valid URL was found")
                     
+                    FireConnection.storageReference.child(FireConnection.fireUser.uid).child("/images/image_" + (storage[currentImage] as! String) + ".jpg").downloadURL { (URL, error) -> Void in
+                        if (error != nil) {
+                            print ("An error ocurred!")
+                        } else {
+                            self.imageUrls.append((URL?.absoluteString)!) //.insert((URL?.absoluteString)!, at: i) //
+                            //print (URL ?? "Not a valid URL was found")
+                        }
+                        /*
+                        if imageCount == (storage.count - 1) {
+                            print("Updating the view")
+                            self.collectionView?.reloadData()
+                        }
+                        */
+                        if imageCount < (storage.count-1){
+                            currentImage += 1
+                            self.collectionView?.reloadData()
+                            self.getFirePicsUrls(storage: storage, imageCount: currentImage)
+                            
+                        }
+                        
+                    }
+                    
                 }
-                if i == (storage.count - 1) {
-                    print("Updating the view")
-                    self.collectionView?.reloadData()
-                }
-            }
+                
+            //}
             
-            FireConnection.storageReference.child(FireConnection.fireUser.uid).child("/images/image_" + (storage[i] as! String) + ".jpg").downloadURL { (URL, error) -> Void in
-                if (error != nil) {
-                    print ("An error ocurred!")
-                } else {
-                    self.imageUrls.append((URL?.absoluteString)!) //.insert((URL?.absoluteString)!, at: i) //
-                    //print (URL ?? "Not a valid URL was found")
-                }
-            }
+            
         }
     }
     
