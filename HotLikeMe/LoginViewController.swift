@@ -15,6 +15,10 @@ import Firebase
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource{
     
+    @IBOutlet weak var scrollView: UIView!
+    @IBOutlet weak var contentView: UIView!
+    
+    
     @IBOutlet weak var imageFaceProfile: UIImageView!
     @IBOutlet weak var imageHLMProfile: UIImageView!
     @IBOutlet weak var labelWelcome: UILabel!
@@ -28,6 +32,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     @IBOutlet weak var label_userVisible: UILabel!
     @IBOutlet weak var label_gps: UILabel!
     
+    @IBOutlet weak var lookingForPicker: UIPickerView!
     
     var user: FBSDKProfile!
     var fireUser: FIRUser!
@@ -44,8 +49,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         
         lookingData = ["Both", "Girls", "Boys"]
         
-        //self.lookingForPicker.delegate = self
-        //self.lookingForPicker.dataSource = self
+        self.lookingForPicker.delegate = self
+        self.lookingForPicker.dataSource = self
 
         loginButton.readPermissions = ["public_profile", "email"]
         loginButton.delegate = self
@@ -57,7 +62,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         imageHLMProfile.layer.borderWidth = 10
         imageHLMProfile.layer.masksToBounds = false
         imageHLMProfile.layer.borderColor = UIColor.lightGray.cgColor
-        imageHLMProfile.layer.cornerRadius = imageHLMProfile.frame.height/1.75
+        imageHLMProfile.layer.cornerRadius = imageHLMProfile.frame.height/1.7
         imageHLMProfile.clipsToBounds = true
         
         text_displayName.delegate = self
@@ -246,6 +251,19 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
         print("Looking for: " + lookingData[row].description)
+        var lookingFor: String!
+        
+        if row == 0 {
+            lookingFor = "both"
+        } else if row == 1 {
+            lookingFor = "female"
+        } else{
+            lookingFor = "male"
+        }
+        
+        let fireRef = FireConnection.databaseReference.child("users").child(fireUser.uid).child("preferences").child("looking_for")
+        fireRef.setValue(lookingFor)
+        
         self.view.endEditing(true)
     }
     
@@ -271,6 +289,11 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         }
         
     }
+    
+    @IBAction func scrollToSettings(_ sender: UIButton) {
+        
+    }
+    
     
 
 }
