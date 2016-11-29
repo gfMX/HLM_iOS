@@ -33,12 +33,15 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     @IBOutlet weak var label_gps: UILabel!
     
     @IBOutlet weak var lookingForPicker: UIPickerView!
+    @IBOutlet weak var lookingDistancePicker: UIPickerView!
+    
     
     var user: FBSDKProfile!
     var fireUser: FIRUser!
     var facebookAccessToken: FBSDKAccessToken!
     
     var lookingData = [String]()
+    var lookingDistance = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,9 +51,15 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         fireUser = FireConnection.fireUser
         
         lookingData = ["Both", "Girls", "Boys"]
+        lookingDistance = ["100m", "250m", "1.0km", "5.0km", "10.0km"]
         
         self.lookingForPicker.delegate = self
         self.lookingForPicker.dataSource = self
+        self.lookingForPicker.tag = 0
+        
+        self.lookingDistancePicker.delegate = self
+        self.lookingDistancePicker.dataSource =  self
+        self.lookingDistancePicker.tag = 1
 
         loginButton.readPermissions = ["public_profile", "email"]
         loginButton.delegate = self
@@ -242,27 +251,63 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int{
-        return lookingData.count
+        var count = 0
+        if pickerView.tag == 0 {
+            count = lookingData.count
+        } else if pickerView.tag == 1 {
+            count = lookingDistance.count
+        }
+        return count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return lookingData[row]
+        if pickerView.tag == 0 {
+            return lookingData[row]
+        } else if pickerView.tag == 1 {
+            return lookingDistance[row]
+        }
+        return ""
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
-        print("Looking for: " + lookingData[row].description)
-        var lookingFor: String!
+        if pickerView.tag == 0{
+            print("Looking for: " + lookingData[row].description)
+            var lookingFor: String!
         
-        if row == 0 {
-            lookingFor = "both"
-        } else if row == 1 {
-            lookingFor = "female"
-        } else{
-            lookingFor = "male"
+            if row == 0 {
+                lookingFor = "both"
+            } else if row == 1 {
+                lookingFor = "female"
+            } else{
+                lookingFor = "male"
+            }
+        
+            let fireRef = FireConnection.databaseReference.child("users").child(fireUser.uid).child("preferences").child("looking_for")
+            fireRef.setValue(lookingFor)
+        } else if pickerView.tag == 1 {
+            print("Looking distance: " + lookingDistance[row].description)
+            
+            var lookDistance: Int!
+            switch lookingDistance[row] {
+            case "100m":
+                lookDistance = 100
+            case "250m":
+                lookDistance = 250
+            case "1.0km":
+                lookDistance = 1000
+            case "5.0km":
+                lookDistance = 5000
+            case "10.0km":
+                lookDistance = 10000
+            default:
+                lookDistance = 100
+            }
+            
+            let fireRef = FireConnection.databaseReference.child("users").child(fireUser.uid).child("preferences").child("sync_distance")
+            fireRef.setValue(lookDistance)
+            print("Looking distance in meters: " + lookDistance.description)
+            
         }
-        
-        let fireRef = FireConnection.databaseReference.child("users").child(fireUser.uid).child("preferences").child("looking_for")
-        fireRef.setValue(lookingFor)
         
         self.view.endEditing(true)
     }
