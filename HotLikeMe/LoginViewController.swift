@@ -13,7 +13,7 @@ import FBSDKLoginKit
 import FBSDKCoreKit
 import Firebase
 
-class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource{
+class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource{
     
     @IBOutlet weak var scrollView: UIView!
     @IBOutlet weak var contentView: UIView!
@@ -27,12 +27,18 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     @IBOutlet weak var switch_userVisible: UISwitch!
     @IBOutlet weak var switch_gps: UISwitch!
 
+    @IBOutlet weak var button_moreSettings: UIButton!
+    
+    @IBOutlet weak var text_description: UITextView!
     @IBOutlet weak var text_displayName: UITextField!
     @IBOutlet weak var label_displayName: UILabel!
     @IBOutlet weak var label_userVisible: UILabel!
     @IBOutlet weak var label_gps: UILabel!
     
-    @IBOutlet weak var lookingForPicker: UIPickerView!
+    @IBOutlet weak var label_lookingFor: UILabel!
+    @IBOutlet weak var label_distanceToLook: UILabel!
+    @IBOutlet weak var label_updateTime: UILabel!
+    @IBOutlet weak var label_description: UILabel!
     @IBOutlet weak var lookingDistancePicker: UIPickerView!
     
     
@@ -41,6 +47,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     var facebookAccessToken: FBSDKAccessToken!
     
     var lookingData = [String]()
+    var lookingTime = [String]()
     var lookingDistance = [String]()
     
     override func viewDidLoad() {
@@ -51,11 +58,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         fireUser = FireConnection.fireUser
         
         lookingData = ["Both", "Girls", "Boys"]
-        lookingDistance = ["100m", "250m", "1.0km", "5.0km", "10.0km"]
-        
-        self.lookingForPicker.delegate = self
-        self.lookingForPicker.dataSource = self
-        self.lookingForPicker.tag = 0
+        lookingTime = ["1 Minute", "5 Minutes", "15 Minutes", "30 Minutes", "1 Hour", "6 Hours"]
+        lookingDistance = ["250m", "1.0km", "5.0km", "10.0km", "50.0km"]
         
         self.lookingDistancePicker.delegate = self
         self.lookingDistancePicker.dataSource =  self
@@ -74,8 +78,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         imageHLMProfile.layer.cornerRadius = imageHLMProfile.frame.height/1.7
         imageHLMProfile.clipsToBounds = true
         
+        text_description.delegate = self
         text_displayName.delegate = self
-        text_displayName.addTarget(self, action: #selector(textFieldDidChange(_:)), for: UIControlEvents.editingDidEnd)
         
         switch_userVisible.addTarget(self, action: #selector(switchUserVisibleChanged), for: UIControlEvents.valueChanged)
         switch_gps.addTarget(self, action: #selector(switchGPSEnabledChanged), for: UIControlEvents.valueChanged)
@@ -120,6 +124,10 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                     Helper.loadImageFromUrl(url: (profilePicURL?.absoluteString)!, view: self.imageHLMProfile)
                     self.imageHLMProfile.contentMode = UIViewContentMode.scaleAspectFill;
                 }
+                
+                /***************************************************************************
+                                      Getting details from Facebook
+                 ***************************************************************************/
                 let graphRequest:FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"first_name,email, picture.type(large)"])
                 graphRequest.start(completionHandler: { (connection, result, error) -> Void in
                     let data:[String:AnyObject] = result as! [String : AnyObject]
@@ -136,6 +144,89 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                     self.imageFaceProfile.contentMode = UIViewContentMode.scaleAspectFit;
                 })
                 
+                /***************************************************************************
+                 Next section updates al values required from Firebase if they already exist
+                 ***************************************************************************/
+                let dbRef = FIRDatabase.database().reference()
+                let ref = dbRef.child("users").child(self.fireUser.uid).child("preferences")
+                ref.observeSingleEvent(of: .value, with: { (snapshot) in
+                    // Get user value
+                    let value = snapshot.value as? NSDictionary
+                    
+                    let boolVisible = (value?.value(forKey: "visible") as? Bool) ?? true
+                    let boolGPS = (value?.value(forKey: "gps_enabled") as? Bool) ?? false
+                    let textDescription = (value?.value(forKey: "description") as? String)
+                    
+                    let fireLookingFor = (value?.value(forKey: "looking_for") as? String) ?? "both"
+                    let fireSyncDistance = (value?.value(forKey: "sync_freq") as? Int) ?? 5
+                    let fireDistance = (value?.value(forKey: "sync_distance") as? Int) ?? 5000
+                    
+                    print (value ?? "No values found")
+                    print ("Description: " + textDescription!)
+                    print ("Visible: " + boolVisible.description)
+                    print ("GPS Enabled: " + boolGPS.description)
+                    print ("Looking for: " + fireLookingFor)
+                    print ("Sync Frequency: " + fireSyncDistance.description)
+                    print ("Sync Distance: " + fireDistance.description)
+                  
+                    //Updating Switches
+                    self.switch_userVisible.isOn = boolVisible
+                    self.switch_gps.isOn = boolGPS
+                    if textDescription != nil {
+                        self.text_description.text = textDescription
+                    }
+                    
+                    //Updating Picker with the Values of Firebase
+                    switch fireLookingFor {
+                    case "both":
+                        self.lookingDistancePicker.selectRow(0, inComponent: 0, animated: true)
+                    case "female":
+                        self.lookingDistancePicker.selectRow(1, inComponent: 0, animated: true)
+                    case "male":
+                        self.lookingDistancePicker.selectRow(2, inComponent: 0, animated: true)
+                    default:
+                        print ("Nothing to do")
+                    }
+                    
+                    switch fireDistance {
+                    case 250:
+                        self.lookingDistancePicker.selectRow(0, inComponent: 1, animated: true)
+                    case 1000:
+                        self.lookingDistancePicker.selectRow(1, inComponent: 1, animated: true)
+                    case 5000:
+                        self.lookingDistancePicker.selectRow(2, inComponent: 1, animated: true)
+                    case 10000:
+                        self.lookingDistancePicker.selectRow(3, inComponent: 1, animated: true)
+                    case 50000:
+                        self.lookingDistancePicker.selectRow(4, inComponent: 1, animated: true)
+                    default:
+                        print ("Nothing to do")
+                    }
+                    
+                    switch fireSyncDistance {
+                    case 1:
+                        self.lookingDistancePicker.selectRow(0, inComponent: 2, animated: true)
+                    case 5:
+                        self.lookingDistancePicker.selectRow(1, inComponent: 2, animated: true)
+                    case 15:
+                        self.lookingDistancePicker.selectRow(2, inComponent: 2, animated: true)
+                    case 30:
+                        self.lookingDistancePicker.selectRow(3, inComponent: 2, animated: true)
+                    case 60:
+                        self.lookingDistancePicker.selectRow(4, inComponent: 2, animated: true)
+                    case 360:
+                        self.lookingDistancePicker.selectRow(5, inComponent: 2, animated: true)
+                    default:
+                        print ("Nothing to do")
+                    }
+                    
+                    
+                }) { (error) in
+                    print(error.localizedDescription)
+                }
+                
+                //Updating from Firebase end!
+                
                 self.imageFaceProfile.isHidden = false
                 self.text_displayName.isHidden = false
                 self.label_displayName.isHidden = false
@@ -145,6 +236,14 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                 self.switch_gps.isHidden = false
                 self.switch_userVisible.isHidden = false
                 self.button_uploadImages.isHidden = false
+                
+                self.button_moreSettings.isHidden = false
+                self.label_lookingFor.isHidden = false
+                self.label_distanceToLook.isHidden = false
+                self.label_updateTime.isHidden = false
+                self.lookingDistancePicker.isHidden = false
+                self.label_description.isHidden = false
+                self.text_description.isHidden = false
             } else {
                 // No user is signed in.
                 self.imageHLMProfile.image = #imageLiteral(resourceName: "defaultPhoto")
@@ -158,6 +257,14 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                 self.switch_gps.isHidden = true
                 self.switch_userVisible.isHidden = true
                 self.button_uploadImages.isHidden = true
+                
+                self.button_moreSettings.isHidden = true
+                self.label_lookingFor.isHidden = true
+                self.label_distanceToLook.isHidden = true
+                self.label_updateTime.isHidden = true
+                self.lookingDistancePicker.isHidden = true
+                self.label_description.isHidden = true
+                self.text_description.isHidden = true
             }
         }
     }
@@ -209,17 +316,18 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     }
     */
     
-    func textFieldDidChange(_ sender : UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
         if fireUser != nil {
+            
             print("Display Name Changed!")
             let fireRef = FireConnection.databaseReference.child("users").child(fireUser.uid).child("preferences").child("alias")
-            fireRef.setValue(sender.text)
+                fireRef.setValue(textField.text)
             
             //Update Firebase Profile: DisplayName
             let user = FIRAuth.auth()?.currentUser
             if let user = user {
                 let changeRequest = user.profileChangeRequest()
-                changeRequest.displayName = sender.text
+                changeRequest.displayName = textField.text
                 changeRequest.commitChanges { error in
                     if let error = error {
                         print("Display name couldn't be updated!")
@@ -229,8 +337,36 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                     }
                 }
             }
+            
         }
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        textField.resignFirstResponder()
+        return true;
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        print("Description Begin editing")
+    }
+    /*
+    func textViewDidChange(_ textView: UITextView) {
+        print("Description Changed")
+    }
+    */
+    func textViewDidEndEditing(_ textView: UITextView) {
+        print("Description Changed")
+        if fireUser != nil {
+            
+            print("Display Name Changed!")
+            let fireRef = FireConnection.databaseReference.child("users").child(fireUser.uid).child("preferences").child("description")
+            fireRef.setValue(textView.text)
+        
+        }
+        
+    }
+    
     
     func switchUserVisibleChanged(sender: UISwitch){
         print("User Visible: " + sender.isOn.description)
@@ -247,33 +383,38 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int{
-        return 1
+        return 3
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int{
         var count = 0
-        if pickerView.tag == 0 {
+        if component == 0 {
             count = lookingData.count
-        } else if pickerView.tag == 1 {
+        } else if component == 1 {
             count = lookingDistance.count
+        } else if component == 2 {
+            count = lookingTime.count
         }
         return count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if pickerView.tag == 0 {
+        if component == 0{
             return lookingData[row]
-        } else if pickerView.tag == 1 {
+        } else if component == 1 {
             return lookingDistance[row]
+        } else if component == 2{
+            return lookingTime[row]
         }
         return ""
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
-        if pickerView.tag == 0{
+
+        if component == 0{
             print("Looking for: " + lookingData[row].description)
             var lookingFor: String!
-        
+            
             if row == 0 {
                 lookingFor = "both"
             } else if row == 1 {
@@ -281,10 +422,11 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
             } else{
                 lookingFor = "male"
             }
-        
+                
             let fireRef = FireConnection.databaseReference.child("users").child(fireUser.uid).child("preferences").child("looking_for")
             fireRef.setValue(lookingFor)
-        } else if pickerView.tag == 1 {
+        }
+        if component == 1 {
             print("Looking distance: " + lookingDistance[row].description)
             
             var lookDistance: Int!
@@ -299,23 +441,44 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                 lookDistance = 5000
             case "10.0km":
                 lookDistance = 10000
+            case "50.0km":
+                lookDistance = 50000
             default:
                 lookDistance = 100
             }
-            
+                
             let fireRef = FireConnection.databaseReference.child("users").child(fireUser.uid).child("preferences").child("sync_distance")
             fireRef.setValue(lookDistance)
             print("Looking distance in meters: " + lookDistance.description)
             
         }
-        
-        self.view.endEditing(true)
-    }
+        if component == 2{
+            print("Sync time: ")
+                
+            var lookTime: Int!
+            switch lookingTime[row]{
+                case "1 Minute":
+                    lookTime = 1
+                case "5 Minutes":
+                    lookTime = 5
+                case "15 Minutes":
+                    lookTime = 15
+                case "30 Minutes":
+                    lookTime = 30
+                case "1 Hour":
+                    lookTime = 60
+                case "6 Hours":
+                    lookTime = 60 * 6
+                default:
+                    lookTime = 5
+            }
+                
+            let fireRefTime = FireConnection.databaseReference.child("users").child(fireUser.uid).child("preferences").child("sync_freq")
+            fireRefTime.setValue(lookTime)
+            print ("Time between Sync: " + lookTime.description)
+        }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool
-    {
-        textField.resignFirstResponder()
-        return true;
+        self.view.endEditing(true)
     }
     
     func imageTapped(img: AnyObject){
