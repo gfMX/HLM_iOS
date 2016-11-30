@@ -45,7 +45,7 @@ class RatingControl: UIView {
     }
     
     override func layoutSubviews() {
-        print ("Frame SIZE: ", Int(frame.size.height))
+        //print ("Frame SIZE: ", Int(frame.size.height))
         let buttonSize = Int(frame.size.height)
         var buttonFrame = CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize)
         

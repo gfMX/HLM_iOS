@@ -25,6 +25,7 @@
 		8BE6790A1DE75E1700E27182 /* ThumbCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE679091DE75E1700E27182 /* ThumbCollectionViewCell.swift */; };
 		8BE6790E1DE79ACD00E27182 /* FireCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE6790D1DE79ACD00E27182 /* FireCollectionViewCell.swift */; };
 		8BEA787E1DDE2E530092B093 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BEA787D1DDE2E530092B093 /* GoogleService-Info.plist */; };
+		8BECB9B41DEF68F0005A6E6B /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BECB9B31DEF68F0005A6E6B /* UsersViewController.swift */; };
 		8BF453431DE4D88300C43195 /* UploadImageCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF453421DE4D88300C43195 /* UploadImageCollectionViewController.swift */; };
 		8BFB3B321DDE4121005246DB /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFB3B311DDE4121005246DB /* Helper.swift */; };
 /* End PBXBuildFile section */
@@ -75,6 +76,7 @@
 		8BE6790D1DE79ACD00E27182 /* FireCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireCollectionViewCell.swift; sourceTree = "<group>"; };
 		8BEA787D1DDE2E530092B093 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8BEA787F1DDE37E10092B093 /* HotLikeMe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HotLikeMe.entitlements; sourceTree = "<group>"; };
+		8BECB9B31DEF68F0005A6E6B /* UsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
 		8BF453421DE4D88300C43195 /* UploadImageCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadImageCollectionViewController.swift; sourceTree = "<group>"; };
 		8BFB3B311DDE4121005246DB /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		A594B99312712018E4869DD4 /* Pods-HotLikeMeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotLikeMeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HotLikeMeTests/Pods-HotLikeMeTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				8BEA787D1DDE2E530092B093 /* GoogleService-Info.plist */,
 				8BE6790D1DE79ACD00E27182 /* FireCollectionViewCell.swift */,
 				8BA016031DDCD2DC0042B165 /* IntroViewController.swift */,
+				8BECB9B31DEF68F0005A6E6B /* UsersViewController.swift */,
 				8BA0163A1DDCF2010042B165 /* LoginViewController.swift */,
 				8B1186BF1DE5EF93009F5C67 /* FireConnection.swift */,
 				8BA016051DDCD2DC0042B165 /* Main.storyboard */,
@@ -486,6 +489,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BA0163B1DDCF2010042B165 /* LoginViewController.swift in Sources */,
+				8BECB9B41DEF68F0005A6E6B /* UsersViewController.swift in Sources */,
 				8BA016041DDCD2DC0042B165 /* IntroViewController.swift in Sources */,
 				8B1186C41DE63946009F5C67 /* SelectProfilePicCollectionViewController.swift in Sources */,
 				8BA016021DDCD2DC0042B165 /* AppDelegate.swift in Sources */,

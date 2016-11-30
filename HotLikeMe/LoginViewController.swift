@@ -105,7 +105,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         
         FIRAuth.auth()?.addStateDidChangeListener { auth, user in
             if let user = user {
-                // User is signed in.
+                // MARK: Update UI: User signed in.
                 if (FireConnection.fireUser == nil){
                     FireConnection.fireUser = user
                     print("User Assigned from Login Screen")
@@ -245,7 +245,11 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                 self.label_description.isHidden = false
                 self.text_description.isHidden = false
             } else {
-                // No user is signed in.
+                
+                /***********************************************
+                // MARK: Update UI: No user signed.
+                ************************************************/
+                
                 self.imageHLMProfile.image = #imageLiteral(resourceName: "defaultPhoto")
                 self.imageFaceProfile.image = nil
                 self.imageFaceProfile.isHidden = true

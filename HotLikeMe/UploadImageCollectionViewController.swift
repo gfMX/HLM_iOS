@@ -16,6 +16,7 @@ class UploadImageCollectionViewController: UICollectionViewController {
     let imageLimit = 120
     var nsImageId:NSArray = []
     var nsImageData:NSArray = []
+    var indexOfSelectedImages = [IndexPath]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +27,7 @@ class UploadImageCollectionViewController: UICollectionViewController {
         // Register cell classes
         //self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
+        self.collectionView?.allowsMultipleSelection = true
         getFbPhotos()
     }
 
@@ -46,15 +48,12 @@ class UploadImageCollectionViewController: UICollectionViewController {
 
 
     // MARK: UICollectionViewDataSource
-
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
         return self.nsImageData.count
     }
 
@@ -66,9 +65,6 @@ class UploadImageCollectionViewController: UICollectionViewController {
     
         Helper.loadImageFromUrl(url: nsImageData[indexPath.item] as! String, view: cell.imageView)
         cell.imageView.contentMode = UIViewContentMode.scaleAspectFill;
-        //cell.backgroundColor = UIColor.cyan
-        //cell.layer.borderColor = UIColor.lightGray.cgColor
-        //cell.layer.borderWidth = 3
         cell.layer.cornerRadius = 8
     
         return cell
@@ -86,29 +82,51 @@ class UploadImageCollectionViewController: UICollectionViewController {
         return true
     }
     */
-    
-    /*// change background color when user touches cell
+   /*
+    // change background color when user touches cell
     override func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
-        cell?.layer.borderColor = UIColor.lightGray.cgColor
+        cell?.layer.borderColor = UIColor.magenta.cgColor
         cell?.layer.borderWidth = 5
-    }*/
+    }
     
-    /*// change background color back when user releases touch
+    // change background color back when user releases touch
     override func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
         cell?.layer.borderColor = nil
         cell?.layer.borderWidth = 0
-    } */
-
+    }
+    */
     // Uncomment this method to specify if the specified item should be selected
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        
         print(nsImageId[indexPath.item])
-        
         return true
     }
-
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.layer.borderColor = UIColor.magenta.cgColor
+        cell?.layer.borderWidth = 5
+        
+        if !indexOfSelectedImages.contains(indexPath){
+            indexOfSelectedImages.append(indexPath)
+        }
+        
+        print("Index: " + indexOfSelectedImages.description)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.layer.borderColor = nil
+        cell?.layer.borderWidth = 0
+        
+        if indexOfSelectedImages.contains(indexPath){
+            indexOfSelectedImages.remove(at: indexOfSelectedImages.index(of: indexPath)!)
+        }
+        
+        print("Index: " + indexOfSelectedImages.description)
+    }
+    
     /*
     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
     override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
