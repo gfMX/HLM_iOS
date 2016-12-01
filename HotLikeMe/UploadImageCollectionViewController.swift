@@ -17,6 +17,13 @@ class UploadImageCollectionViewController: UICollectionViewController {
     var nsImageId:NSArray = []
     var nsImageData:NSArray = []
     var indexOfSelectedImages = [IndexPath]()
+    var imageReference = [String]()
+    
+    var imTinyUrl = [String]()
+    var imFullUrl = [String]()
+    
+    var imThumbSelected = [String]()
+    var imImageSelected = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +73,25 @@ class UploadImageCollectionViewController: UICollectionViewController {
         Helper.loadImageFromUrl(url: nsImageData[indexPath.item] as! String, view: cell.imageView)
         cell.imageView.contentMode = UIViewContentMode.scaleAspectFill;
         cell.layer.cornerRadius = 8
+        
+        if indexOfSelectedImages.contains(indexPath){
+            cell.layer.borderColor = UIColor.lightGray.cgColor
+            cell.layer.borderWidth = 5
+            imImageSelected.append(imFullUrl[indexPath.item])
+            imThumbSelected.append(imTinyUrl[indexPath.item])
+        } else {
+            cell.layer.borderColor = UIColor.clear.cgColor
+            cell.layer.borderWidth = 0
+            if imImageSelected.contains(imFullUrl[indexPath.item]){
+                imImageSelected.remove(at: imImageSelected.index(of: imFullUrl[indexPath.item])!)
+            }
+            if imThumbSelected.contains(imTinyUrl[indexPath.item]){
+                imThumbSelected.remove(at: imThumbSelected.index(of: imTinyUrl[indexPath.item])!)
+            }
+        }
+        
+        print("Images: ", imImageSelected)
+        print("Thumbs: ", imThumbSelected)
     
         return cell
     }
@@ -100,31 +126,36 @@ class UploadImageCollectionViewController: UICollectionViewController {
     // Uncomment this method to specify if the specified item should be selected
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         print(nsImageId[indexPath.item])
+        
+        if !indexOfSelectedImages.contains(indexPath){
+            indexOfSelectedImages.append(indexPath)
+        } else {
+            indexOfSelectedImages.remove(at: indexOfSelectedImages.index(of: indexPath)!)
+        }
+        if !imageReference.contains(nsImageId[indexPath.item] as! String) {
+            imageReference.append(nsImageId[indexPath.item] as! String)
+        } else {
+            imageReference.remove(at: imageReference.index(of: nsImageId[indexPath.item] as! String)!)
+        }
+        
+        print("Index: " + indexOfSelectedImages.description)
+        print("Ids: " + imageReference.description)
+        
+        //self.collectionView?.reloadItems(at: [indexPath])
+        
         return true
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.layer.borderColor = UIColor.magenta.cgColor
-        cell?.layer.borderWidth = 5
-        
-        if !indexOfSelectedImages.contains(indexPath){
-            indexOfSelectedImages.append(indexPath)
-        }
-        
-        print("Index: " + indexOfSelectedImages.description)
+        //let cell = collectionView.cellForItem(at: indexPath)
+
+        self.collectionView?.reloadItems(at: [indexPath])
     }
     
     override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.layer.borderColor = nil
-        cell?.layer.borderWidth = 0
-        
-        if indexOfSelectedImages.contains(indexPath){
-            indexOfSelectedImages.remove(at: indexOfSelectedImages.index(of: indexPath)!)
-        }
-        
-        print("Index: " + indexOfSelectedImages.description)
+        //let cell = collectionView.cellForItem(at: indexPath)
+
+        self.collectionView?.reloadItems(at: [indexPath])
     }
     
     /*
@@ -157,13 +188,27 @@ class UploadImageCollectionViewController: UICollectionViewController {
                 let nsData = nsResult.value(forKey: "data") as! NSArray
                 self.nsImageId = nsData.value(forKey: "id") as! NSArray
                 self.nsImageData = nsData.value(forKey: "picture") as! NSArray
-                print("Thumbs")
-                print("URLs: " + self.nsImageData.count.description + " IDs: " + self.nsImageId.count.description)
                 
+                for i in 0 ..< self.nsImageData.count {
+                    let object0 = nsData[i] as! NSDictionary
+                    let object1 = object0.value(forKey: "images") as! NSArray
+                    let object2 = object1[0] as! NSDictionary
+                    
+                    self.imFullUrl.append(object2.value(forKey: "source") as! String)
+                    self.imTinyUrl.append(self.nsImageData[i] as! String)
+                    
+                    //print("Tinys: ", self.nsImageData[i])
+                    //print("Testing: ", object1[0])
+                }
                 self.collectionView?.reloadData()
             }
         })
         
+    }
+    
+    func clearVars(){
+        imFullUrl.removeAll()
+        imTinyUrl.removeAll()
     }
     
     @IBAction func goBack(_ sender: UIBarButtonItem) {

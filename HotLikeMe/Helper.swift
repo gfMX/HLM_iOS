@@ -14,7 +14,7 @@ class Helper{
 static func loadImageFromUrl(url: String, view: UIImageView){
     
     // Create Url from string
-    print("URL: " + url)
+    //print("HELPER -> URL: " + url)
     let url = NSURL(string: url)!
     
     // Download task:
