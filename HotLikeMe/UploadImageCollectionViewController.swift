@@ -24,6 +24,8 @@ class UploadImageCollectionViewController: UICollectionViewController {
     
     var imThumbSelected = [String]()
     var imImageSelected = [String]()
+    
+    var imageCount: Int!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,13 +77,15 @@ class UploadImageCollectionViewController: UICollectionViewController {
         cell.layer.cornerRadius = 8
         
         if indexOfSelectedImages.contains(indexPath){
-            cell.layer.borderColor = UIColor.lightGray.cgColor
+            cell.layer.borderColor = UIColor.gray.cgColor
             cell.layer.borderWidth = 5
+            
             imImageSelected.append(imFullUrl[indexPath.item])
             imThumbSelected.append(imTinyUrl[indexPath.item])
         } else {
             cell.layer.borderColor = UIColor.clear.cgColor
             cell.layer.borderWidth = 0
+            
             if imImageSelected.contains(imFullUrl[indexPath.item]){
                 imImageSelected.remove(at: imImageSelected.index(of: imFullUrl[indexPath.item])!)
             }
@@ -90,8 +94,8 @@ class UploadImageCollectionViewController: UICollectionViewController {
             }
         }
         
-        print("Images: ", imImageSelected)
-        print("Thumbs: ", imThumbSelected)
+        //print("Images: ", imImageSelected)
+        //print("Thumbs: ", imThumbSelected)
     
         return cell
     }
@@ -203,6 +207,48 @@ class UploadImageCollectionViewController: UICollectionViewController {
                 self.collectionView?.reloadData()
             }
         })
+        
+    }
+    
+    func getDataFromUrl(url: URL, completion: @escaping (_ data: Data?, _  response: URLResponse?, _ error: Error?) -> Void) {
+        URLSession.shared.dataTask(with: url) {
+            (data, response, error) in
+            completion(data, response, error)
+            }.resume()
+    }
+    
+    func downloadData(url: URL, fileName: String, uniqueId: String, nImages: Int) {
+        let uniqueId = NSUUID().uuidString
+        print("UUID: ", uniqueId)
+        
+        print("Download Started")
+        getDataFromUrl(url: url) { (data, response, error)  in
+            guard let data = data, error == nil else { return }
+            print(response?.suggestedFilename ?? url.lastPathComponent)
+            print("Download Finished")
+            DispatchQueue.main.async() { () -> Void in
+                self.uploadImagesToFirebase(data: data, fileName: fileName, uniqueId: uniqueId, nImages: nImages)
+            }
+        }
+    }
+    
+    func uploadImagesToFirebase(data: Data, fileName: String, uniqueId: String, nImages: Int){
+        let riversRef = FireConnection.storageReference.child(FireConnection.fireUser.uid).child("images")
+        
+        let uploadTask = riversRef.put(data, metadata: nil) { metadata, error in
+            if (error != nil) {
+                // Uh-oh, an error occurred!
+            } else {
+                
+                let downloadURL = metadata!.downloadURL
+                print("Upload Finished! ", downloadURL)
+                
+            }
+        }
+        uploadTask.resume()
+    }
+    
+    func prepareToUpload(){
         
     }
     
