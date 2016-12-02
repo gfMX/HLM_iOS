@@ -64,6 +64,10 @@
     </array>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>We need to access your photos so You can select a few for HotLikeMe</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Will you allow HotlikeMe to always know your location?</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Do you allow HotLikeMe to know your current location?</string>
 
 </dict>
 </plist>
