@@ -8,6 +8,7 @@
 
 import UIKit
 import FBSDKCoreKit
+import Firebase
 
 private let reuseIdentifier = "cellView"
 
@@ -26,10 +27,15 @@ class UploadImageCollectionViewController: UICollectionViewController {
     var imImageSelected = [String]()
     
     var imageCount: Int!
+    
+    var firebaseReference: FIRDatabaseReference!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        clearVars()
+        firebaseReference = FireConnection.databaseReference.child("users").child(FireConnection.fireUser.uid)
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -217,44 +223,83 @@ class UploadImageCollectionViewController: UICollectionViewController {
             }.resume()
     }
     
-    func downloadData(url: URL, fileName: String, uniqueId: String, nImages: Int) {
+    func downloadData(start: Int, total: Int) {
         let uniqueId = NSUUID().uuidString
-        print("UUID: ", uniqueId)
+        let urlImage = URL(string: imImageSelected[start])
+        let urlThumb = URL(string: imThumbSelected[start])
+        var currentImage = start
         
+        print("Current item: " + currentImage.description, " Total images: " + total.description)
+        
+        let metadataInfo = FIRStorageMetadata()
+        metadataInfo.contentType = "image/jpeg"
+        
+        print("UUID: ", uniqueId)
         print("Download Started")
-        getDataFromUrl(url: url) { (data, response, error)  in
+        getDataFromUrl(url: urlImage!) { (data, response, error)  in
             guard let data = data, error == nil else { return }
-            print(response?.suggestedFilename ?? url.lastPathComponent)
             print("Download Finished")
             DispatchQueue.main.async() { () -> Void in
-                self.uploadImagesToFirebase(data: data, fileName: fileName, uniqueId: uniqueId, nImages: nImages)
+                
+                let imageName = "image_" + uniqueId + ".jpg"
+                print("Image name: ", imageName)
+                
+                let fullImageRef = FireConnection.storageReference.child(FireConnection.fireUser.uid).child("images").child(imageName)
+                let uploadTask = fullImageRef.put(data, metadata: metadataInfo) { metadata, error in
+                    if (error != nil) {
+                        // Uh-oh, an error occurred!
+                    } else {
+                        
+                        let downloadURL = metadata!.downloadURL
+                        print("Upload Image Finished: ", downloadURL)
+                        
+                        self.getDataFromUrl(url: urlThumb!) { (data, response, error)  in
+                            guard let data = data, error == nil else { return }
+                            print("Download Finished")
+                            DispatchQueue.main.async() { () -> Void in
+                        
+                                let thumbName = "thumb_" + uniqueId + ".jpg"
+                                print("Image name: ", thumbName)
+                        
+                                let thumbImageRef = FireConnection.storageReference.child(FireConnection.fireUser.uid).child("images").child("thumbs").child(thumbName)
+                                let uploadTiny = thumbImageRef.put(data, metadata: metadataInfo) { metadata, error in
+                                    if (error != nil) {
+                                        // Uh-oh, an error occurred!
+                                    } else {
+                                
+                                        let downloadURL = metadata!.downloadURL
+                                        print("Upload Thumb Finished: ", downloadURL)
+                                        
+                                        let thumbPath = "/" + FireConnection.fireUser.uid + "/images/thumbs/" + thumbName
+                                        let imagePath = "/" + FireConnection.fireUser.uid + "/images/" + imageName
+                                        
+                                        self.firebaseReference.child("images").child(uniqueId).setValue(imagePath)
+                                        self.firebaseReference.child("thumbs").child(uniqueId).setValue(thumbPath)
+                                        
+                                        if start < total - 1 {
+                                            currentImage = +1
+                                            print("Uploading Image: ", currentImage)
+                                            self.downloadData(start: currentImage, total: total)
+                                        }
+                                
+                                    }
+                                }
+                                uploadTiny.resume()
+                            }
+                        }
+                        
+                    }
+                }
+                uploadTask.resume()
+                
             }
         }
-    }
-    
-    func uploadImagesToFirebase(data: Data, fileName: String, uniqueId: String, nImages: Int){
-        let riversRef = FireConnection.storageReference.child(FireConnection.fireUser.uid).child("images")
-        
-        let uploadTask = riversRef.put(data, metadata: nil) { metadata, error in
-            if (error != nil) {
-                // Uh-oh, an error occurred!
-            } else {
-                
-                let downloadURL = metadata!.downloadURL
-                print("Upload Finished! ", downloadURL)
-                
-            }
-        }
-        uploadTask.resume()
-    }
-    
-    func prepareToUpload(){
         
     }
     
     func clearVars(){
-        imFullUrl.removeAll()
-        imTinyUrl.removeAll()
+        imImageSelected.removeAll()
+        imThumbSelected.removeAll()
     }
     
     @IBAction func goBack(_ sender: UIBarButtonItem) {
@@ -262,7 +307,15 @@ class UploadImageCollectionViewController: UICollectionViewController {
     }
     
     @IBAction func uploadImages(_ sender: UIBarButtonItem) {
+        print("Preparing images for upload")
+        let countImages = imImageSelected.count
+        print("Image upload count: ", countImages)
         
+        if countImages > 0 {
+            downloadData(start: 0, total: countImages)
+        } else {
+            print ("No images selected")
+        }
     }
 
 }
