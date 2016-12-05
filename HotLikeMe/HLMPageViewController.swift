@@ -7,10 +7,16 @@
 //
 
 import UIKit
+import Firebase
+import CoreLocation
 
-class HLMPageViewController: UIPageViewController {
+class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
     
+    var timer: Timer!
     var orderedViewControllersCount = 1
+    var locationManager:CLLocationManager!
+    
+    let defaults = UserDefaults.standard
     
     private(set) lazy var orderedViewControllers: [UIViewController] = {
         return [self.newColoredViewController(color: "Login"),
@@ -35,6 +41,17 @@ class HLMPageViewController: UIPageViewController {
         }
         
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        let timeInterval = (defaults.double(forKey: "defSyncFrequency") * 60)
+        if defaults.bool(forKey: "defVisible"){
+            print ("Requesting Location")
+            timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(self.determineMyCurrentLocation), userInfo: nil, repeats: true);
+        } else {
+            print("Default config for Visible not Found or Not Enabled")
+        }
+        print("Defaults: \(defaults)")
+    }
 
     private func newColoredViewController(color: String) -> UIViewController {
         return UIStoryboard(name: "Main", bundle: nil) .
@@ -57,7 +74,56 @@ class HLMPageViewController: UIPageViewController {
     }
     */
     
-    // MARK: - GPS Location Functions
+    // MARK: - GPS Location
+    
+    func determineMyCurrentLocation() {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() && defaults.bool(forKey: "defGPS") {
+            locationManager.startUpdatingLocation()
+            //locationManager.startUpdatingHeading()
+        } else {
+            print("Location request Stopped by the User")
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let userLocation:CLLocation = locations[0] as CLLocation
+        
+        // Call stopUpdatingLocation() to stop listening for location updates,
+        // other wise this function will be called every time when user location changes.
+        
+        if FireConnection.fireUser != nil {
+            print("Location Updated")
+            let fireReference = FireConnection.databaseReference.child("users").child(FireConnection.fireUser.uid).child("location_last")
+            
+            fireReference.child("loc_latitude").setValue(userLocation.coordinate.latitude)
+            fireReference.child("loc_longitude").setValue(userLocation.coordinate.longitude)
+            fireReference.child("loc_accuracy:").setValue(userLocation.horizontalAccuracy)
+            fireReference.child("timestamp").setValue(userLocation.timestamp.timeIntervalSince1970 * 1000)
+            fireReference.child("day").setValue(userLocation.timestamp.description)
+        }
+        
+        print("latitude  = \(userLocation.coordinate.latitude)")
+        print("longitude = \(userLocation.coordinate.longitude)")
+        print("location Accuracy: \(userLocation.horizontalAccuracy) Timestamp: \(userLocation.timestamp)")
+        
+        manager.stopUpdatingLocation()
+        /*
+        if !defaults.bool(forKey: "defVisible"){
+            timer.invalidate()
+            print ("Requesting Location Stoped")
+        }
+        */
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
+    {
+        print("Error on Location \(error)")
+    }
 
 }
 

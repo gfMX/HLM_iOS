@@ -32,7 +32,7 @@
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hCW-5p-f3N">
                                                 <rect key="frame" x="299" y="44" width="58" height="60"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" image="6EDCC3CA-E536-4886-A7AB-4975254375B9" translatesAutoresizingMaskIntoConstraints="NO" id="L1f-8P-nkA">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" image="55AA1DE5-3A16-41C5-864C-BB610645F82F" translatesAutoresizingMaskIntoConstraints="NO" id="L1f-8P-nkA">
                                                 <rect key="frame" x="68" y="106" width="240" height="240"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="L1f-8P-nkA" secondAttribute="height" multiplier="1:1" id="IBd-Ch-W7r"/>
@@ -277,20 +277,35 @@
                                 <rect key="frame" x="77" y="440" width="220" height="45"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="User description" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="t3R-LK-MlA">
+                                <rect key="frame" x="28" y="493" width="319" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="t3R-LK-MlA" firstAttribute="trailing" secondItem="Wdx-Eq-8dQ" secondAttribute="trailingMargin" constant="-12" id="28I-8e-chI"/>
                             <constraint firstItem="EAV-ni-bET" firstAttribute="top" secondItem="vg6-A9-PzZ" secondAttribute="bottom" constant="56" id="Kja-Ga-evY"/>
                             <constraint firstItem="EAV-ni-bET" firstAttribute="leading" secondItem="Wdx-Eq-8dQ" secondAttribute="leadingMargin" id="PKE-be-QYG"/>
                             <constraint firstItem="IMz-yW-nVc" firstAttribute="top" secondItem="EAV-ni-bET" secondAttribute="bottom" constant="8" symbolic="YES" id="SZg-XD-ZNg"/>
                             <constraint firstItem="EAV-ni-bET" firstAttribute="centerX" secondItem="IMz-yW-nVc" secondAttribute="centerX" id="bhN-XZ-F0y"/>
+                            <constraint firstItem="t3R-LK-MlA" firstAttribute="top" secondItem="fGi-Hl-SVT" secondAttribute="bottom" constant="8" id="kQ9-XH-qKg"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fGi-Hl-SVT" secondAttribute="trailing" constant="62" id="ldZ-Z5-gaN"/>
                             <constraint firstItem="fGi-Hl-SVT" firstAttribute="top" secondItem="IMz-yW-nVc" secondAttribute="bottom" constant="8" symbolic="YES" id="n8v-zd-2c3"/>
                             <constraint firstItem="EAV-ni-bET" firstAttribute="trailing" secondItem="Wdx-Eq-8dQ" secondAttribute="trailingMargin" id="nOy-lJ-Tbi"/>
                             <constraint firstItem="IMz-yW-nVc" firstAttribute="leading" secondItem="Wdx-Eq-8dQ" secondAttribute="leadingMargin" constant="12" id="p7g-KM-zYs"/>
+                            <constraint firstItem="Hoq-na-1cc" firstAttribute="top" secondItem="t3R-LK-MlA" secondAttribute="bottom" constant="46" id="q06-3z-bfs"/>
+                            <constraint firstItem="t3R-LK-MlA" firstAttribute="leading" secondItem="Wdx-Eq-8dQ" secondAttribute="leadingMargin" constant="12" id="vPx-jy-5JX"/>
                             <constraint firstItem="fGi-Hl-SVT" firstAttribute="leading" secondItem="Wdx-Eq-8dQ" secondAttribute="leadingMargin" constant="61" id="xMt-7t-QQN"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="user_description" destination="t3R-LK-MlA" id="973-bH-5Ov"/>
+                        <outlet property="user_displayName" destination="EAV-ni-bET" id="mNv-BB-eAD"/>
+                        <outlet property="user_displayPic" destination="IMz-yW-nVc" id="Rd4-ot-JA9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oc3-1g-wEt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -300,7 +315,7 @@
         <scene sceneID="Gbg-Jp-v7q">
             <objects>
                 <collectionViewController id="VID-Tb-WpG" customClass="SelectProfilePicCollectionViewController" customModule="HotLikeMe" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="L0K-Td-Egg">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="L0K-Td-Egg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="900"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -388,7 +403,7 @@
         <scene sceneID="gEz-uW-Cb5">
             <objects>
                 <collectionViewController id="75o-Sh-CcG" customClass="UploadImageCollectionViewController" customModule="HotLikeMe" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="ky0-ee-ce9">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="ky0-ee-ce9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="900"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -453,7 +468,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zd7-8m-fKV" id="3T4-dr-ejJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="89"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="gHr-RB-XrV">
@@ -497,7 +512,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qr1-Bl-h0l" id="qqR-YB-hC1">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -541,7 +556,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="6EDCC3CA-E536-4886-A7AB-4975254375B9" width="540" height="540">
+        <image name="55AA1DE5-3A16-41C5-864C-BB610645F82F" width="540" height="540">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

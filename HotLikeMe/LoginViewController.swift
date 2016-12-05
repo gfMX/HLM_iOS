@@ -50,6 +50,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     var lookingTime = [String]()
     var lookingDistance = [String]()
     
+    let defaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -125,29 +127,33 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                     self.imageHLMProfile.contentMode = UIViewContentMode.scaleAspectFill;
                 }
                 
+                 let dbRef = FIRDatabase.database().reference()
                 /***************************************************************************
                                       Getting details from Facebook
                  ***************************************************************************/
-                let graphRequest:FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"first_name,email, picture.type(large)"])
+                let graphRequest:FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"first_name,email, picture.type(large),gender"])
                 graphRequest.start(completionHandler: { (connection, result, error) -> Void in
                     let data:[String:AnyObject] = result as! [String : AnyObject]
                     let strFirstName: String = (data["first_name"]!) as! String
+                    let gender: String = (data["gender"]!) as! String
                     
                     let picture = data["picture"]! as? NSDictionary
                     let strPictureURL = ((picture?.object(forKey: "data") as AnyObject).object(forKey: "url")) as! String
                     
-                    print("Now the data: ")
-                    print(strPictureURL)
+                    print("Now the data: \(data)")
     
                     self.labelWelcome.text = "Welcome, \(strFirstName)"
                     Helper.loadImageFromUrl(url: strPictureURL, view: self.imageFaceProfile)
                     self.imageFaceProfile.contentMode = UIViewContentMode.scaleAspectFit;
+                    
+                    dbRef.child("users").child(self.fireUser.uid).child("preferences").child("gender").setValue(gender)
+                    self.defaults.set(gender, forKey: "defGender")
                 })
                 
                 /***************************************************************************
                  Next section updates al values required from Firebase if they already exist
                  ***************************************************************************/
-                let dbRef = FIRDatabase.database().reference()
+               
                 let ref = dbRef.child("users").child(self.fireUser.uid).child("preferences")
                 ref.observeSingleEvent(of: .value, with: { (snapshot) in
                     // Get user value
@@ -168,6 +174,13 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                     print ("Looking for: " + fireLookingFor)
                     print ("Sync Frequency: " + fireSyncDistance.description)
                     print ("Sync Distance: " + fireDistance.description)
+                    
+                    // MARK: Updating Defaults:
+                    self.defaults.set(boolGPS, forKey: "defGPS")
+                    self.defaults.set(boolVisible, forKey: "defVisible")
+                    self.defaults.set(fireLookingFor, forKey: "defLookingfor")
+                    self.defaults.set(fireSyncDistance, forKey: "defSyncFrequency")
+                    self.defaults.set(fireDistance, forKey: "defSyncDistance")
                   
                     //Updating Switches
                     self.switch_userVisible.isOn = boolVisible
@@ -309,8 +322,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     }
 
     
-
-    
     // MARK: - Navigation
     /*
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -375,7 +386,17 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     func switchUserVisibleChanged(sender: UISwitch){
         print("User Visible: " + sender.isOn.description)
         if fireUser != nil {
-            FireConnection.databaseReference.child("users").child(fireUser.uid).child("preferences").child("visible").setValue(sender.isOn)
+            let gender = defaults.string(forKey: "defGender")
+            let databaseRef = FIRDatabase.database().reference()
+            databaseRef.child("users").child(fireUser.uid).child("preferences").child("visible").setValue(sender.isOn)
+            self.defaults.set(sender.isOn, forKey: "defVisible")
+            if sender.isOn {
+                databaseRef.child("groups").child(gender!).child(fireUser.uid).setValue(true)
+                databaseRef.child("groups").child("both").child(fireUser.uid).setValue(true)
+            } else {
+                databaseRef.child("groups").child(gender!).child(fireUser.uid).setValue(nil)
+                databaseRef.child("groups").child("both").child(fireUser.uid).setValue(nil)
+            }
         }
     }
     
@@ -383,6 +404,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         print("GPS Enabled: " + sender.isOn.description)
         if fireUser != nil {
             FireConnection.databaseReference.child("users").child(fireUser.uid).child("preferences").child("gps_enabled").setValue(sender.isOn)
+            self.defaults.set(sender.isOn, forKey: "defGPS")
         }
     }
     
@@ -426,9 +448,11 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
             } else{
                 lookingFor = "male"
             }
-                
+            
             let fireRef = FireConnection.databaseReference.child("users").child(fireUser.uid).child("preferences").child("looking_for")
             fireRef.setValue(lookingFor)
+            defaults.set(lookingFor, forKey: "defLookingFor")
+            print("Looking for: " + lookingFor)
         }
         if component == 1 {
             print("Looking distance: " + lookingDistance[row].description)
@@ -453,6 +477,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                 
             let fireRef = FireConnection.databaseReference.child("users").child(fireUser.uid).child("preferences").child("sync_distance")
             fireRef.setValue(lookDistance)
+            defaults.set(lookDistance, forKey: "defSyncDistance")
             print("Looking distance in meters: " + lookDistance.description)
             
         }
@@ -479,6 +504,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                 
             let fireRefTime = FireConnection.databaseReference.child("users").child(fireUser.uid).child("preferences").child("sync_freq")
             fireRefTime.setValue(lookTime)
+            defaults.set(lookTime, forKey: "defSyncFrequency")
             print ("Time between Sync: " + lookTime.description)
         }
     
@@ -506,6 +532,4 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         
     }
     
-    
-
 }
