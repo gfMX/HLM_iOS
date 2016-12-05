@@ -32,7 +32,7 @@
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hCW-5p-f3N">
                                                 <rect key="frame" x="299" y="44" width="58" height="60"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" image="55AA1DE5-3A16-41C5-864C-BB610645F82F" translatesAutoresizingMaskIntoConstraints="NO" id="L1f-8P-nkA">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" image="3CADB8A2-C53E-454C-99AA-11442BDE2CAF" translatesAutoresizingMaskIntoConstraints="NO" id="L1f-8P-nkA">
                                                 <rect key="frame" x="68" y="106" width="240" height="240"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="L1f-8P-nkA" secondAttribute="height" multiplier="1:1" id="IBd-Ch-W7r"/>
@@ -277,8 +277,8 @@
                                 <rect key="frame" x="77" y="440" width="220" height="45"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="User description" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="t3R-LK-MlA">
-                                <rect key="frame" x="28" y="493" width="319" height="128"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="User description" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t3R-LK-MlA">
+                                <rect key="frame" x="28" y="493" width="319" height="90"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -296,7 +296,7 @@
                             <constraint firstItem="fGi-Hl-SVT" firstAttribute="top" secondItem="IMz-yW-nVc" secondAttribute="bottom" constant="8" symbolic="YES" id="n8v-zd-2c3"/>
                             <constraint firstItem="EAV-ni-bET" firstAttribute="trailing" secondItem="Wdx-Eq-8dQ" secondAttribute="trailingMargin" id="nOy-lJ-Tbi"/>
                             <constraint firstItem="IMz-yW-nVc" firstAttribute="leading" secondItem="Wdx-Eq-8dQ" secondAttribute="leadingMargin" constant="12" id="p7g-KM-zYs"/>
-                            <constraint firstItem="Hoq-na-1cc" firstAttribute="top" secondItem="t3R-LK-MlA" secondAttribute="bottom" constant="46" id="q06-3z-bfs"/>
+                            <constraint firstItem="Hoq-na-1cc" firstAttribute="top" secondItem="t3R-LK-MlA" secondAttribute="bottom" constant="84" id="q06-3z-bfs"/>
                             <constraint firstItem="t3R-LK-MlA" firstAttribute="leading" secondItem="Wdx-Eq-8dQ" secondAttribute="leadingMargin" constant="12" id="vPx-jy-5JX"/>
                             <constraint firstItem="fGi-Hl-SVT" firstAttribute="leading" secondItem="Wdx-Eq-8dQ" secondAttribute="leadingMargin" constant="61" id="xMt-7t-QQN"/>
                         </constraints>
@@ -305,6 +305,7 @@
                         <outlet property="user_description" destination="t3R-LK-MlA" id="973-bH-5Ov"/>
                         <outlet property="user_displayName" destination="EAV-ni-bET" id="mNv-BB-eAD"/>
                         <outlet property="user_displayPic" destination="IMz-yW-nVc" id="Rd4-ot-JA9"/>
+                        <outlet property="user_ratingBar" destination="fGi-Hl-SVT" id="wHG-w0-sIU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oc3-1g-wEt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -556,7 +557,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="55AA1DE5-3A16-41C5-864C-BB610645F82F" width="540" height="540">
+        <image name="3CADB8A2-C53E-454C-99AA-11442BDE2CAF" width="540" height="540">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

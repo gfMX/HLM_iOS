@@ -19,6 +19,7 @@ class UsersViewController: UIViewController {
     @IBOutlet weak var user_displayPic: UIImageView!
     @IBOutlet weak var user_description: UITextView!
     
+    @IBOutlet weak var user_ratingBar: RatingControl!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,7 +57,8 @@ class UsersViewController: UIViewController {
                 // Get user value
                 let value = snapshot.value as? NSDictionary
                 self.userIds = value?.allKeys as! [String]
-                print("Data: \(self.userIds)")
+                //print("Data: \(self.userIds)")
+                
                 if self.userIds.count > 0 {
                     self.userIds.shuffle()
                     self.getUserDetails()
@@ -92,15 +94,25 @@ class UsersViewController: UIViewController {
                         Helper.loadImageFromUrl(url: (URL?.absoluteString)!, view: self.user_displayPic)
                         self.user_displayPic.contentMode = UIViewContentMode.scaleAspectFit;
                     }
-                    
                 }
+                
+                let ref = FIRDatabase.database().reference().child("users").child(self.userIds[currentUser]).child("user_rate")
+                ref.observeSingleEvent(of: .value, with: { (snapshot) in
+                    // Get user value
+                    let value = snapshot.value as? NSDictionary
+                    let myRatingOfTheUser = value?.value(forKey: (self.user?.uid)!) ?? 0
+                    self.user_ratingBar.rating = myRatingOfTheUser as! Int
+                    
+                    //print("All values: \(value)")
+                    print("⭐️ Current user Rating: \(myRatingOfTheUser) ⭐️")
+
+                })
                 
             }) { (error) in
                 print(error.localizedDescription)
             }
         }
     }
-
 }
 
 // MARK: Estensions
