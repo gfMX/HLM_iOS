@@ -96,7 +96,7 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
         // Call stopUpdatingLocation() to stop listening for location updates,
         // other wise this function will be called every time when user location changes.
         
-        if FireConnection.fireUser != nil {
+    if FireConnection.fireUser != nil {
             print("Location Updated")
             let fireReference = FireConnection.databaseReference.child("users").child(FireConnection.fireUser.uid).child("location_last")
             
