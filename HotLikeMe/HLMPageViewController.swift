@@ -120,8 +120,7 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
         */
     }
     
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
-    {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Error on Location \(error)")
     }
 
