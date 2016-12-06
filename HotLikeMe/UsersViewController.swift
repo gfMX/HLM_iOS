@@ -142,6 +142,23 @@ class UsersViewController: UIViewController {
     
     // MARK: Actions
     
+    @IBAction func dragCard(_ sender: UIPanGestureRecognizer) {
+        //var rotationAngle: CGFloat = 0
+        let translation = sender.translation(in: self.view)
+        if let view = sender.view {
+            view.center = CGPoint(x:view.center.x + translation.x,
+                                  y:view.center.y + translation.y)
+            
+            //rotationAngle = rotationAngle + 1
+            let dx = view.center.x + translation.x
+            let dy = view.center.y + translation.y
+            
+            let angle = atan2(dx, dy)
+            view.transform = CGAffineTransform(rotationAngle: angle);
+        }
+        sender.setTranslation(CGPoint.zero, in: self.view)
+    }
+    
     @IBAction func reloadUser(_ sender: UIBarButtonItem) {
         getUsersList()
         print("Asking for a new 👤")

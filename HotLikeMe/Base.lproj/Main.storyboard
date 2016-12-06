@@ -34,7 +34,7 @@
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hCW-5p-f3N">
                                                 <rect key="frame" x="299" y="4" width="58" height="60"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" image="CA712377-054B-4BC6-AC3C-41BDAF95AF49" translatesAutoresizingMaskIntoConstraints="NO" id="L1f-8P-nkA">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" image="929C5B21-9C19-4B06-B306-514E7FB290E4" translatesAutoresizingMaskIntoConstraints="NO" id="L1f-8P-nkA">
                                                 <rect key="frame" x="68" y="56" width="240" height="240"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="L1f-8P-nkA" secondAttribute="height" multiplier="1:1" id="jdi-D3-isc"/>
@@ -265,45 +265,60 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EAV-ni-bET">
-                                <rect key="frame" x="16" y="110" width="343" height="29"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="320" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="IMz-yW-nVc">
-                                <rect key="frame" x="28" y="157" width="319" height="319"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XqN-VZ-x8v">
+                                <rect key="frame" x="16" y="74" width="343" height="511"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EAV-ni-bET">
+                                        <rect key="frame" x="12" y="28" width="319" height="29"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" placeholderIntrinsicWidth="220" placeholderIntrinsicHeight="45" translatesAutoresizingMaskIntoConstraints="NO" id="fGi-Hl-SVT" customClass="RatingControl" customModule="HotLikeMe" customModuleProvider="target">
+                                        <rect key="frame" x="67" y="400" width="220" height="45"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="User description" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t3R-LK-MlA">
+                                        <rect key="frame" x="12" y="453" width="319" height="46"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="320" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="IMz-yW-nVc">
+                                        <rect key="frame" x="12" y="65" width="319" height="319"/>
+                                        <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="319" id="teD-7v-42s"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="319" id="qqf-jK-xp9"/>
+                                    <constraint firstItem="fGi-Hl-SVT" firstAttribute="leading" secondItem="XqN-VZ-x8v" secondAttribute="leading" constant="67" id="3nn-vG-Mea"/>
+                                    <constraint firstItem="IMz-yW-nVc" firstAttribute="leading" secondItem="t3R-LK-MlA" secondAttribute="leading" id="Hr9-t0-ByJ"/>
+                                    <constraint firstItem="IMz-yW-nVc" firstAttribute="trailing" secondItem="t3R-LK-MlA" secondAttribute="trailing" id="IEw-Vf-xEX"/>
+                                    <constraint firstItem="fGi-Hl-SVT" firstAttribute="top" secondItem="IMz-yW-nVc" secondAttribute="bottom" constant="16" id="IIh-Gh-ZFp"/>
+                                    <constraint firstItem="IMz-yW-nVc" firstAttribute="leading" secondItem="EAV-ni-bET" secondAttribute="leading" id="Iug-Ys-irJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="EAV-ni-bET" secondAttribute="trailing" constant="12" id="Mo7-r3-ueJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="t3R-LK-MlA" secondAttribute="bottom" constant="12" id="OpP-ku-x0L"/>
+                                    <constraint firstItem="IMz-yW-nVc" firstAttribute="top" secondItem="EAV-ni-bET" secondAttribute="bottom" constant="8" id="Pxc-eN-gG0"/>
+                                    <constraint firstItem="IMz-yW-nVc" firstAttribute="trailing" secondItem="EAV-ni-bET" secondAttribute="trailing" id="RU6-aO-pFC"/>
+                                    <constraint firstItem="EAV-ni-bET" firstAttribute="top" secondItem="XqN-VZ-x8v" secondAttribute="top" constant="28" id="UyZ-Yz-gs2"/>
+                                    <constraint firstItem="EAV-ni-bET" firstAttribute="leading" secondItem="XqN-VZ-x8v" secondAttribute="leading" constant="12" id="VPt-BF-qtf"/>
+                                    <constraint firstItem="t3R-LK-MlA" firstAttribute="top" secondItem="fGi-Hl-SVT" secondAttribute="bottom" constant="8" symbolic="YES" id="mQn-0Y-sSa"/>
                                 </constraints>
-                            </imageView>
-                            <view contentMode="scaleToFill" placeholderIntrinsicWidth="220" placeholderIntrinsicHeight="45" translatesAutoresizingMaskIntoConstraints="NO" id="fGi-Hl-SVT" customClass="RatingControl" customModule="HotLikeMe" customModuleProvider="target">
-                                <rect key="frame" x="77" y="489" width="220" height="45"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="FAn-uW-fIY" appends="YES" id="UOi-uq-ObG"/>
+                                </connections>
                             </view>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="User description" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t3R-LK-MlA">
-                                <rect key="frame" x="28" y="548" width="319" height="46"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="t3R-LK-MlA" firstAttribute="trailing" secondItem="Wdx-Eq-8dQ" secondAttribute="trailingMargin" constant="-12" id="28I-8e-chI"/>
-                            <constraint firstItem="EAV-ni-bET" firstAttribute="top" secondItem="vg6-A9-PzZ" secondAttribute="bottom" constant="46" id="Kja-Ga-evY"/>
-                            <constraint firstItem="EAV-ni-bET" firstAttribute="leading" secondItem="Wdx-Eq-8dQ" secondAttribute="leadingMargin" id="PKE-be-QYG"/>
-                            <constraint firstItem="IMz-yW-nVc" firstAttribute="top" secondItem="EAV-ni-bET" secondAttribute="bottom" constant="18" id="SZg-XD-ZNg"/>
-                            <constraint firstItem="EAV-ni-bET" firstAttribute="centerX" secondItem="IMz-yW-nVc" secondAttribute="centerX" id="bhN-XZ-F0y"/>
-                            <constraint firstItem="t3R-LK-MlA" firstAttribute="top" secondItem="fGi-Hl-SVT" secondAttribute="bottom" constant="14" id="kQ9-XH-qKg"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="fGi-Hl-SVT" secondAttribute="trailing" constant="62" id="ldZ-Z5-gaN"/>
-                            <constraint firstItem="fGi-Hl-SVT" firstAttribute="top" secondItem="IMz-yW-nVc" secondAttribute="bottom" constant="13" id="n8v-zd-2c3"/>
-                            <constraint firstItem="EAV-ni-bET" firstAttribute="trailing" secondItem="Wdx-Eq-8dQ" secondAttribute="trailingMargin" id="nOy-lJ-Tbi"/>
-                            <constraint firstItem="IMz-yW-nVc" firstAttribute="leading" secondItem="Wdx-Eq-8dQ" secondAttribute="leadingMargin" constant="12" id="p7g-KM-zYs"/>
-                            <constraint firstItem="Hoq-na-1cc" firstAttribute="top" secondItem="t3R-LK-MlA" secondAttribute="bottom" constant="73" id="q06-3z-bfs"/>
-                            <constraint firstItem="t3R-LK-MlA" firstAttribute="leading" secondItem="Wdx-Eq-8dQ" secondAttribute="leadingMargin" constant="12" id="vPx-jy-5JX"/>
-                            <constraint firstItem="fGi-Hl-SVT" firstAttribute="leading" secondItem="Wdx-Eq-8dQ" secondAttribute="leadingMargin" constant="61" id="xMt-7t-QQN"/>
+                            <constraint firstItem="XqN-VZ-x8v" firstAttribute="trailing" secondItem="Wdx-Eq-8dQ" secondAttribute="trailingMargin" id="0Fc-So-dEV"/>
+                            <constraint firstItem="XqN-VZ-x8v" firstAttribute="leading" secondItem="Wdx-Eq-8dQ" secondAttribute="leadingMargin" id="Hri-L0-pkm"/>
+                            <constraint firstItem="Hoq-na-1cc" firstAttribute="top" secondItem="XqN-VZ-x8v" secondAttribute="bottom" constant="82" id="nFk-Aa-LrZ"/>
+                            <constraint firstItem="XqN-VZ-x8v" firstAttribute="top" secondItem="vg6-A9-PzZ" secondAttribute="bottom" constant="10" id="tyO-eQ-9es"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="lZN-wM-JM0">
@@ -321,6 +336,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oc3-1g-wEt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="FAn-uW-fIY">
+                    <connections>
+                        <action selector="dragCard:" destination="isq-na-kqC" id="xWQ-TN-Fjk"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="940" y="911.69415292353835"/>
         </scene>
@@ -328,7 +348,7 @@
         <scene sceneID="Gbg-Jp-v7q">
             <objects>
                 <collectionViewController id="VID-Tb-WpG" customClass="SelectProfilePicCollectionViewController" customModule="HotLikeMe" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="L0K-Td-Egg">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="L0K-Td-Egg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="980"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -416,7 +436,7 @@
         <scene sceneID="gEz-uW-Cb5">
             <objects>
                 <collectionViewController id="75o-Sh-CcG" customClass="UploadImageCollectionViewController" customModule="HotLikeMe" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="ky0-ee-ce9">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="ky0-ee-ce9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="980"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -624,7 +644,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="CA712377-054B-4BC6-AC3C-41BDAF95AF49" width="540" height="540">
+        <image name="929C5B21-9C19-4B06-B306-514E7FB290E4" width="540" height="540">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
