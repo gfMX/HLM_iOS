@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 
 class UsersViewController: UIViewController {
-    let user = FIRAuth.auth()?.currentUser
+    var user = FIRAuth.auth()?.currentUser
     
     var shuffledFlag = false
     var userIds = [String]()
@@ -30,6 +30,12 @@ class UsersViewController: UIViewController {
     }
 
     override func viewDidAppear(_ animated: Bool) {
+        if user == nil {
+            user = FIRAuth.auth()?.currentUser
+        } else {
+            print("👤 Logged")
+        }
+        
         getUsersList()
     }
     
@@ -93,6 +99,8 @@ class UsersViewController: UIViewController {
         let ref = FIRDatabase.database().reference()
         let currentUser = currentUser
         if user != nil {
+            FireConnection.setCurrentUserId(id: userIds[currentUser])
+            
             self.user_displayPic.image = nil
             ref.child("users").child(userIds[currentUser]).child("preferences").observeSingleEvent(of: .value, with: { (snapshot) in
                 let value = snapshot.value as? NSDictionary

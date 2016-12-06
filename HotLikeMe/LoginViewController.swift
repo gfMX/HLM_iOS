@@ -110,7 +110,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                 // MARK: Update UI: User signed in.
                 if (FireConnection.fireUser == nil){
                     FireConnection.fireUser = user
-                    print("User Assigned from Login Screen")
+                    print("👤 Assigned from Login Screen")
                 }
                 self.fireUser = FireConnection.fireUser
                 print(self.fireUser.uid)
@@ -140,7 +140,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                     let picture = data["picture"]! as? NSDictionary
                     let strPictureURL = ((picture?.object(forKey: "data") as AnyObject).object(forKey: "url")) as! String
                     
-                    print("Now the data: \(data)")
+                    //print("Now the data: \(data)")
     
                     self.labelWelcome.text = "Welcome, \(strFirstName)"
                     Helper.loadImageFromUrl(url: strPictureURL, view: self.imageFaceProfile)
@@ -293,11 +293,11 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     }
     
     func loginButton(_ loginButton: FBSDKLoginButton, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
-        print("User Logged In")
+        print("👤 Logged In")
         if ((error) != nil)
         {
             // Process error
-            print("Error:" + error.localizedDescription)
+            print("❌:" + error.localizedDescription)
         }
         else if result.isCancelled {
             // Handle cancellations
@@ -306,9 +306,9 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
             let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
             FIRAuth.auth()?.signIn(with: credential) { (user, error) in
                 if (error != nil){
-                    print("There was an error Loggin into Firebase")
+                    print("❌ Loggin into Firebase")
                 } else{
-                    print("Logged into Firebase")
+                    print("✅ Logged into Firebase")
                     
                 }
                 self.updateUI()
@@ -318,7 +318,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
         try! FIRAuth.auth()!.signOut()
-        print("User Logged Out")
+        print("👤 Logged Out")
     }
 
     
@@ -384,7 +384,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     
     
     func switchUserVisibleChanged(sender: UISwitch){
-        print("User Visible: " + sender.isOn.description)
+        print("👤 Visible: " + sender.isOn.description)
         if fireUser != nil {
             let gender = defaults.string(forKey: "defGender")
             let databaseRef = FIRDatabase.database().reference()
