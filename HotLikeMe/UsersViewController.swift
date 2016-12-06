@@ -12,7 +12,9 @@ import Firebase
 class UsersViewController: UIViewController {
     let user = FIRAuth.auth()?.currentUser
     
+    var shuffledFlag = false
     var userIds = [String]()
+    var currentUser: Int = 0
     let defaults = UserDefaults.standard
     
     @IBOutlet weak var user_displayName: UILabel!
@@ -56,14 +58,30 @@ class UsersViewController: UIViewController {
             ref.child("groups").child(lookingFor!).observeSingleEvent(of: .value, with: { (snapshot) in
                 // Get user value
                 let value = snapshot.value as? NSDictionary
-                self.userIds = value?.allKeys as! [String]
-                //print("Data: \(self.userIds)")
+                if value?.count != self.userIds.count{
+                    self.userIds = value?.allKeys as! [String]
+                    self.shuffledFlag = false
+                    self.currentUser = 0
+                    print("Users leave/arrive at the area")
+                    //print("Data: \(self.userIds)")
+                }
                 
                 if self.userIds.count > 0 {
-                    self.userIds.shuffle()
-                    self.getUserDetails()
+                    if !self.shuffledFlag {
+                        self.userIds.shuffle()
+                        self.shuffledFlag = true
+                    }
+                    
+                    self.getUserDetails(currentUser: self.currentUser)
+                    
+                    if self.currentUser + 1 < self.userIds.count {
+                        self.currentUser += 1
+                    } else {
+                        self.currentUser = 0
+                    }
+                    print("Next 👤: \(self.currentUser) Total 👥: \(self.userIds.count)")
                 } else{
-                    print("There are no Users Around")
+                    print("There are no 👥 Around")
                 }
             }) { (error) in
                 print(error.localizedDescription)
@@ -71,10 +89,11 @@ class UsersViewController: UIViewController {
         }
     }
     
-    func getUserDetails(){
+    func getUserDetails(currentUser: Int){
         let ref = FIRDatabase.database().reference()
-        let currentUser = 0
+        let currentUser = currentUser
         if user != nil {
+            self.user_displayPic.image = nil
             ref.child("users").child(userIds[currentUser]).child("preferences").observeSingleEvent(of: .value, with: { (snapshot) in
                 let value = snapshot.value as? NSDictionary
                 
@@ -82,14 +101,14 @@ class UsersViewController: UIViewController {
                 let description = value?.value(forKey: "description") as? String
                 let profilePic = value?.value(forKey: "profile_pic_storage") as? String
                 
-                print(value ?? "No value found for that user")
+                print(value ?? "No value found for that 👤")
                 
                 self.user_displayName.text = alias
                 self.user_description.text = description
                 
                 FireConnection.storageReference.child(self.userIds[currentUser]).child("/images/image_" + profilePic! + ".jpg").downloadURL { (URL, error) -> Void in
                     if (error != nil) {
-                        print ("An error ocurred!")
+                        print ("An ❌ ocurred!")
                     } else {
                         Helper.loadImageFromUrl(url: (URL?.absoluteString)!, view: self.user_displayPic)
                         self.user_displayPic.contentMode = UIViewContentMode.scaleAspectFit;
@@ -104,8 +123,7 @@ class UsersViewController: UIViewController {
                     self.user_ratingBar.rating = myRatingOfTheUser as! Int
                     
                     //print("All values: \(value)")
-                    print("⭐️ Current user Rating: \(myRatingOfTheUser) ⭐️")
-
+                    print("⭐️ Current 👤 Rating: \(myRatingOfTheUser) ⭐️")
                 })
                 
             }) { (error) in
@@ -113,7 +131,16 @@ class UsersViewController: UIViewController {
             }
         }
     }
+    
+    // MARK: Actions
+    
+    @IBAction func reloadUser(_ sender: UIBarButtonItem) {
+        getUsersList()
+        print("Asking for a new 👤")
+    }
+    
 }
+
 
 // MARK: Estensions
 

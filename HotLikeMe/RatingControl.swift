@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class RatingControl: UIView {
     // MARK: Properties
@@ -66,8 +67,11 @@ class RatingControl: UIView {
     // MARK: Button Action
     
     func ratingButtonTapped (_ button: UIButton){
-        print("--> Rating Assigned 👍 <--")
-         rating = ratingButtons.index(of: button)! + 1
+        
+        rating = ratingButtons.index(of: button)! + 1
+        FireConnection.setGlobalUserRating(rating: rating)
+        
+        print("--> Rating Assigned 👍: \(rating) <--")
         
         updateButtonSelectionStates()
     }

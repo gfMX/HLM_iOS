@@ -21,6 +21,9 @@ class FireConnection {
     static var storageReference: FIRStorageReference!
     //static var visibleViews = 1
     
+    static var currentUserRating: Int!
+    static var currentUserID: String!
+    
     private init(){
         print ("Initializing Connection")
         checkFirebaseLogStatus()
@@ -42,5 +45,17 @@ class FireConnection {
                 //FireConnection.visibleViews = self.maxViews
             }
         }
+    }
+    static func setGlobalUserRating(rating: Int){
+        FireConnection.currentUserRating = rating
+    }
+    static func getGlobalUserRating() -> Int {
+        return FireConnection.currentUserRating
+    }
+    static func setCurrentUserId(id: String){
+        FireConnection.currentUserID = id
+    }
+    static func getCurrentUserId() -> String {
+        return FireConnection.currentUserID
     }
 }
