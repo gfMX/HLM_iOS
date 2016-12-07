@@ -22,6 +22,9 @@
 		8BA016391DDCE4310042B165 /* HLMPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA016381DDCE4310042B165 /* HLMPageViewController.swift */; };
 		8BA0163B1DDCF2010042B165 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA0163A1DDCF2010042B165 /* LoginViewController.swift */; };
 		8BA0163D1DDD080D0042B165 /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA0163C1DDD080D0042B165 /* RatingControl.swift */; };
+		8BD3C8421DF8661300D52483 /* ChatUserListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD3C8411DF8661300D52483 /* ChatUserListTableViewController.swift */; };
+		8BD3C8441DF867B900D52483 /* ChatUserCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD3C8431DF867B900D52483 /* ChatUserCellTableViewCell.swift */; };
+		8BD3C8461DF8851E00D52483 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD3C8451DF8851E00D52483 /* Users.swift */; };
 		8BE6790A1DE75E1700E27182 /* ThumbCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE679091DE75E1700E27182 /* ThumbCollectionViewCell.swift */; };
 		8BE6790E1DE79ACD00E27182 /* FireCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE6790D1DE79ACD00E27182 /* FireCollectionViewCell.swift */; };
 		8BEA787E1DDE2E530092B093 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BEA787D1DDE2E530092B093 /* GoogleService-Info.plist */; };
@@ -72,6 +75,9 @@
 		8BA016381DDCE4310042B165 /* HLMPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HLMPageViewController.swift; sourceTree = "<group>"; };
 		8BA0163A1DDCF2010042B165 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8BA0163C1DDD080D0042B165 /* RatingControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
+		8BD3C8411DF8661300D52483 /* ChatUserListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUserListTableViewController.swift; sourceTree = "<group>"; };
+		8BD3C8431DF867B900D52483 /* ChatUserCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUserCellTableViewCell.swift; sourceTree = "<group>"; };
+		8BD3C8451DF8851E00D52483 /* Users.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
 		8BE679091DE75E1700E27182 /* ThumbCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbCollectionViewCell.swift; sourceTree = "<group>"; };
 		8BE6790D1DE79ACD00E27182 /* FireCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireCollectionViewCell.swift; sourceTree = "<group>"; };
 		8BEA787D1DDE2E530092B093 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -158,12 +164,15 @@
 				8BA016031DDCD2DC0042B165 /* IntroViewController.swift */,
 				8BECB9B31DEF68F0005A6E6B /* UsersViewController.swift */,
 				8BA0163A1DDCF2010042B165 /* LoginViewController.swift */,
+				8BD3C8411DF8661300D52483 /* ChatUserListTableViewController.swift */,
+				8BD3C8431DF867B900D52483 /* ChatUserCellTableViewCell.swift */,
 				8B1186BF1DE5EF93009F5C67 /* FireConnection.swift */,
 				8BA016051DDCD2DC0042B165 /* Main.storyboard */,
 				8BF453421DE4D88300C43195 /* UploadImageCollectionViewController.swift */,
 				8BA016381DDCE4310042B165 /* HLMPageViewController.swift */,
 				8B1186C31DE63946009F5C67 /* SelectProfilePicCollectionViewController.swift */,
 				8BA0163C1DDD080D0042B165 /* RatingControl.swift */,
+				8BD3C8451DF8851E00D52483 /* Users.swift */,
 				8BFB3B311DDE4121005246DB /* Helper.swift */,
 				8BA016081DDCD2DC0042B165 /* Assets.xcassets */,
 				8BA0160A1DDCD2DC0042B165 /* LaunchScreen.storyboard */,
@@ -492,13 +501,16 @@
 				8BECB9B41DEF68F0005A6E6B /* UsersViewController.swift in Sources */,
 				8BA016041DDCD2DC0042B165 /* IntroViewController.swift in Sources */,
 				8B1186C41DE63946009F5C67 /* SelectProfilePicCollectionViewController.swift in Sources */,
+				8BD3C8441DF867B900D52483 /* ChatUserCellTableViewCell.swift in Sources */,
 				8BA016021DDCD2DC0042B165 /* AppDelegate.swift in Sources */,
 				8BF453431DE4D88300C43195 /* UploadImageCollectionViewController.swift in Sources */,
+				8BD3C8461DF8851E00D52483 /* Users.swift in Sources */,
 				8BA0163D1DDD080D0042B165 /* RatingControl.swift in Sources */,
 				8BE6790E1DE79ACD00E27182 /* FireCollectionViewCell.swift in Sources */,
 				8B1186C01DE5EF93009F5C67 /* FireConnection.swift in Sources */,
 				8BA016391DDCE4310042B165 /* HLMPageViewController.swift in Sources */,
 				8BFB3B321DDE4121005246DB /* Helper.swift in Sources */,
+				8BD3C8421DF8661300D52483 /* ChatUserListTableViewController.swift in Sources */,
 				8BE6790A1DE75E1700E27182 /* ThumbCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

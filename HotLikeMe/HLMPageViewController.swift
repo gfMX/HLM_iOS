@@ -29,7 +29,6 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
 
         _ = FireConnection.sharedInstance
         
-        
         dataSource = self
         orderedViewControllersCount = orderedViewControllers.count
         
@@ -39,7 +38,6 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
                                animated: true,
                                completion: nil)
         }
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -97,7 +95,7 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
         // other wise this function will be called every time when user location changes.
         
     if FireConnection.fireUser != nil {
-            print("Location Updated")
+            //print("Location Updated")
             let fireReference = FireConnection.databaseReference.child("users").child(FireConnection.fireUser.uid).child("location_last")
             
             fireReference.child("loc_latitude").setValue(userLocation.coordinate.latitude)

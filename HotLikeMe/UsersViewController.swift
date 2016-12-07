@@ -17,6 +17,8 @@ class UsersViewController: UIViewController {
     var currentUser: Int = 0
     let defaults = UserDefaults.standard
     
+    @IBOutlet weak var containerView: UIView!
+    
     @IBOutlet weak var user_displayName: UILabel!
     @IBOutlet weak var user_displayPic: UIImageView!
     @IBOutlet weak var user_description: UITextView!
@@ -149,12 +151,13 @@ class UsersViewController: UIViewController {
             view.center = CGPoint(x:view.center.x + translation.x,
                                   y:view.center.y + translation.y)
             
-            //rotationAngle = rotationAngle + 1
+            /*
             let dx = view.center.x + translation.x
             let dy = view.center.y + translation.y
             
             let angle = atan2(dx, dy)
-            view.transform = CGAffineTransform(rotationAngle: angle);
+            view.transform = CGAffineTransform(rotationAngle: angle)
+            */
         }
         sender.setTranslation(CGPoint.zero, in: self.view)
     }

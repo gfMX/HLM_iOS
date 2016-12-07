@@ -144,7 +144,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     
                     self.labelWelcome.text = "Welcome, \(strFirstName)"
                     Helper.loadImageFromUrl(url: strPictureURL, view: self.imageFaceProfile)
-                    self.imageFaceProfile.contentMode = UIViewContentMode.scaleAspectFit;
+                    self.imageFaceProfile.contentMode = UIViewContentMode.scaleAspectFit
                     
                     dbRef.child("users").child(self.fireUser.uid).child("preferences").child("gender").setValue(gender)
                     self.defaults.set(gender, forKey: "defGender")
