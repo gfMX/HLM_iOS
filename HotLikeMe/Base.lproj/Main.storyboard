@@ -34,7 +34,7 @@
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hCW-5p-f3N">
                                                 <rect key="frame" x="299" y="4" width="58" height="60"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" image="D03C88A8-6E13-4B9A-9A29-84ECF84211AE" translatesAutoresizingMaskIntoConstraints="NO" id="L1f-8P-nkA">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" image="D7098DE4-8F66-4E1C-842F-F009D0392D83" translatesAutoresizingMaskIntoConstraints="NO" id="L1f-8P-nkA">
                                                 <rect key="frame" x="68" y="56" width="240" height="240"/>
                                                 <accessibility key="accessibilityConfiguration">
                                                     <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
@@ -509,7 +509,6 @@
                                     <outlet property="chat_lastMessage" destination="udW-dc-1sn" id="9y6-06-LNW"/>
                                     <outlet property="chat_userImage" destination="gHr-RB-XrV" id="UO7-J0-sDg"/>
                                     <outlet property="chat_userName" destination="D7G-eo-5us" id="pAz-r7-zKD"/>
-                                    <segue destination="bob-KA-zeG" kind="show" identifier="HLMChat" id="wyH-uN-DvJ"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -525,6 +524,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="GH4-MF-0V4" kind="show" identifier="HLMChat" id="Gok-Ox-VeH"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HFo-z3-Uz3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -547,33 +549,20 @@
             <point key="canvasLocation" x="1817" y="32"/>
         </scene>
         <!--User Chat-->
-        <scene sceneID="UGx-MG-Bhr">
+        <scene sceneID="eRi-Dz-oDg">
             <objects>
-                <tableViewController id="bob-KA-zeG" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="ihQ-X1-bfV">
+                <viewController title="User Chat" id="GH4-MF-0V4" customClass="ChatViewController" customModule="HotLikeMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="NfN-6P-zzZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="kp0-xD-t2v"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9t2-BL-wqw">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="chatMessage" id="Qr1-Bl-h0l">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qr1-Bl-h0l" id="qqR-YB-hC1">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="bob-KA-zeG" id="NfO-fL-X6F"/>
-                            <outlet property="delegate" destination="bob-KA-zeG" id="xac-ib-rTn"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="User Chat" id="CLr-eO-2fW">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="7OY-Bs-pPQ"/>
-                    </navigationItem>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cNE-aA-bz7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0UU-NB-C0v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1817" y="1833"/>
         </scene>
@@ -625,7 +614,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="D03C88A8-6E13-4B9A-9A29-84ECF84211AE" width="540" height="540">
+        <image name="D7098DE4-8F66-4E1C-842F-F009D0392D83" width="540" height="540">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

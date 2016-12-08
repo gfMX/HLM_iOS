@@ -13,7 +13,6 @@
 		8B1186C01DE5EF93009F5C67 /* FireConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1186BF1DE5EF93009F5C67 /* FireConnection.swift */; };
 		8B1186C41DE63946009F5C67 /* SelectProfilePicCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1186C31DE63946009F5C67 /* SelectProfilePicCollectionViewController.swift */; };
 		8BA016021DDCD2DC0042B165 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA016011DDCD2DC0042B165 /* AppDelegate.swift */; };
-		8BA016041DDCD2DC0042B165 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA016031DDCD2DC0042B165 /* IntroViewController.swift */; };
 		8BA016071DDCD2DC0042B165 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BA016051DDCD2DC0042B165 /* Main.storyboard */; };
 		8BA016091DDCD2DC0042B165 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BA016081DDCD2DC0042B165 /* Assets.xcassets */; };
 		8BA0160C1DDCD2DC0042B165 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BA0160A1DDCD2DC0042B165 /* LaunchScreen.storyboard */; };
@@ -25,11 +24,12 @@
 		8BD3C8421DF8661300D52483 /* ChatUserListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD3C8411DF8661300D52483 /* ChatUserListTableViewController.swift */; };
 		8BD3C8441DF867B900D52483 /* ChatUserCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD3C8431DF867B900D52483 /* ChatUserCellTableViewCell.swift */; };
 		8BD3C8461DF8851E00D52483 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD3C8451DF8851E00D52483 /* Users.swift */; };
-		8BE6790A1DE75E1700E27182 /* ThumbCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE679091DE75E1700E27182 /* ThumbCollectionViewCell.swift */; };
-		8BE6790E1DE79ACD00E27182 /* FireCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE6790D1DE79ACD00E27182 /* FireCollectionViewCell.swift */; };
 		8BEA787E1DDE2E530092B093 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BEA787D1DDE2E530092B093 /* GoogleService-Info.plist */; };
 		8BECB9B41DEF68F0005A6E6B /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BECB9B31DEF68F0005A6E6B /* UsersViewController.swift */; };
 		8BF453431DE4D88300C43195 /* UploadImageCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF453421DE4D88300C43195 /* UploadImageCollectionViewController.swift */; };
+		8BF4C6371DF9EDFC0007A0EC /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF4C6361DF9EDFC0007A0EC /* ChatViewController.swift */; };
+		8BF4C63C1DF9EF230007A0EC /* FireCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF4C63A1DF9EF230007A0EC /* FireCollectionViewCell.swift */; };
+		8BF4C63D1DF9EF230007A0EC /* ThumbCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF4C63B1DF9EF230007A0EC /* ThumbCollectionViewCell.swift */; };
 		8BFB3B321DDE4121005246DB /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFB3B311DDE4121005246DB /* Helper.swift */; };
 /* End PBXBuildFile section */
 
@@ -61,7 +61,6 @@
 		8B1186C31DE63946009F5C67 /* SelectProfilePicCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectProfilePicCollectionViewController.swift; sourceTree = "<group>"; };
 		8BA015FE1DDCD2DC0042B165 /* HotLikeMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotLikeMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BA016011DDCD2DC0042B165 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8BA016031DDCD2DC0042B165 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		8BA016061DDCD2DC0042B165 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8BA016081DDCD2DC0042B165 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8BA0160B1DDCD2DC0042B165 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -78,12 +77,13 @@
 		8BD3C8411DF8661300D52483 /* ChatUserListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUserListTableViewController.swift; sourceTree = "<group>"; };
 		8BD3C8431DF867B900D52483 /* ChatUserCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUserCellTableViewCell.swift; sourceTree = "<group>"; };
 		8BD3C8451DF8851E00D52483 /* Users.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
-		8BE679091DE75E1700E27182 /* ThumbCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbCollectionViewCell.swift; sourceTree = "<group>"; };
-		8BE6790D1DE79ACD00E27182 /* FireCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireCollectionViewCell.swift; sourceTree = "<group>"; };
 		8BEA787D1DDE2E530092B093 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8BEA787F1DDE37E10092B093 /* HotLikeMe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HotLikeMe.entitlements; sourceTree = "<group>"; };
 		8BECB9B31DEF68F0005A6E6B /* UsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
 		8BF453421DE4D88300C43195 /* UploadImageCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadImageCollectionViewController.swift; sourceTree = "<group>"; };
+		8BF4C6361DF9EDFC0007A0EC /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		8BF4C63A1DF9EF230007A0EC /* FireCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireCollectionViewCell.swift; sourceTree = "<group>"; };
+		8BF4C63B1DF9EF230007A0EC /* ThumbCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbCollectionViewCell.swift; sourceTree = "<group>"; };
 		8BFB3B311DDE4121005246DB /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		A594B99312712018E4869DD4 /* Pods-HotLikeMeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotLikeMeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HotLikeMeTests/Pods-HotLikeMeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AB6C2DF49E021DB3DBD6EB1B /* Pods_HotLikeMeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HotLikeMeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -158,24 +158,17 @@
 			children = (
 				8BEA787F1DDE37E10092B093 /* HotLikeMe.entitlements */,
 				8BA016011DDCD2DC0042B165 /* AppDelegate.swift */,
-				8BE679091DE75E1700E27182 /* ThumbCollectionViewCell.swift */,
-				8BEA787D1DDE2E530092B093 /* GoogleService-Info.plist */,
-				8BE6790D1DE79ACD00E27182 /* FireCollectionViewCell.swift */,
-				8BA016031DDCD2DC0042B165 /* IntroViewController.swift */,
-				8BECB9B31DEF68F0005A6E6B /* UsersViewController.swift */,
-				8BA0163A1DDCF2010042B165 /* LoginViewController.swift */,
-				8BD3C8411DF8661300D52483 /* ChatUserListTableViewController.swift */,
-				8BD3C8431DF867B900D52483 /* ChatUserCellTableViewCell.swift */,
 				8B1186BF1DE5EF93009F5C67 /* FireConnection.swift */,
-				8BA016051DDCD2DC0042B165 /* Main.storyboard */,
-				8BF453421DE4D88300C43195 /* UploadImageCollectionViewController.swift */,
-				8BA016381DDCE4310042B165 /* HLMPageViewController.swift */,
-				8B1186C31DE63946009F5C67 /* SelectProfilePicCollectionViewController.swift */,
-				8BA0163C1DDD080D0042B165 /* RatingControl.swift */,
-				8BD3C8451DF8851E00D52483 /* Users.swift */,
 				8BFB3B311DDE4121005246DB /* Helper.swift */,
-				8BA016081DDCD2DC0042B165 /* Assets.xcassets */,
+				8BA016381DDCE4310042B165 /* HLMPageViewController.swift */,
+				8BA0163A1DDCF2010042B165 /* LoginViewController.swift */,
+				8BF4C63E1DF9EF620007A0EC /* Users View */,
+				8BF4C6391DF9EE4F0007A0EC /* Image Browsers */,
+				8BF4C6381DF9EE360007A0EC /* Chat */,
+				8BA016051DDCD2DC0042B165 /* Main.storyboard */,
 				8BA0160A1DDCD2DC0042B165 /* LaunchScreen.storyboard */,
+				8BA016081DDCD2DC0042B165 /* Assets.xcassets */,
+				8BEA787D1DDE2E530092B093 /* GoogleService-Info.plist */,
 				8BA0160D1DDCD2DC0042B165 /* Info.plist */,
 			);
 			path = HotLikeMe;
@@ -207,6 +200,37 @@
 				844ADF8DDE6C46590D280496 /* Pods_HotLikeMeUITests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8BF4C6381DF9EE360007A0EC /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				8BD3C8411DF8661300D52483 /* ChatUserListTableViewController.swift */,
+				8BD3C8431DF867B900D52483 /* ChatUserCellTableViewCell.swift */,
+				8BF4C6361DF9EDFC0007A0EC /* ChatViewController.swift */,
+				8BD3C8451DF8851E00D52483 /* Users.swift */,
+			);
+			name = Chat;
+			sourceTree = "<group>";
+		};
+		8BF4C6391DF9EE4F0007A0EC /* Image Browsers */ = {
+			isa = PBXGroup;
+			children = (
+				8BF4C63A1DF9EF230007A0EC /* FireCollectionViewCell.swift */,
+				8BF4C63B1DF9EF230007A0EC /* ThumbCollectionViewCell.swift */,
+				8BF453421DE4D88300C43195 /* UploadImageCollectionViewController.swift */,
+				8B1186C31DE63946009F5C67 /* SelectProfilePicCollectionViewController.swift */,
+			);
+			name = "Image Browsers";
+			sourceTree = "<group>";
+		};
+		8BF4C63E1DF9EF620007A0EC /* Users View */ = {
+			isa = PBXGroup;
+			children = (
+				8BECB9B31DEF68F0005A6E6B /* UsersViewController.swift */,
+				8BA0163C1DDD080D0042B165 /* RatingControl.swift */,
+			);
+			name = "Users View";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -497,21 +521,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BF4C63C1DF9EF230007A0EC /* FireCollectionViewCell.swift in Sources */,
 				8BA0163B1DDCF2010042B165 /* LoginViewController.swift in Sources */,
 				8BECB9B41DEF68F0005A6E6B /* UsersViewController.swift in Sources */,
-				8BA016041DDCD2DC0042B165 /* IntroViewController.swift in Sources */,
+				8BF4C6371DF9EDFC0007A0EC /* ChatViewController.swift in Sources */,
 				8B1186C41DE63946009F5C67 /* SelectProfilePicCollectionViewController.swift in Sources */,
 				8BD3C8441DF867B900D52483 /* ChatUserCellTableViewCell.swift in Sources */,
 				8BA016021DDCD2DC0042B165 /* AppDelegate.swift in Sources */,
 				8BF453431DE4D88300C43195 /* UploadImageCollectionViewController.swift in Sources */,
 				8BD3C8461DF8851E00D52483 /* Users.swift in Sources */,
 				8BA0163D1DDD080D0042B165 /* RatingControl.swift in Sources */,
-				8BE6790E1DE79ACD00E27182 /* FireCollectionViewCell.swift in Sources */,
 				8B1186C01DE5EF93009F5C67 /* FireConnection.swift in Sources */,
 				8BA016391DDCE4310042B165 /* HLMPageViewController.swift in Sources */,
 				8BFB3B321DDE4121005246DB /* Helper.swift in Sources */,
 				8BD3C8421DF8661300D52483 /* ChatUserListTableViewController.swift in Sources */,
-				8BE6790A1DE75E1700E27182 /* ThumbCollectionViewCell.swift in Sources */,
+				8BF4C63D1DF9EF230007A0EC /* ThumbCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
