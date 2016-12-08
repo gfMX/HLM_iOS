@@ -34,7 +34,11 @@ class ChatUserListTableViewController: UITableViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        getActiveChats()
+        user = FIRAuth.auth()?.currentUser
+        
+        if user != nil {
+            getActiveChats()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -66,8 +70,8 @@ class ChatUserListTableViewController: UITableViewController {
         cell.chat_userImage.layer.masksToBounds = false
         cell.chat_userImage.clipsToBounds = true
         cell.chat_userImage.layer.borderColor = UIColor.lightGray.cgColor
-        cell.chat_userImage.layer.borderWidth = 4
-        cell.chat_userImage.layer.cornerRadius = cell.chat_userImage.frame.height/1.8
+        cell.chat_userImage.layer.borderWidth = 5
+        cell.chat_userImage.layer.cornerRadius = cell.chat_userImage.frame.height / 2
         cell.chat_userImage.contentMode = UIViewContentMode.scaleAspectFill
 
         return cell
@@ -115,6 +119,17 @@ class ChatUserListTableViewController: UITableViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
+        /*
+        if segue.identifier == "HLMChat" {
+            let userDetailViewController = segue.destination as! ChatViewController
+            if let selectedCell = sender as? ChatUserCellTableViewCell {
+                let indexPathForCell = tableView.indexPath(for: selectedCell)!
+                let selectedUser = users[indexPathForCell.row]
+                userDetailViewController.user = selectedUser
+            }
+        }
+        */
+        
     }
     
     
@@ -139,8 +154,7 @@ class ChatUserListTableViewController: UITableViewController {
         users.removeAll()
         
         for i in 0 ..< listUsers.count {
-        
-            self.ref1.child("users").child(self.listUsers[i]).child("preferences").observeSingleEvent(of: .value, with: {(snapshot) in
+                self.ref1.child("users").child(self.listUsers[i]).child("preferences").observeSingleEvent(of: .value, with: {(snapshot) in
                 let value2 = snapshot.value as? NSDictionary
                 
                 let user_name = value2?.value(forKey: "alias") as! String
@@ -164,17 +178,25 @@ class ChatUserListTableViewController: UITableViewController {
                         let user = Users(name: user_name, photo: user_picUrl, message: user_message)!
                         self.users.append(user)
                         
-                        if i == self.listUsers.count - 1 {
+                        self.tableView.reloadData()
+                        
+                        /*
+                         if i == self.listUsers.count - 1 {
                             self.tableView.reloadData()
                         }
+                        */
                         
                     }
                 })
             })
-            
-            
         }
-        
+        // End of the function
     }
-
+    
+    @IBAction func refreshUserList(_ sender: UIBarButtonItem) {
+        if user != nil {
+            getActiveChats()
+        }
+        self.tableView.reloadData()
+    }
 }

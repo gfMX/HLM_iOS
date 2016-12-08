@@ -13,7 +13,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Login & Settings-->
+        <!--Settings-->
         <scene sceneID="FJt-Hh-or0">
             <objects>
                 <viewController storyboardIdentifier="ViewLogin" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GW3-Gl-dEn" customClass="LoginViewController" customModule="HotLikeMe" customModuleProvider="target" colorLabel="IBBuiltInLabel-Red" sceneMemberID="viewController">
@@ -34,11 +34,18 @@
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hCW-5p-f3N">
                                                 <rect key="frame" x="299" y="4" width="58" height="60"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" image="474B4700-1D7F-46F4-8769-47DD5B2EF54F" translatesAutoresizingMaskIntoConstraints="NO" id="L1f-8P-nkA">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" image="D03C88A8-6E13-4B9A-9A29-84ECF84211AE" translatesAutoresizingMaskIntoConstraints="NO" id="L1f-8P-nkA">
                                                 <rect key="frame" x="68" y="56" width="240" height="240"/>
+                                                <accessibility key="accessibilityConfiguration">
+                                                    <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
+                                                </accessibility>
+                                                <gestureRecognizers/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="L1f-8P-nkA" secondAttribute="height" multiplier="1:1" id="jdi-D3-isc"/>
                                                 </constraints>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="oVX-aU-4aL" appends="YES" id="TMT-x6-nXj"/>
+                                                </connections>
                                             </imageView>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="z2K-kF-p4A">
                                                 <rect key="frame" x="244" y="453" width="51" height="31"/>
@@ -221,7 +228,7 @@
                             <constraint firstItem="PUe-7T-kDr" firstAttribute="bottom" secondItem="5BL-Ez-hB2" secondAttribute="top" id="vW5-rS-igb"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Login &amp; Settings" id="Hfn-Rm-9iK"/>
+                    <navigationItem key="navigationItem" title="Settings" id="Hfn-Rm-9iK"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="980"/>
                     <connections>
@@ -245,14 +252,18 @@
                         <outlet property="switch_userVisible" destination="8dy-8J-XYl" id="tQO-lc-vRW"/>
                         <outlet property="text_description" destination="JAl-u1-TiL" id="q0a-wt-2C3"/>
                         <outlet property="text_displayName" destination="hFy-xx-zdZ" id="jTK-pm-C7Z"/>
-                        <segue destination="yBo-eJ-XeC" kind="show" identifier="HLMProfilePic" id="nkB-wH-Kpq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PwK-Tj-OFd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="oVX-aU-4aL">
+                    <connections>
+                        <segue destination="VID-Tb-WpG" kind="show" identifier="HLMProfilePic" id="NlI-DG-lDz"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="96.799999999999997" y="912.14392803598207"/>
         </scene>
-        <!--User Navigator-->
+        <!--HotLikeMe-->
         <scene sceneID="u6y-rP-X59">
             <objects>
                 <viewController storyboardIdentifier="ViewUsers" useStoryboardIdentifierAsRestorationIdentifier="YES" id="isq-na-kqC" customClass="UsersViewController" customModule="HotLikeMe" customModuleProvider="target" colorLabel="IBBuiltInLabel-Orange" sceneMemberID="viewController">
@@ -291,7 +302,6 @@
                                         </constraints>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="fGi-Hl-SVT" firstAttribute="leading" secondItem="XqN-VZ-x8v" secondAttribute="leading" constant="67" id="3nn-vG-Mea"/>
@@ -320,8 +330,8 @@
                             <constraint firstItem="XqN-VZ-x8v" firstAttribute="top" secondItem="vg6-A9-PzZ" secondAttribute="bottom" constant="10" id="tyO-eQ-9es"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="User Navigator" id="lZN-wM-JM0">
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="01T-iv-SBJ">
+                    <navigationItem key="navigationItem" title="HotLikeMe" id="lZN-wM-JM0">
+                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="01T-iv-SBJ">
                             <connections>
                                 <action selector="reloadUser:" destination="isq-na-kqC" id="fO5-LI-PLX"/>
                             </connections>
@@ -349,7 +359,7 @@
             <objects>
                 <collectionViewController id="VID-Tb-WpG" customClass="SelectProfilePicCollectionViewController" customModule="HotLikeMe" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="L0K-Td-Egg">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="980"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="8" minimumInteritemSpacing="8" id="2Um-Tx-GW1">
@@ -384,11 +394,6 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="Select Profile Image" id="0cA-9N-SD4">
                         <barButtonItem key="backBarButtonItem" title="Back" id="eOJ-3Q-ItC"/>
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="tkf-hl-fyM">
-                            <connections>
-                                <action selector="goBack:" destination="VID-Tb-WpG" id="gzz-Pr-vI5"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="trash" id="9vj-uL-ayB">
                             <connections>
                                 <action selector="deleteImage:" destination="VID-Tb-WpG" id="7dE-hZ-JJo"/>
@@ -398,23 +403,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pe0-58-Xyq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-295" y="3058"/>
-        </scene>
-        <!--ProfileBrowseController-->
-        <scene sceneID="M7k-hj-lcx">
-            <objects>
-                <navigationController storyboardIdentifier="SelectProfileImage" title="ProfileBrowseController" id="yBo-eJ-XeC" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="hHT-DL-HaR">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="VID-Tb-WpG" kind="relationship" relationship="rootViewController" id="6vK-Rf-jkP"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4qm-KO-zpQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-295" y="2051"/>
+            <point key="canvasLocation" x="-249" y="1833"/>
         </scene>
         <!--Upload Images-->
         <scene sceneID="gEz-uW-Cb5">
@@ -465,7 +454,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TCV-Lb-0eu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="452" y="2050"/>
+            <point key="canvasLocation" x="457" y="1974"/>
         </scene>
         <!--Chat-->
         <scene sceneID="g8o-YP-dch">
@@ -496,9 +485,9 @@
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="gHr-RB-XrV">
-                                            <rect key="frame" x="9" y="12" width="75" height="68"/>
+                                            <rect key="frame" x="9" y="8" width="75" height="72"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" secondItem="gHr-RB-XrV" secondAttribute="height" multiplier="1:1" constant="7" id="UAg-Iz-AOc"/>
+                                                <constraint firstAttribute="width" secondItem="gHr-RB-XrV" secondAttribute="height" multiplier="1:1" constant="3" id="UAg-Iz-AOc"/>
                                                 <constraint firstAttribute="width" constant="75" id="jdh-je-1qC"/>
                                             </constraints>
                                         </imageView>
@@ -511,8 +500,8 @@
                                         <constraint firstItem="D7G-eo-5us" firstAttribute="leading" secondItem="udW-dc-1sn" secondAttribute="leading" id="T2X-nA-3iu"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="gHr-RB-XrV" secondAttribute="bottom" constant="2" id="TT3-L2-skf"/>
                                         <constraint firstItem="D7G-eo-5us" firstAttribute="leading" secondItem="gHr-RB-XrV" secondAttribute="trailing" constant="13" id="VhU-7H-cjc"/>
-                                        <constraint firstItem="gHr-RB-XrV" firstAttribute="top" secondItem="3T4-dr-ejJ" secondAttribute="topMargin" constant="4" id="chy-oA-daE"/>
-                                        <constraint firstItem="gHr-RB-XrV" firstAttribute="top" secondItem="D7G-eo-5us" secondAttribute="top" constant="4" id="enW-x2-rvT"/>
+                                        <constraint firstItem="gHr-RB-XrV" firstAttribute="top" secondItem="3T4-dr-ejJ" secondAttribute="topMargin" id="chy-oA-daE"/>
+                                        <constraint firstItem="gHr-RB-XrV" firstAttribute="top" secondItem="D7G-eo-5us" secondAttribute="top" id="enW-x2-rvT"/>
                                         <constraint firstItem="gHr-RB-XrV" firstAttribute="leading" secondItem="3T4-dr-ejJ" secondAttribute="leadingMargin" constant="1" id="yN6-Yp-Q0K"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -529,7 +518,13 @@
                             <outlet property="delegate" destination="zeG-PC-S2L" id="4tR-DT-aaL"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Chat" id="tt8-EN-0Bd"/>
+                    <navigationItem key="navigationItem" title="Chat" id="tt8-EN-0Bd">
+                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="7i7-98-vCh">
+                            <connections>
+                                <action selector="refreshUserList:" destination="zeG-PC-S2L" id="0Bm-Kx-ARj"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HFo-z3-Uz3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -580,7 +575,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cNE-aA-bz7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1817" y="1910"/>
+            <point key="canvasLocation" x="1817" y="1833"/>
         </scene>
         <!--Page View Controller-->
         <scene sceneID="qrr-HJ-Fd3">
@@ -630,7 +625,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="474B4700-1D7F-46F4-8769-47DD5B2EF54F" width="540" height="540">
+        <image name="D03C88A8-6E13-4B9A-9A29-84ECF84211AE" width="540" height="540">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

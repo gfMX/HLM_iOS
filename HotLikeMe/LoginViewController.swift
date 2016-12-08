@@ -69,10 +69,11 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
 
         loginButton.readPermissions = ["public_profile", "email"]
         loginButton.delegate = self
-        
+        /*
         let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(imageTapped(img:)))
-        imageHLMProfile.isUserInteractionEnabled = true
         imageHLMProfile.addGestureRecognizer(tapGestureRecognizer)
+        */
+        imageHLMProfile.isUserInteractionEnabled = true
         
         imageHLMProfile.layer.borderWidth = 10
         imageHLMProfile.layer.masksToBounds = false
@@ -511,6 +512,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         self.view.endEditing(true)
     }
     
+    /*
     func imageTapped(img: AnyObject){
         if fireUser != nil {
             self.performSegue(withIdentifier: "HLMProfilePic", sender: self)
@@ -518,6 +520,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
             print("Missing credentials to Access Fire Images")
         }
     }
+    */
     /*
     @IBAction func funcUploadImages(_ sender: UIButton) {
         if fireUser != nil && facebookAccessToken != nil {

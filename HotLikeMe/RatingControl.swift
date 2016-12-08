@@ -67,15 +67,14 @@ class RatingControl: UIView {
     // MARK: Button Action
     
     func ratingButtonTapped (_ button: UIButton){
-        
         rating = ratingButtons.index(of: button)! + 1
-        
         let user = FIRAuth.auth()?.currentUser
-        let currentUserId = FireConnection.getCurrentUserId()
-        let dbRef = FIRDatabase.database().reference()
-        FireConnection.setGlobalUserRating(rating: rating)
         
         if user != nil {
+            let currentUserId = FireConnection.getCurrentUserId()
+            let dbRef = FIRDatabase.database().reference()
+            FireConnection.setGlobalUserRating(rating: rating)
+            
             dbRef.child("users").child(currentUserId).child("user_rate").child((user?.uid)!).setValue(rating)
             print("--> Rating Assigned 👍: \(rating) <--")
         }

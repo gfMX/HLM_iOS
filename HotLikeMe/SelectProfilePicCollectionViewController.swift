@@ -13,6 +13,8 @@ private let reuseIdentifier = "cellFireView"
 
 class SelectProfilePicCollectionViewController: UICollectionViewController {
     
+    var user:FIRUser!
+    
     var thumbUrls = [String]()
     var imageUrls = [String]()
     var thumbsStorage = [String]()
@@ -31,7 +33,13 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
         //self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
-        getFirePics()
+        user = FIRAuth.auth()?.currentUser
+        
+        if user != nil {
+            getFirePics()
+        } else {
+            print("👤 Not Logged ❌")
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -116,13 +124,13 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
     // MARK: Actions
     
     func getFirePics(){
-        let userID = FIRAuth.auth()?.currentUser?.uid
+        let userID = user.uid
         let ref = FIRDatabase.database().reference()
         
         self.thumbUrls.removeAll()
         self.imageUrls.removeAll()
         
-        ref.child("users").child(userID!).child("thumbs").observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child("users").child(userID).child("thumbs").observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             let value = snapshot.value as? NSDictionary
             //print (value ?? "No values found")
