@@ -157,7 +157,11 @@ class ChatUserListTableViewController: UITableViewController {
         users.removeAll()
         
         for i in 0 ..< listUsers.count {
-                self.ref1.child("users").child(self.listUsers[i]).child("preferences").observeSingleEvent(of: .value, with: {(snapshot) in
+            
+            let uid = self.listUsers[i]
+            let cid = self.listChats[i]
+            
+                self.ref1.child("users").child(uid).child("preferences").observeSingleEvent(of: .value, with: {(snapshot) in
                 let value2 = snapshot.value as? NSDictionary
                 
                 let user_name = value2?.value(forKey: "alias") as! String
@@ -165,20 +169,20 @@ class ChatUserListTableViewController: UITableViewController {
                 
                 print ("Storage Pic: \(user_pic)")
                 
-                self.ref.child("chats_resume").child(self.listChats[i]).observeSingleEvent(of: .value, with: {(snapshot) in
+                self.ref.child("chats_resume").child(cid).observeSingleEvent(of: .value, with: {(snapshot) in
                     let value = snapshot.value as? NSDictionary
                     
                     let user_message = value?.value(forKey: "text") as! String
                     var user_picUrl: String!
                     
-                    FireConnection.storageReference.child(self.listUsers[i]).child("/images/image_" + user_pic + ".jpg").downloadURL { (URL, error) -> Void in
+                    FireConnection.storageReference.child(uid).child("/images/image_" + user_pic + ".jpg").downloadURL { (URL, error) -> Void in
                         if (error != nil) {
                             print ("An error ocurred!")
                         } else {
                             user_picUrl = URL?.absoluteString
                         }
                         
-                        let user = Users(name: user_name, photo: user_picUrl, message: user_message)!
+                        let user = Users(uid: uid, name: user_name, photo: user_picUrl, message: user_message)!
                         self.users.append(user)
                         
                         self.tableView.reloadData()

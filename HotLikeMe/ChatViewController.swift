@@ -24,7 +24,7 @@ class ChatViewController: JSQMessagesViewController {
 
         // Do any additional setup after loading the view.
         
-        print("Chat: \(userChat?.name)")
+        print("Chat: \(userChat?.uid)")
         self.senderId = FIRAuth.auth()?.currentUser?.uid
     }
 

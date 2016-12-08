@@ -13,6 +13,7 @@ class Users: NSObject, NSCoding {
     // MARK: Properties
     
     var name: String
+    var uid: String
     var photo: String
     var message: String
     
@@ -20,20 +21,22 @@ class Users: NSObject, NSCoding {
     
     struct PropertyKey {
         static let nameKey = "name"
+        static let uidKey = "uid"
         static let photoKey = "photo"
         static let messageKey = "message"
     }
     
     // MARK: Initialization
     
-    init?(name: String, photo: String, message: String) {
+    init?(uid: String, name: String, photo: String, message: String) {
         self.name = name
+        self.uid = uid
         self.photo = photo
         self.message = message
         
         super.init()
         
-        if name.isEmpty || photo.isEmpty {
+        if name.isEmpty || photo.isEmpty || uid.isEmpty {
             return nil
         }
     }
@@ -42,16 +45,18 @@ class Users: NSObject, NSCoding {
     
     func encode(with aCoder: NSCoder) {
         aCoder.encode(name, forKey: PropertyKey.nameKey)
+        aCoder.encode(uid, forKey: PropertyKey.uidKey)
         aCoder.encode(photo, forKey: PropertyKey.photoKey)
         aCoder.encode(message, forKey: PropertyKey.messageKey)
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
         let name = aDecoder.decodeObject(forKey: PropertyKey.nameKey) as! String
+        let uid = aDecoder.decodeObject(forKey: PropertyKey.uidKey) as! String
         let photo = aDecoder.decodeObject(forKey: PropertyKey.photoKey) as! String
         let message = aDecoder.decodeObject(forKey: PropertyKey.messageKey) as! String
         
-        self.init(name: name, photo: photo, message: message)
+        self.init(uid: uid, name: name, photo: photo, message: message)
     }
     
 }
