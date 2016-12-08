@@ -13,7 +13,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Login View Controller-->
+        <!--Login & Settings-->
         <scene sceneID="FJt-Hh-or0">
             <objects>
                 <viewController storyboardIdentifier="ViewLogin" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GW3-Gl-dEn" customClass="LoginViewController" customModule="HotLikeMe" customModuleProvider="target" colorLabel="IBBuiltInLabel-Red" sceneMemberID="viewController">
@@ -34,7 +34,7 @@
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hCW-5p-f3N">
                                                 <rect key="frame" x="299" y="4" width="58" height="60"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" image="26D69E68-598E-4032-85D3-968CDAEF9BC4" translatesAutoresizingMaskIntoConstraints="NO" id="L1f-8P-nkA">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" image="474B4700-1D7F-46F4-8769-47DD5B2EF54F" translatesAutoresizingMaskIntoConstraints="NO" id="L1f-8P-nkA">
                                                 <rect key="frame" x="68" y="56" width="240" height="240"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="L1f-8P-nkA" secondAttribute="height" multiplier="1:1" id="jdi-D3-isc"/>
@@ -79,7 +79,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <state key="normal" title="Upload your images"/>
                                                 <connections>
-                                                    <action selector="funcUploadImages:" destination="GW3-Gl-dEn" eventType="touchUpInside" id="4he-u3-fNf"/>
+                                                    <segue destination="75o-Sh-CcG" kind="show" identifier="HLMUploadImages" id="6fE-HX-pfs"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Visible to other users" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WCC-bn-ZSn">
@@ -221,7 +221,7 @@
                             <constraint firstItem="PUe-7T-kDr" firstAttribute="bottom" secondItem="5BL-Ez-hB2" secondAttribute="top" id="vW5-rS-igb"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Hfn-Rm-9iK"/>
+                    <navigationItem key="navigationItem" title="Login &amp; Settings" id="Hfn-Rm-9iK"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="980"/>
                     <connections>
@@ -245,7 +245,6 @@
                         <outlet property="switch_userVisible" destination="8dy-8J-XYl" id="tQO-lc-vRW"/>
                         <outlet property="text_description" destination="JAl-u1-TiL" id="q0a-wt-2C3"/>
                         <outlet property="text_displayName" destination="hFy-xx-zdZ" id="jTK-pm-C7Z"/>
-                        <segue destination="eLz-Z7-dX8" kind="show" identifier="HLMUploadImages" id="yYY-3r-Ppl"/>
                         <segue destination="yBo-eJ-XeC" kind="show" identifier="HLMProfilePic" id="nkB-wH-Kpq"/>
                     </connections>
                 </viewController>
@@ -253,7 +252,7 @@
             </objects>
             <point key="canvasLocation" x="96.799999999999997" y="912.14392803598207"/>
         </scene>
-        <!--Users View Controller-->
+        <!--User Navigator-->
         <scene sceneID="u6y-rP-X59">
             <objects>
                 <viewController storyboardIdentifier="ViewUsers" useStoryboardIdentifierAsRestorationIdentifier="YES" id="isq-na-kqC" customClass="UsersViewController" customModule="HotLikeMe" customModuleProvider="target" colorLabel="IBBuiltInLabel-Orange" sceneMemberID="viewController">
@@ -321,7 +320,7 @@
                             <constraint firstItem="XqN-VZ-x8v" firstAttribute="top" secondItem="vg6-A9-PzZ" secondAttribute="bottom" constant="10" id="tyO-eQ-9es"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="lZN-wM-JM0">
+                    <navigationItem key="navigationItem" title="User Navigator" id="lZN-wM-JM0">
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="01T-iv-SBJ">
                             <connections>
                                 <action selector="reloadUser:" destination="isq-na-kqC" id="fO5-LI-PLX"/>
@@ -384,7 +383,7 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Select Profile Image" id="0cA-9N-SD4">
-                        <barButtonItem key="backBarButtonItem" title=" Back" id="eOJ-3Q-ItC"/>
+                        <barButtonItem key="backBarButtonItem" title="Back" id="eOJ-3Q-ItC"/>
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="tkf-hl-fyM">
                             <connections>
                                 <action selector="goBack:" destination="VID-Tb-WpG" id="gzz-Pr-vI5"/>
@@ -416,22 +415,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4qm-KO-zpQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-295" y="2051"/>
-        </scene>
-        <!--ImageBrowserController-->
-        <scene sceneID="87Y-3F-7qx">
-            <objects>
-                <navigationController storyboardIdentifier="UploadImages" title="ImageBrowserController" id="eLz-Z7-dX8" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="v7E-gm-YZk">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="75o-Sh-CcG" kind="relationship" relationship="rootViewController" id="W93-k3-wcN"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="duO-22-xl4" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="489" y="2051"/>
         </scene>
         <!--Upload Images-->
         <scene sceneID="gEz-uW-Cb5">
@@ -473,11 +456,6 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="Upload Images" id="XUq-p0-N7b">
                         <barButtonItem key="backBarButtonItem" title="Back" id="wEt-0q-SdO"/>
-                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="caF-bS-LZl">
-                            <connections>
-                                <action selector="goBack:" destination="75o-Sh-CcG" id="dxH-wy-FfR"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="bq0-Gd-BqK">
                             <connections>
                                 <action selector="uploadImages:" destination="75o-Sh-CcG" id="m3h-b8-aLE"/>
@@ -487,7 +465,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TCV-Lb-0eu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="489" y="3058"/>
+            <point key="canvasLocation" x="452" y="2050"/>
         </scene>
         <!--Chat-->
         <scene sceneID="g8o-YP-dch">
@@ -518,9 +496,9 @@
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="gHr-RB-XrV">
-                                            <rect key="frame" x="9" y="8" width="75" height="75"/>
+                                            <rect key="frame" x="9" y="12" width="75" height="68"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" secondItem="gHr-RB-XrV" secondAttribute="height" multiplier="1:1" id="UAg-Iz-AOc"/>
+                                                <constraint firstAttribute="width" secondItem="gHr-RB-XrV" secondAttribute="height" multiplier="1:1" constant="7" id="UAg-Iz-AOc"/>
                                                 <constraint firstAttribute="width" constant="75" id="jdh-je-1qC"/>
                                             </constraints>
                                         </imageView>
@@ -531,10 +509,10 @@
                                         <constraint firstItem="D7G-eo-5us" firstAttribute="trailing" secondItem="udW-dc-1sn" secondAttribute="trailing" id="MXR-tR-Wua"/>
                                         <constraint firstItem="D7G-eo-5us" firstAttribute="trailing" secondItem="3T4-dr-ejJ" secondAttribute="trailingMargin" id="Pto-D7-wge"/>
                                         <constraint firstItem="D7G-eo-5us" firstAttribute="leading" secondItem="udW-dc-1sn" secondAttribute="leading" id="T2X-nA-3iu"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="gHr-RB-XrV" secondAttribute="bottom" constant="-2" id="TT3-L2-skf"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="gHr-RB-XrV" secondAttribute="bottom" constant="2" id="TT3-L2-skf"/>
                                         <constraint firstItem="D7G-eo-5us" firstAttribute="leading" secondItem="gHr-RB-XrV" secondAttribute="trailing" constant="13" id="VhU-7H-cjc"/>
-                                        <constraint firstItem="gHr-RB-XrV" firstAttribute="top" secondItem="3T4-dr-ejJ" secondAttribute="topMargin" id="chy-oA-daE"/>
-                                        <constraint firstItem="gHr-RB-XrV" firstAttribute="top" secondItem="D7G-eo-5us" secondAttribute="top" id="enW-x2-rvT"/>
+                                        <constraint firstItem="gHr-RB-XrV" firstAttribute="top" secondItem="3T4-dr-ejJ" secondAttribute="topMargin" constant="4" id="chy-oA-daE"/>
+                                        <constraint firstItem="gHr-RB-XrV" firstAttribute="top" secondItem="D7G-eo-5us" secondAttribute="top" constant="4" id="enW-x2-rvT"/>
                                         <constraint firstItem="gHr-RB-XrV" firstAttribute="leading" secondItem="3T4-dr-ejJ" secondAttribute="leadingMargin" constant="1" id="yN6-Yp-Q0K"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -542,6 +520,7 @@
                                     <outlet property="chat_lastMessage" destination="udW-dc-1sn" id="9y6-06-LNW"/>
                                     <outlet property="chat_userImage" destination="gHr-RB-XrV" id="UO7-J0-sDg"/>
                                     <outlet property="chat_userName" destination="D7G-eo-5us" id="pAz-r7-zKD"/>
+                                    <segue destination="bob-KA-zeG" kind="show" identifier="HLMChat" id="wyH-uN-DvJ"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -550,10 +529,7 @@
                             <outlet property="delegate" destination="zeG-PC-S2L" id="4tR-DT-aaL"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="tt8-EN-0Bd"/>
-                    <connections>
-                        <segue destination="r1O-i0-jPP" kind="show" identifier="HLMChat" id="h0A-uk-IaC"/>
-                    </connections>
+                    <navigationItem key="navigationItem" title="Chat" id="tt8-EN-0Bd"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HFo-z3-Uz3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -575,7 +551,7 @@
             </objects>
             <point key="canvasLocation" x="1817" y="32"/>
         </scene>
-        <!--Root View Controller-->
+        <!--User Chat-->
         <scene sceneID="UGx-MG-Bhr">
             <objects>
                 <tableViewController id="bob-KA-zeG" sceneMemberID="viewController">
@@ -598,27 +574,13 @@
                             <outlet property="delegate" destination="bob-KA-zeG" id="xac-ib-rTn"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="CLr-eO-2fW"/>
+                    <navigationItem key="navigationItem" title="User Chat" id="CLr-eO-2fW">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="7OY-Bs-pPQ"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cNE-aA-bz7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1817" y="2427"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="eYh-gd-Xws">
-            <objects>
-                <navigationController id="r1O-i0-jPP" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="PXJ-6W-T30">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="bob-KA-zeG" kind="relationship" relationship="rootViewController" id="inn-cG-x6M"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ovm-Xz-hb5" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1817" y="1677"/>
+            <point key="canvasLocation" x="1817" y="1910"/>
         </scene>
         <!--Page View Controller-->
         <scene sceneID="qrr-HJ-Fd3">
@@ -668,7 +630,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="26D69E68-598E-4032-85D3-968CDAEF9BC4" width="540" height="540">
+        <image name="474B4700-1D7F-46F4-8769-47DD5B2EF54F" width="540" height="540">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

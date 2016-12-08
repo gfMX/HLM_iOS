@@ -518,7 +518,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
             print("Missing credentials to Access Fire Images")
         }
     }
-    
+    /*
     @IBAction func funcUploadImages(_ sender: UIButton) {
         if fireUser != nil && facebookAccessToken != nil {
             self.performSegue(withIdentifier: "HLMUploadImages", sender:self)
@@ -527,7 +527,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         }
         
     }
-    
+    */
     @IBAction func scrollToSettings(_ sender: UIButton) {
         
     }
