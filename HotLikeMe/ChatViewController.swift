@@ -53,7 +53,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
         
         print("Chat: \(senderId!) Chat ID: \(chatId!)")
         
-        configureDatabase()
+        //configureDatabase()
         configureStorage()
         configureRemoteConfig()
         fetchConfig()
@@ -73,7 +73,8 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
             guard let strongSelf = self else { return }
             strongSelf.messages.append(snapshot)
             print("Snapshot: \(snapshot) Count: \(strongSelf.messages.count)")
-            //strongSelf.clientTable.insertRows(at: [IndexPath(row: strongSelf.messages.count-1, section: 0)], with: .automatic)
+            strongSelf.clientTable.insertRows(at: [IndexPath(row: strongSelf.messages.count-1, section: 0)], with: .automatic)
+            //self?.clientTable.reloadData()
             
         })
     }
