@@ -126,7 +126,6 @@ class ChatUserListTableViewController: UITableViewController {
             
             chatVc.userChat = userChat
         }
-        
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -134,7 +133,6 @@ class ChatUserListTableViewController: UITableViewController {
         print("User Name: \(userChat.name)")
         self.performSegue(withIdentifier: "HLMChat", sender: userChat)
     }
-    
     
     func getActiveChats(){
         ref.child("users").child(user.uid).child("my_chats").observe(FIRDataEventType.value, with: { (snapshot) in
@@ -182,7 +180,7 @@ class ChatUserListTableViewController: UITableViewController {
                             user_picUrl = URL?.absoluteString
                         }
                         
-                        let user = Users(uid: uid, name: user_name, photo: user_picUrl, message: user_message)!
+                        let user = Users(uid: uid, chatid: cid, name: user_name, photo: user_picUrl, message: user_message)!
                         self.users.append(user)
                         
                         self.tableView.reloadData()

@@ -34,7 +34,7 @@
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hCW-5p-f3N">
                                                 <rect key="frame" x="299" y="4" width="58" height="60"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" image="D7098DE4-8F66-4E1C-842F-F009D0392D83" translatesAutoresizingMaskIntoConstraints="NO" id="L1f-8P-nkA">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" image="890D8BE1-AC02-4129-B2F6-8B0F197C2E19" translatesAutoresizingMaskIntoConstraints="NO" id="L1f-8P-nkA">
                                                 <rect key="frame" x="68" y="56" width="240" height="240"/>
                                                 <accessibility key="accessibilityConfiguration">
                                                     <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
@@ -469,7 +469,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zd7-8m-fKV" id="3T4-dr-ejJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="89"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D7G-eo-5us">
@@ -559,12 +559,64 @@
                     <view key="view" contentMode="scaleToFill" id="9t2-BL-wqw">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="M74-UW-wwA">
+                                <rect key="frame" x="16" y="72" width="343" height="548"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="tableViewCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="ClientCell" id="gBh-47-LIL">
+                                        <rect key="frame" x="0.0" y="28" width="343" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gBh-47-LIL" id="O4K-Km-fnr">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="GH4-MF-0V4" id="b7w-Ni-C1Z"/>
+                                    <outlet property="delegate" destination="GH4-MF-0V4" id="2ub-Sv-YB3"/>
+                                </connections>
+                            </tableView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ugb-gj-Ocq">
+                                <rect key="frame" x="16" y="629" width="274" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yOH-Uh-y0G">
+                                <rect key="frame" x="298" y="628" width="61" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="61" id="b81-Qi-3tr"/>
+                                </constraints>
+                                <state key="normal" title="Send"/>
+                                <connections>
+                                    <action selector="didSendMessage:" destination="GH4-MF-0V4" eventType="touchUpInside" id="PJj-27-7Y6"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="M74-UW-wwA" firstAttribute="top" secondItem="NfN-6P-zzZ" secondAttribute="bottom" constant="8" id="25K-Iz-diN"/>
+                            <constraint firstItem="M74-UW-wwA" firstAttribute="leading" secondItem="9t2-BL-wqw" secondAttribute="leadingMargin" id="5pc-yJ-Ly0"/>
+                            <constraint firstItem="yOH-Uh-y0G" firstAttribute="leading" secondItem="Ugb-gj-Ocq" secondAttribute="trailing" constant="8" id="JOE-Bq-GbF"/>
+                            <constraint firstItem="Ugb-gj-Ocq" firstAttribute="top" secondItem="M74-UW-wwA" secondAttribute="bottom" constant="9" id="JWN-Rj-upm"/>
+                            <constraint firstItem="M74-UW-wwA" firstAttribute="trailing" secondItem="9t2-BL-wqw" secondAttribute="trailingMargin" id="OMl-RB-EB1"/>
+                            <constraint firstItem="Ugb-gj-Ocq" firstAttribute="leading" secondItem="9t2-BL-wqw" secondAttribute="leadingMargin" id="fNe-kx-GPf"/>
+                            <constraint firstItem="yOH-Uh-y0G" firstAttribute="trailing" secondItem="9t2-BL-wqw" secondAttribute="trailingMargin" id="jpZ-rI-mSa"/>
+                            <constraint firstItem="yOH-Uh-y0G" firstAttribute="top" secondItem="M74-UW-wwA" secondAttribute="bottom" constant="8" id="krf-KQ-gKt"/>
+                            <constraint firstItem="kp0-xD-t2v" firstAttribute="top" secondItem="M74-UW-wwA" secondAttribute="bottom" constant="47" id="lfH-EE-uPY"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="clientTable" destination="M74-UW-wwA" id="I4V-Zo-NPR"/>
+                        <outlet property="sendButton" destination="yOH-Uh-y0G" id="LCT-7Y-K6Z"/>
+                        <outlet property="textField" destination="Ugb-gj-Ocq" id="Rej-an-Y5H"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0UU-NB-C0v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1817" y="1833"/>
+            <point key="canvasLocation" x="1816.8" y="1832.833583208396"/>
         </scene>
         <!--Page View Controller-->
         <scene sceneID="qrr-HJ-Fd3">
@@ -614,7 +666,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="D7098DE4-8F66-4E1C-842F-F009D0392D83" width="540" height="540">
+        <image name="890D8BE1-AC02-4129-B2F6-8B0F197C2E19" width="540" height="540">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

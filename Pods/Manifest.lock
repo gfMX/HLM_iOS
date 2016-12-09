@@ -71,9 +71,6 @@ PODS:
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.0)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.0)
   - GTMSessionFetcher/Core (1.1.7)
-  - JSQMessagesViewController (7.3.4):
-    - JSQSystemSoundPlayer (~> 2.0.1)
-  - JSQSystemSoundPlayer (2.0.1)
 
 DEPENDENCIES:
   - FacebookCore
@@ -82,7 +79,6 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/RemoteConfig
   - Firebase/Storage
-  - JSQMessagesViewController
 
 SPEC CHECKSUMS:
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
@@ -102,9 +98,7 @@ SPEC CHECKSUMS:
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
   GTMSessionFetcher: a1f8ed39e4fe21c68957daed472c7afbcdf29166
-  JSQMessagesViewController: 39fed975e3c9f8eba7292071e29eeb541d105e66
-  JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
 
-PODFILE CHECKSUM: 93d9515b3de1ea74e13850eb746518b5837e725d
+PODFILE CHECKSUM: b9ea9f1de816e91d675144d138196aef340a908b
 
 COCOAPODS: 1.1.1

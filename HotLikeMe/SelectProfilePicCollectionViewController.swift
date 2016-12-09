@@ -130,6 +130,7 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
         self.thumbUrls.removeAll()
         self.imageUrls.removeAll()
         
+        
         ref.child("users").child(userID).child("thumbs").observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             let value = snapshot.value as? NSDictionary
@@ -144,6 +145,7 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
             self.thumbUrls = [String](repeating: " ", count: nCount)
             self.imageUrls = [String](repeating: " ", count: nCount)
             
+            ref.child("users").child(userID).child("total_images").setValue(self.imageUrls.count)
             print ("Size of Arrays: " + self.thumbUrls.count.description + " " + self.imageUrls.count.description)
             
             self.getFirePicsUrls(storage: self.thumbsStorage)
