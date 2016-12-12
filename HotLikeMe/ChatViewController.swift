@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-//@objc(ChatViewController)
+@objc(ChatViewController)
 class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,
 UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -53,7 +53,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
         
         print("Chat: \(senderId!) Chat ID: \(chatId!)")
         
-        //configureDatabase()
+        configureDatabase()
         configureStorage()
         configureRemoteConfig()
         fetchConfig()

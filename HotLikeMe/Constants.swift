@@ -16,4 +16,12 @@ struct Constants {
         static let timeStamp = "timeStamp"
         static let userId = "userId"
     }
+    
+    struct User {
+        static let name = "name"
+        static let chatid = "chatid"
+        static let uid = "uid"
+        static let photo = "photo"
+        static let message = "message"
+    }
 }

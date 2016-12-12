@@ -63,5 +63,5 @@ class Users: NSObject, NSCoding {
         
         self.init(uid: uid, chatid: chatid, name: name, photo: photo, message: message)
     }
-    
+ 
 }
