@@ -12,6 +12,7 @@
 		7601290C5E821D0C45A04353 /* Pods_HotLikeMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F4BFF0CA240A11935FE9A0E /* Pods_HotLikeMe.framework */; };
 		8B1186C01DE5EF93009F5C67 /* FireConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1186BF1DE5EF93009F5C67 /* FireConnection.swift */; };
 		8B1186C41DE63946009F5C67 /* SelectProfilePicCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1186C31DE63946009F5C67 /* SelectProfilePicCollectionViewController.swift */; };
+		8B1F76551DFF01CE003EF630 /* ChatHLMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F76541DFF01CE003EF630 /* ChatHLMViewController.swift */; };
 		8BA016021DDCD2DC0042B165 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA016011DDCD2DC0042B165 /* AppDelegate.swift */; };
 		8BA016071DDCD2DC0042B165 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BA016051DDCD2DC0042B165 /* Main.storyboard */; };
 		8BA016091DDCD2DC0042B165 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BA016081DDCD2DC0042B165 /* Assets.xcassets */; };
@@ -60,6 +61,7 @@
 		844ADF8DDE6C46590D280496 /* Pods_HotLikeMeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HotLikeMeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B1186BF1DE5EF93009F5C67 /* FireConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireConnection.swift; sourceTree = "<group>"; };
 		8B1186C31DE63946009F5C67 /* SelectProfilePicCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectProfilePicCollectionViewController.swift; sourceTree = "<group>"; };
+		8B1F76541DFF01CE003EF630 /* ChatHLMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatHLMViewController.swift; sourceTree = "<group>"; };
 		8BA015FE1DDCD2DC0042B165 /* HotLikeMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotLikeMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BA016011DDCD2DC0042B165 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8BA016061DDCD2DC0042B165 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				8BD3C8431DF867B900D52483 /* ChatUserCellTableViewCell.swift */,
 				8BDAC46F1DFB267A001236AC /* Constants.swift */,
 				8BF4C6361DF9EDFC0007A0EC /* ChatViewController.swift */,
+				8B1F76541DFF01CE003EF630 /* ChatHLMViewController.swift */,
 				8BD3C8451DF8851E00D52483 /* Users.swift */,
 			);
 			name = Chat;
@@ -537,6 +540,7 @@
 				8BA0163D1DDD080D0042B165 /* RatingControl.swift in Sources */,
 				8B1186C01DE5EF93009F5C67 /* FireConnection.swift in Sources */,
 				8BA016391DDCE4310042B165 /* HLMPageViewController.swift in Sources */,
+				8B1F76551DFF01CE003EF630 /* ChatHLMViewController.swift in Sources */,
 				8BFB3B321DDE4121005246DB /* Helper.swift in Sources */,
 				8BD3C8421DF8661300D52483 /* ChatUserListTableViewController.swift in Sources */,
 				8BF4C63D1DF9EF230007A0EC /* ThumbCollectionViewCell.swift in Sources */,

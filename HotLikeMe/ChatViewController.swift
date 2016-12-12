@@ -74,7 +74,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
             strongSelf.messages.append(snapshot)
             print("Snapshot: \(snapshot) Count: \(strongSelf.messages.count)")
             strongSelf.clientTable.insertRows(at: [IndexPath(row: strongSelf.messages.count-1, section: 0)], with: .automatic)
-            //self?.clientTable.reloadData()
+            self?.clientTable.reloadData()
             
         })
     }

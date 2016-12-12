@@ -125,7 +125,7 @@ class ChatUserListTableViewController: UITableViewController {
             chatVc.senderId = user.uid
             
             chatVc.userChat = userChat
-        }
+        } 
         
     }
     

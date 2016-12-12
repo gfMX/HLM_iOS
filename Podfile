@@ -14,6 +14,9 @@ target 'HotLikeMe' do
 	pod 'Firebase/Storage'
 	pod 'Firebase/RemoteConfig'
 
+	#JSQMessagesViewController
+	pod 'JSQMessagesViewController'
+
 end
 
 target 'HotLikeMeTests' do
