@@ -14,6 +14,7 @@
 		8B1186C41DE63946009F5C67 /* SelectProfilePicCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1186C31DE63946009F5C67 /* SelectProfilePicCollectionViewController.swift */; };
 		8B1F76551DFF01CE003EF630 /* ChatHLMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F76541DFF01CE003EF630 /* ChatHLMViewController.swift */; };
 		8B1F76571DFF0379003EF630 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F76561DFF0379003EF630 /* Message.swift */; };
+		8B1F76591DFF5007003EF630 /* SecureMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F76581DFF5007003EF630 /* SecureMessage.swift */; };
 		8BA016021DDCD2DC0042B165 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA016011DDCD2DC0042B165 /* AppDelegate.swift */; };
 		8BA016071DDCD2DC0042B165 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BA016051DDCD2DC0042B165 /* Main.storyboard */; };
 		8BA016091DDCD2DC0042B165 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BA016081DDCD2DC0042B165 /* Assets.xcassets */; };
@@ -64,6 +65,7 @@
 		8B1186C31DE63946009F5C67 /* SelectProfilePicCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectProfilePicCollectionViewController.swift; sourceTree = "<group>"; };
 		8B1F76541DFF01CE003EF630 /* ChatHLMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatHLMViewController.swift; sourceTree = "<group>"; };
 		8B1F76561DFF0379003EF630 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		8B1F76581DFF5007003EF630 /* SecureMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecureMessage.swift; sourceTree = "<group>"; };
 		8BA015FE1DDCD2DC0042B165 /* HotLikeMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotLikeMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BA016011DDCD2DC0042B165 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8BA016061DDCD2DC0042B165 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				8B1F76541DFF01CE003EF630 /* ChatHLMViewController.swift */,
 				8BD3C8451DF8851E00D52483 /* Users.swift */,
 				8B1F76561DFF0379003EF630 /* Message.swift */,
+				8B1F76581DFF5007003EF630 /* SecureMessage.swift */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -539,6 +542,7 @@
 				8BD3C8441DF867B900D52483 /* ChatUserCellTableViewCell.swift in Sources */,
 				8BA016021DDCD2DC0042B165 /* AppDelegate.swift in Sources */,
 				8BDAC4701DFB267A001236AC /* Constants.swift in Sources */,
+				8B1F76591DFF5007003EF630 /* SecureMessage.swift in Sources */,
 				8BF453431DE4D88300C43195 /* UploadImageCollectionViewController.swift in Sources */,
 				8BD3C8461DF8851E00D52483 /* Users.swift in Sources */,
 				8BA0163D1DDD080D0042B165 /* RatingControl.swift in Sources */,

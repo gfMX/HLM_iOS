@@ -17,7 +17,4 @@ struct Constants {
         static let userId = "userId"
     }
     
-    struct Segues {
-        static let HLMChat = "HLMChat"
-    }
 }

@@ -34,7 +34,7 @@
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hCW-5p-f3N">
                                                 <rect key="frame" x="299" y="4" width="58" height="60"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" image="F71B4E31-237A-4AE2-9534-4DF36070C25D" translatesAutoresizingMaskIntoConstraints="NO" id="L1f-8P-nkA">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" image="99E5FB93-C9F5-454A-996D-715CBDCFDF75" translatesAutoresizingMaskIntoConstraints="NO" id="L1f-8P-nkA">
                                                 <rect key="frame" x="68" y="56" width="240" height="240"/>
                                                 <accessibility key="accessibilityConfiguration">
                                                     <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
@@ -525,7 +525,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="GH4-MF-0V4" kind="show" identifier="HLMChat" id="boL-Uo-pdN"/>
+                        <segue destination="H9A-Zn-4ly" kind="show" identifier="HLMChat" id="NGN-Er-I93"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HFo-z3-Uz3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -561,7 +561,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="M74-UW-wwA">
-                                <rect key="frame" x="16" y="72" width="343" height="548"/>
+                                <rect key="frame" x="16" y="28" width="343" height="592"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="tableViewCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="ClientCell" id="gBh-47-LIL">
@@ -684,7 +684,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="F71B4E31-237A-4AE2-9534-4DF36070C25D" width="540" height="540">
+        <image name="99E5FB93-C9F5-454A-996D-715CBDCFDF75" width="540" height="540">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

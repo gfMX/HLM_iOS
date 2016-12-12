@@ -120,7 +120,7 @@ class ChatUserListTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
         
         if let userChat = sender as? Users {
-            let chatVc = segue.destination as! ChatViewController
+            let chatVc = segue.destination as! ChatHLMViewController
             chatVc.senderDisplayName = userChat.name
             chatVc.senderId = user.uid
             
@@ -132,7 +132,7 @@ class ChatUserListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let userChat = users[(indexPath as NSIndexPath).row]
         print("User Name: \(userChat.name)")
-        self.performSegue(withIdentifier: Constants.Segues.HLMChat, sender: userChat)
+        self.performSegue(withIdentifier: "HLMChat", sender: userChat)
     }
     
     func getActiveChats(){

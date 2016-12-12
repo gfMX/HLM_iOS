@@ -24,11 +24,11 @@ class ChatHLMViewController: JSQMessagesViewController {
     var currentUser: FIRUser!
     var dbRef: FIRDatabaseReference?
     
-    /*var userChat: Users? {
+    var userChat: Users? {
         didSet {
             title = userChat?.name
         }
-    }*/
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +39,7 @@ class ChatHLMViewController: JSQMessagesViewController {
         self.currentUser = FIRAuth.auth()?.currentUser
         self.senderId = currentUser?.uid
         
-        messageRef = FIRDatabase.database().reference().child("chats").child("chat_0958f70a-3500-48dc-a687-aa472f48504c"/*(userChat?.chatid)!*/)
+        messageRef = FIRDatabase.database().reference().child("chats").child((userChat?.chatid)!) //"chat_0958f70a-3500-48dc-a687-aa472f48504c"
         print("DB Reference: \(messageRef.description())")
         
         let currentDate = Date()
@@ -88,11 +88,12 @@ class ChatHLMViewController: JSQMessagesViewController {
         
         newMessageRefHandle = messageQuery.observe(.childAdded, with: { (snapshot) -> Void in
            
-            let messageData = snapshot.value as! Dictionary<String, String>
+            let messageData = snapshot.value as! NSDictionary
             
-            if let id = messageData["userId"] as String!, let name = messageData["name"] as String!, let photoUrl = messageData["photoUrl"] as String!, let timeStamp = messageData["timeStamp"] as String!, let text = messageData["text"] as String!, text.characters.count > 0 {
+            if let id = messageData["userId"] as! String!, let name = messageData["name"] as! String!, let photoUrl = messageData["photoUrl"] as! String!, let timeStamp = messageData["timeStamp"] as! String!, let text = messageData["text"] as! String!, text.characters.count > 0 {
                 
                 let date = Date()
+                print("Time stamp: \(timeStamp)")
                 
                 self.addMessage(withId: id, name: name, text: text, photoUrl: photoUrl, date: date)
                 
