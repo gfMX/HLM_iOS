@@ -68,11 +68,14 @@ class ChatHLMViewController: JSQMessagesViewController {
     
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
         let itemRef = messageRef.childByAutoId()
+        let dateString = (date.timeIntervalSince1970 * 1000).description
         let messageItem = [
             "userId": senderId!,
             "name": senderDisplayName!,
             "text": text!,
-            ]
+            "photoUrl": currentUser.photoURL?.absoluteString ?? "",
+            "timeStamp": dateString,
+            ] as [String : Any]
         
         itemRef.setValue(messageItem)
         

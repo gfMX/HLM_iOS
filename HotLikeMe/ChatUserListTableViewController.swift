@@ -205,4 +205,9 @@ class ChatUserListTableViewController: UITableViewController {
         }
         self.tableView.reloadData()
     }
+    
+    func clearVars(){
+        listChats.removeAll()
+        listUsers.removeAll()
+    }
 }
