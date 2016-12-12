@@ -13,6 +13,7 @@
 		8B1186C01DE5EF93009F5C67 /* FireConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1186BF1DE5EF93009F5C67 /* FireConnection.swift */; };
 		8B1186C41DE63946009F5C67 /* SelectProfilePicCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1186C31DE63946009F5C67 /* SelectProfilePicCollectionViewController.swift */; };
 		8B1F76551DFF01CE003EF630 /* ChatHLMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F76541DFF01CE003EF630 /* ChatHLMViewController.swift */; };
+		8B1F76571DFF0379003EF630 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F76561DFF0379003EF630 /* Message.swift */; };
 		8BA016021DDCD2DC0042B165 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA016011DDCD2DC0042B165 /* AppDelegate.swift */; };
 		8BA016071DDCD2DC0042B165 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BA016051DDCD2DC0042B165 /* Main.storyboard */; };
 		8BA016091DDCD2DC0042B165 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BA016081DDCD2DC0042B165 /* Assets.xcassets */; };
@@ -62,6 +63,7 @@
 		8B1186BF1DE5EF93009F5C67 /* FireConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireConnection.swift; sourceTree = "<group>"; };
 		8B1186C31DE63946009F5C67 /* SelectProfilePicCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectProfilePicCollectionViewController.swift; sourceTree = "<group>"; };
 		8B1F76541DFF01CE003EF630 /* ChatHLMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatHLMViewController.swift; sourceTree = "<group>"; };
+		8B1F76561DFF0379003EF630 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		8BA015FE1DDCD2DC0042B165 /* HotLikeMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotLikeMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BA016011DDCD2DC0042B165 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8BA016061DDCD2DC0042B165 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				8BF4C6361DF9EDFC0007A0EC /* ChatViewController.swift */,
 				8B1F76541DFF01CE003EF630 /* ChatHLMViewController.swift */,
 				8BD3C8451DF8851E00D52483 /* Users.swift */,
+				8B1F76561DFF0379003EF630 /* Message.swift */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -530,6 +533,7 @@
 				8BF4C63C1DF9EF230007A0EC /* FireCollectionViewCell.swift in Sources */,
 				8BA0163B1DDCF2010042B165 /* LoginViewController.swift in Sources */,
 				8BECB9B41DEF68F0005A6E6B /* UsersViewController.swift in Sources */,
+				8B1F76571DFF0379003EF630 /* Message.swift in Sources */,
 				8BF4C6371DF9EDFC0007A0EC /* ChatViewController.swift in Sources */,
 				8B1186C41DE63946009F5C67 /* SelectProfilePicCollectionViewController.swift in Sources */,
 				8BD3C8441DF867B900D52483 /* ChatUserCellTableViewCell.swift in Sources */,

@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-@objc(ChatViewController)
+//@objc(ChatViewController)
 class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,
 UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -49,7 +49,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
         
         currentUser = FIRAuth.auth()?.currentUser
         senderId = currentUser?.uid
-        chatId = userChat?.chatid
+        chatId = userChat?.chatid //"chat_0958f70a-3500-48dc-a687-aa472f48504c"
         
         print("Chat: \(senderId!) Chat ID: \(chatId!)")
         
@@ -149,29 +149,35 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
         let cell = self.clientTable .dequeueReusableCell(withIdentifier: "tableViewCell", for: indexPath)
         // Unpack message from Firebase DataSnapshot
         let messageSnapshot: FIRDataSnapshot! = self.messages[indexPath.row]
-        let message = messageSnapshot.value as! Dictionary<String, String>
-        let name = message[Constants.MessageFields.name] as String!
+        print("Content of Snapshot: \(messageSnapshot)")
+        
+        let message = messageSnapshot.value as! NSDictionary //, String, String, String, Bool
+        print("Content of Message: \(message)")
+        
+        
+        let name = message[Constants.MessageFields.name] as! String!
         if let imageURL = message[Constants.MessageFields.imageURL] {
-            if imageURL.hasPrefix("gs://") {
-                FIRStorage.storage().reference(forURL: imageURL).data(withMaxSize: INT64_MAX){ (data, error) in
+            if (imageURL as AnyObject).hasPrefix("gs://") {
+                FIRStorage.storage().reference(forURL: imageURL as! String).data(withMaxSize: INT64_MAX){ (data, error) in
                     if let error = error {
                         print("Error downloading: \(error)")
                         return
                     }
                     cell.imageView?.image = UIImage.init(data: data!)
                 }
-            } else if let URL = URL(string: imageURL), let data = try? Data(contentsOf: URL) {
+            } else if let URL = URL(string: imageURL as! String), let data = try? Data(contentsOf: URL) {
                 cell.imageView?.image = UIImage.init(data: data)
             }
             cell.textLabel?.text = "sent by: \(name)"
         } else {
-            let text = message[Constants.MessageFields.text] as String!
+            let text = message[Constants.MessageFields.text] as! String!
             cell.textLabel?.text = name! + ": " + text!
             cell.imageView?.image = UIImage(named: "ic_account_circle")
-            if let photoURL = message[Constants.MessageFields.photoUrl], let URL = URL(string: photoURL), let data = try? Data(contentsOf: URL) {
+            if let photoURL = message[Constants.MessageFields.photoUrl], let URL = URL(string: photoURL as! String), let data = try? Data(contentsOf: URL) {
                 cell.imageView?.image = UIImage(data: data)
             }
         }
+        
         return cell
     }
     

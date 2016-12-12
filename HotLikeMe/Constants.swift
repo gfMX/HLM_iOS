@@ -16,4 +16,8 @@ struct Constants {
         static let timeStamp = "timeStamp"
         static let userId = "userId"
     }
+    
+    struct Segues {
+        static let HLMChat = "HLMChat"
+    }
 }

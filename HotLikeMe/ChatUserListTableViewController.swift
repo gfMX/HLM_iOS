@@ -125,14 +125,14 @@ class ChatUserListTableViewController: UITableViewController {
             chatVc.senderId = user.uid
             
             chatVc.userChat = userChat
-        } 
+        }
         
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let userChat = users[(indexPath as NSIndexPath).row]
         print("User Name: \(userChat.name)")
-        self.performSegue(withIdentifier: "HLMChat", sender: userChat)
+        self.performSegue(withIdentifier: Constants.Segues.HLMChat, sender: userChat)
     }
     
     func getActiveChats(){
