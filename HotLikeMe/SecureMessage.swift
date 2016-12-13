@@ -22,12 +22,28 @@ class SecureMessage {
         
         print("Salt: \(RSalt) IV: \(RIV) Text: \(text)")
         
-        let Salt = RSalt
-        let IVV = RIV
+        //Testing zone
+
+        
+        
+        //Testing Zone ended
+        
+        let Salt = base64ToByteArray(base64String: RSalt)
+        let IVV = base64ToByteArray(base64String: RIV)
         
         print("Decoded \nSalt: \(Salt)\nIVV: \(IVV)\n")
         
         return ""
+    }
+    
+    static func base64ToByteArray(base64String: String) -> [UInt8]? {
+        if let nsdata = NSData(base64Encoded: base64String, options: NSData.Base64DecodingOptions.ignoreUnknownCharacters) {
+            var bytes = [UInt8](repeating: 0, count: nsdata.length)
+            nsdata.getBytes(&bytes, length: bytes.count) //getBytes(&bytes)
+            
+            return bytes
+        }
+        return nil // Invalid input
     }
 }
 

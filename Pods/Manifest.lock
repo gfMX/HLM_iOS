@@ -74,6 +74,7 @@ PODS:
   - JSQMessagesViewController (7.3.4):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
+  - RNCryptor (5.0.1)
 
 DEPENDENCIES:
   - FacebookCore
@@ -83,6 +84,7 @@ DEPENDENCIES:
   - Firebase/RemoteConfig
   - Firebase/Storage
   - JSQMessagesViewController
+  - RNCryptor
 
 SPEC CHECKSUMS:
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
@@ -104,7 +106,8 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: a1f8ed39e4fe21c68957daed472c7afbcdf29166
   JSQMessagesViewController: 39fed975e3c9f8eba7292071e29eeb541d105e66
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
+  RNCryptor: 2e352a488779d1a9184ab629be22a7c5bc84acb5
 
-PODFILE CHECKSUM: 7986d391d7292512e198a604c419b54a3f3f69fd
+PODFILE CHECKSUM: bf8fab9ced70168e64c5a6ff803f4228f244112a
 
 COCOAPODS: 1.1.1

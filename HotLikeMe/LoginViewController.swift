@@ -132,24 +132,26 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                 /***************************************************************************
                                       Getting details from Facebook
                  ***************************************************************************/
-                let graphRequest:FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"first_name,email, picture.type(large),gender"])
-                graphRequest.start(completionHandler: { (connection, result, error) -> Void in
-                    let data:[String:AnyObject] = result as! [String : AnyObject]
-                    let strFirstName: String = (data["first_name"]!) as! String
-                    let gender: String = (data["gender"]!) as! String
-                    
-                    let picture = data["picture"]! as? NSDictionary
-                    let strPictureURL = ((picture?.object(forKey: "data") as AnyObject).object(forKey: "url")) as! String
-                    
-                    //print("Now the data: \(data)")
-    
-                    self.labelWelcome.text = "Welcome, \(strFirstName)"
-                    Helper.loadImageFromUrl(url: strPictureURL, view: self.imageFaceProfile)
-                    self.imageFaceProfile.contentMode = UIViewContentMode.scaleAspectFit
-                    
-                    dbRef.child("users").child(self.fireUser.uid).child("preferences").child("gender").setValue(gender)
-                    self.defaults.set(gender, forKey: "defGender")
-                })
+                if self.facebookAccessToken != nil {
+                    let graphRequest:FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"first_name,email, picture.type(large),gender"])
+                    graphRequest.start(completionHandler: { (connection, result, error) -> Void in
+                        let data:[String:AnyObject] = result as! [String : AnyObject]
+                        let strFirstName: String = (data["first_name"]!) as! String
+                        let gender: String = (data["gender"]!) as! String
+                        
+                        let picture = data["picture"]! as? NSDictionary
+                        let strPictureURL = ((picture?.object(forKey: "data") as AnyObject).object(forKey: "url")) as! String
+                        
+                        //print("Now the data: \(data)")
+                        
+                        self.labelWelcome.text = "Welcome, \(strFirstName)"
+                        Helper.loadImageFromUrl(url: strPictureURL, view: self.imageFaceProfile)
+                        self.imageFaceProfile.contentMode = UIViewContentMode.scaleAspectFit
+                        
+                        dbRef.child("users").child(self.fireUser.uid).child("preferences").child("gender").setValue(gender)
+                        self.defaults.set(gender, forKey: "defGender")
+                    })
+                }
                 
                 /***************************************************************************
                  Next section updates al values required from Firebase if they already exist

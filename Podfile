@@ -16,6 +16,9 @@ target 'HotLikeMe' do
 
 	#JSQMessagesViewController
 	pod 'JSQMessagesViewController'
+    
+    #RNCryptor
+    pod 'RNCryptor'
 
 end
 
