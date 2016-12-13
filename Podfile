@@ -16,9 +16,6 @@ target 'HotLikeMe' do
 
 	#JSQMessagesViewController
 	pod 'JSQMessagesViewController'
-	
-	#CryptoSwift
-    pod 'CryptoSwift'
 
 end
 
