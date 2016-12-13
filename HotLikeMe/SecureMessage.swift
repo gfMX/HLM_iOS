@@ -10,7 +10,6 @@ import Foundation
 
 class SecureMessage {
  
-    
     static func decrypt (str: String) -> String {
         
         let text = str.substring(to: str.index(str.startIndex, offsetBy: str.characters.count - 38))
