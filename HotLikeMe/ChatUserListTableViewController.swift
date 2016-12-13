@@ -168,10 +168,12 @@ class ChatUserListTableViewController: UITableViewController {
                 
                 print ("Storage Pic: \(user_pic)")
                 
-                self.ref.child("chats_resume").child(cid).observeSingleEvent(of: .value, with: {(snapshot) in
+                    self.ref.child("chats_resume").child(cid).observeSingleEvent(of:.value, with: {(snapshot) in
                     let value = snapshot.value as? NSDictionary
                     
-                    let user_message = value?.value(forKey: "text") as! String
+                    let user_message = (value?.value(forKey: "text") as? String) ?? "No message found"
+                    SecureMessage.decrypt(str: user_message)
+                        
                     var user_picUrl: String!
                     
                     FireConnection.storageReference.child(uid).child("/images/image_" + user_pic + ".jpg").downloadURL { (URL, error) -> Void in

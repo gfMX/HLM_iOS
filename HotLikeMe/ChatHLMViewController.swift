@@ -18,8 +18,8 @@ class ChatHLMViewController: JSQMessagesViewController {
     lazy var incomingBubbleImageView: JSQMessagesBubbleImage = self.setupIncomingBubble()
     
     private var messageRef: FIRDatabaseReference!
+    private var lastMessageRef: FIRDatabaseReference!
     private var newMessageRefHandle: FIRDatabaseHandle?
-    
     
     var currentUser: FIRUser!
     var dbRef: FIRDatabaseReference?
@@ -40,6 +40,7 @@ class ChatHLMViewController: JSQMessagesViewController {
         self.senderId = currentUser?.uid
         
         messageRef = FIRDatabase.database().reference().child("chats").child((userChat?.chatid)!) //"chat_0958f70a-3500-48dc-a687-aa472f48504c"
+        lastMessageRef = FIRDatabase.database().reference().child("chats_resume").child((userChat?.chatid)!)
         print("DB Reference: \(messageRef.description())")
         
         let currentDate = Date()
@@ -78,10 +79,13 @@ class ChatHLMViewController: JSQMessagesViewController {
             ] as [String : Any]
         
         itemRef.setValue(messageItem)
+        lastMessageRef.setValue(messageItem)
         
         JSQSystemSoundPlayer.jsq_playMessageSentSound()
         
         finishSendingMessage()
+        
+        print("✉️ Sent!")
     }
     
     private func observeMessages() {
@@ -99,7 +103,6 @@ class ChatHLMViewController: JSQMessagesViewController {
                 print("Time stamp: \(timeStamp)")
                 
                 self.addMessage(withId: id, name: name, text: text, photoUrl: photoUrl, date: date)
-                
                 self.finishReceivingMessage()
             } else {
                 print("Error! Could not decode message data")
