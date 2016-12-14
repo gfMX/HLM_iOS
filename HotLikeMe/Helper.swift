@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RNCryptor
 import UIKit
 
 class Helper{
@@ -33,6 +34,37 @@ class Helper{
         // Run task
         task.resume()
     }
+    /***************************************************************************
+                                Encryption Zone
+     ***************************************************************************/
+    
+    // MARK: Encryption
+    static func encryptString(text: String, password: String) -> String {
+        let nsString = text as NSString
+        let data:Data = nsString.data(using: String.Encoding.utf8.rawValue)!
+        let ciphertext = RNCryptor.encrypt(data: data, withPassword: password)
+        let cipherString = ciphertext.base64EncodedString()
+        
+        print("Encrypted Text: \(cipherString)")
+        
+        return cipherString
+    }
+    
+    static func decryptString(text: String, password: String) -> String {
+        let string64 = text.data(using: String.Encoding.utf8)
+        let result64Data = Data(base64Encoded: string64!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)!
+        
+        do {
+            let originalData = try RNCryptor.decrypt(data: result64Data/*.data(using: String.Encoding.utf8)!*/, withPassword: password)
+            let decryptedString = NSString(data: originalData, encoding: String.Encoding.utf8.rawValue) as! String
+            print("Decrypted data: \(decryptedString)")
+            
+            return decryptedString
+        } catch {
+            print(error)
+            return "Text could not be decrypted"
+        }
+    }
     
     static func genPassword(keyString: String) -> String {
         // MARK: Password generator:
@@ -57,4 +89,7 @@ class Helper{
         }
         return digestData
     }
+    /***************************************************************************
+                            End of Encryption Zone
+     ***************************************************************************/
 }

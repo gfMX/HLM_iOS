@@ -77,23 +77,11 @@ class ChatHLMViewController: JSQMessagesViewController {
         // Everything we need to upload and decrypt Messages...
         
         //Encrypt Messages:
-        let nsString = text as NSString
-        let data:Data = nsString.data(using: String.Encoding.utf8.rawValue)!
-        let ciphertext = RNCryptor.encrypt(data: data, withPassword: password)
-        let cipherString = ciphertext.base64EncodedString()
-            
-            print("Cipher Text: \(cipherString)")
+        let cipherString = Helper.encryptString(text: text, password: password)
         
         //Decrypt Messages:
-        let string64 = cipherString.data(using: String.Encoding.utf8)
-        let result64Data = Data(base64Encoded: string64!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)!
+        _ = Helper.decryptString(text: cipherString, password: password)
         
-        do {
-            let originalData = try RNCryptor.decrypt(data: result64Data/*.data(using: String.Encoding.utf8)!*/, withPassword: password)
-            print("Decrypted data: \(NSString(data: originalData, encoding: String.Encoding.utf8.rawValue) as! String)")
-        } catch {
-            print(error)
-        }
         // End Testing Zone
         //////////////////////////////////////////////////////////////////
         
