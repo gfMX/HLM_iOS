@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import RNCryptor
 
 class ChatUserListTableViewController: UITableViewController {
 
@@ -160,6 +161,10 @@ class ChatUserListTableViewController: UITableViewController {
             let uid = self.listUsers[i]
             let cid = self.listChats[i]
             
+            let passwordChain = String(cid.replacingOccurrences(of: "chat_", with: ""))?.characters.reversed()
+            let password = Helper.sha256(string: passwordChain) as? String
+            print("Password SHA-256: \(password)")
+            
                 self.ref1.child("users").child(uid).child("preferences").observeSingleEvent(of: .value, with: {(snapshot) in
                 let value2 = snapshot.value as? NSDictionary
                 
@@ -172,7 +177,16 @@ class ChatUserListTableViewController: UITableViewController {
                     let value = snapshot.value as? NSDictionary
                     
                     let user_message = (value?.value(forKey: "text") as? String) ?? "No message found"
-                    SecureMessage.decrypt(str: user_message)
+                        
+                        //Testing Decryption with RNCryptor
+                        do {
+                            let originalData = try RNCryptor.decrypt(data: user_message.data(using: String.Encoding.utf8)!, withPassword: password)
+                            print("Decrypted data: \(originalData)")
+                        } catch {
+                            print(error)
+                        }
+                        
+                    //SecureMessage.decrypt(str: user_message)
                         
                     var user_picUrl: String!
                     

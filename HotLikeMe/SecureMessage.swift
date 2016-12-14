@@ -21,11 +21,10 @@ class SecureMessage {
         let RIV = str.substring(from: RIVRange)
         
         print("Salt: \(RSalt) IV: \(RIV) Text: \(text)")
-        
+        print("Salt decoded:")
+
         //Testing zone
 
-        
-        
         //Testing Zone ended
         
         let Salt = base64ToByteArray(base64String: RSalt)
@@ -41,8 +40,14 @@ class SecureMessage {
             var bytes = [UInt8](repeating: 0, count: nsdata.length)
             nsdata.getBytes(&bytes, length: bytes.count) //getBytes(&bytes)
             
+            //let buffInt8 = bytes.map{ Int8(bitPattern: $0)}
+            //let str = String(cString:buffInt8)
+            
+            //print("Buffer: \(str)")
+            
             return bytes
         }
+        
         return nil // Invalid input
     }
 }

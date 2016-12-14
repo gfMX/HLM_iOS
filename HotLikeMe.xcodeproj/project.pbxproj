@@ -64,6 +64,7 @@
 		8B1F76541DFF01CE003EF630 /* ChatHLMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatHLMViewController.swift; sourceTree = "<group>"; };
 		8B1F76561DFF0379003EF630 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		8B1F76581DFF5007003EF630 /* SecureMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecureMessage.swift; sourceTree = "<group>"; };
+		8B223AAA1E01C06D006D86A3 /* HotLikeMe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HotLikeMe-Bridging-Header.h"; sourceTree = "<group>"; };
 		8BA015FE1DDCD2DC0042B165 /* HotLikeMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotLikeMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BA016011DDCD2DC0042B165 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8BA016061DDCD2DC0042B165 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -161,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				8BEA787F1DDE37E10092B093 /* HotLikeMe.entitlements */,
+				8B223AAA1E01C06D006D86A3 /* HotLikeMe-Bridging-Header.h */,
 				8BA016011DDCD2DC0042B165 /* AppDelegate.swift */,
 				8B1186BF1DE5EF93009F5C67 /* FireConnection.swift */,
 				8BFB3B311DDE4121005246DB /* Helper.swift */,
@@ -311,7 +313,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = MezcalDev;
 				TargetAttributes = {
 					8BA015FD1DDCD2DC0042B165 = {
@@ -705,6 +707,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mezcaldev.HotLikeMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "HotLikeMe-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -721,6 +724,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mezcaldev.HotLikeMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "HotLikeMe-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
