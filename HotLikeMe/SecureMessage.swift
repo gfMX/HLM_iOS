@@ -21,15 +21,14 @@ class SecureMessage {
         let RIV = str.substring(from: RIVRange)
         
         print("Salt: \(RSalt) IV: \(RIV) Text: \(text)")
-        print("Salt decoded:")
-
-        //Testing zone
-
-        //Testing Zone ended
         
+        let string64 = RSalt.data(using: String.Encoding.utf8)
+        let result64Data = Data(base64Encoded: string64!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)!
+        print("Salt decoded: \(NSString(data: result64Data, encoding: String.Encoding.utf8.rawValue))")
+      
         let Salt = base64ToByteArray(base64String: RSalt)
         let IVV = base64ToByteArray(base64String: RIV)
-        
+    
         print("Decoded \nSalt: \(Salt)\nIVV: \(IVV)\n")
         
         return ""

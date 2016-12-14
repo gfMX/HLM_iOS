@@ -707,7 +707,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mezcaldev.HotLikeMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "HotLikeMe-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "HotLikeMe/HotLikeMe-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -724,7 +724,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mezcaldev.HotLikeMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "HotLikeMe-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "HotLikeMe/HotLikeMe-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

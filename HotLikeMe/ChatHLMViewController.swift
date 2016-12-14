@@ -7,12 +7,14 @@
 //
 import UIKit
 import Firebase
+import RNCryptor
 import JSQMessagesViewController
 
 @objc(ChatHLMViewController)
 class ChatHLMViewController: JSQMessagesViewController {
     
     var messages = [Message]()
+    private var password:String!
     
     lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
     lazy var incomingBubbleImageView: JSQMessagesBubbleImage = self.setupIncomingBubble()
@@ -38,6 +40,7 @@ class ChatHLMViewController: JSQMessagesViewController {
         //print("Chat: \(userChat?.uid)")
         self.currentUser = FIRAuth.auth()?.currentUser
         self.senderId = currentUser?.uid
+        self.password = Helper.genPassword(keyString: (userChat?.chatid)!)
         
         messageRef = FIRDatabase.database().reference().child("chats").child((userChat?.chatid)!) //"chat_0958f70a-3500-48dc-a687-aa472f48504c"
         lastMessageRef = FIRDatabase.database().reference().child("chats_resume").child((userChat?.chatid)!)
@@ -68,6 +71,32 @@ class ChatHLMViewController: JSQMessagesViewController {
     }
     
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
+        
+        //////////////////////////////////////////////////////////////////
+        // MARK: Testing Decryption with RNCryptor
+        // Everything we need to upload and decrypt Messages...
+        
+        //Encrypt Messages:
+        let nsString = text as NSString
+        let data:Data = nsString.data(using: String.Encoding.utf8.rawValue)!
+        let ciphertext = RNCryptor.encrypt(data: data, withPassword: password)
+        let cipherString = ciphertext.base64EncodedString()
+            
+            print("Cipher Text: \(cipherString)")
+        
+        //Decrypt Messages:
+        let string64 = cipherString.data(using: String.Encoding.utf8)
+        let result64Data = Data(base64Encoded: string64!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)!
+        
+        do {
+            let originalData = try RNCryptor.decrypt(data: result64Data/*.data(using: String.Encoding.utf8)!*/, withPassword: password)
+            print("Decrypted data: \(NSString(data: originalData, encoding: String.Encoding.utf8.rawValue) as! String)")
+        } catch {
+            print(error)
+        }
+        // End Testing Zone
+        //////////////////////////////////////////////////////////////////
+        
         let itemRef = messageRef.childByAutoId()
         let dateString = (date.timeIntervalSince1970 * 1000).description
         let messageItem = [

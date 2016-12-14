@@ -34,6 +34,18 @@ class Helper{
         task.resume()
     }
     
+    static func genPassword(keyString: String) -> String {
+        // MARK: Password generator:
+        let passwordChain = keyString.replacingOccurrences(of: "chat_", with: "")
+        let reversedChain = String(passwordChain.characters.reversed())
+        let shaData = Helper.sha256(string: reversedChain)
+        let password = shaData!.map { String(format: "%02hhx", $0) }.joined()
+        print("Password SHA-256: \(password)")
+        // End of password generation!
+        
+        return password
+    }
+    
     static func sha256(string: String) -> Data? {
         guard let messageData = string.data(using:String.Encoding.utf8) else { return nil }
         var digestData = Data(count: Int(CC_SHA256_DIGEST_LENGTH))
