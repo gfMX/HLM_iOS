@@ -55,7 +55,7 @@ class Helper{
         let result64Data = Data(base64Encoded: string64!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)!
         
         do {
-            let originalData = try RNCryptor.decrypt(data: result64Data/*.data(using: String.Encoding.utf8)!*/, withPassword: password)
+            let originalData = try RNCryptor.decrypt(data: result64Data, withPassword: password)
             let decryptedString = NSString(data: originalData, encoding: String.Encoding.utf8.rawValue) as! String
             print("Decrypted data: \(decryptedString)")
             
@@ -66,14 +66,13 @@ class Helper{
         }
     }
     
+    // MARK: Password generator:
     static func genPassword(keyString: String) -> String {
-        // MARK: Password generator:
         let passwordChain = keyString.replacingOccurrences(of: "chat_", with: "")
         let reversedChain = String(passwordChain.characters.reversed())
         let shaData = Helper.sha256(string: reversedChain)
         let password = shaData!.map { String(format: "%02hhx", $0) }.joined()
         print("Password SHA-256: \(password)")
-        // End of password generation!
         
         return password
     }
