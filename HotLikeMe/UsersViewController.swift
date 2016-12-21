@@ -119,7 +119,9 @@ class UsersViewController: UIViewController {
                 let alias = value?.value(forKey: "alias") as? String
                 let description = value?.value(forKey: "description") as? String
                 let profilePic = value?.value(forKey: "profile_pic_storage") as? String
+                self.likeUserFlag = (value?.value(forKey: "visible") as? Bool)!
                 
+                print("Like 👤: \(self.likeUserFlag)")
                 print(value ?? "No value found for that 👤")
                 
                 self.user_displayName.text = alias
@@ -151,7 +153,7 @@ class UsersViewController: UIViewController {
         }
     }
     
-    func updateRating(rating: Int){
+    func updateRating(rating: Int, likeUser: Bool){
         let user = FIRAuth.auth()?.currentUser
         
         if user != nil {
@@ -160,7 +162,52 @@ class UsersViewController: UIViewController {
             FireConnection.setGlobalUserRating(rating: rating)
             
             dbRef.child("users").child(currentUserId).child("user_rate").child((user?.uid)!).setValue(rating)
-            print("👤 Rated 👍: \(rating) ⭐️")
+            if likeUser {
+                dbRef.child("users").child((user?.uid)!).child("like_user").child(currentUserId).setValue(likeUser)
+                checkIfWeLike(currentUserId: currentUserId)
+            } else{
+                 dbRef.child("users").child((user?.uid)!).child("like_user").child(currentUserId).setValue(nil)
+            }
+            print("👤 Rated 👍:  ⭐️\(rating) ⚠️ Like: \(likeUser)")
+        }
+    }
+    
+    func checkIfWeLike(currentUserId: String){
+        let user = FIRAuth.auth()?.currentUser
+        
+        if user != nil {
+            //let currentUserId = FireConnection.getCurrentUserId()
+            let dbRef = FIRDatabase.database().reference()
+            
+            dbRef.child("users").child(currentUserId).child("like_user").observeSingleEvent(of: .value, with: { (snapshot) in
+                //let value = snapshot.value as? NSDictionary
+                if snapshot.hasChild((user?.uid)!){
+                    print("We like! ✅")
+                    self.checkChat(currentUserId: currentUserId)
+                } else {
+                    print("We don't Like 🚷")
+                }
+            })
+        }
+    }
+    
+    func checkChat(currentUserId: String){
+        let user = FIRAuth.auth()?.currentUser
+        
+        if user != nil {
+            let dbRef = FIRDatabase.database().reference()
+            
+            dbRef.child("users").child((user?.uid)!).child("my_chats").observeSingleEvent(of: .value, with: { (snapshot) in
+                let value = snapshot.value as? NSDictionary
+                if !snapshot.hasChild((user?.uid)!){
+                    let ucid = UUID().uuidString
+                    let chatUid = "chat_" + ucid
+                    dbRef.child("users").child(currentUserId).child("my_chats").child((user?.uid)!).setValue(chatUid)
+                    dbRef.child("users").child((user?.uid)!).child("my_chats").child(currentUserId).setValue(chatUid)
+                } else {
+                    print("💬 exists with ID: \(value?.value(forKey: currentUserId))")
+                }
+            })
         }
     }
     
@@ -168,10 +215,8 @@ class UsersViewController: UIViewController {
     
     @IBAction func dragCard(_ sender: UIPanGestureRecognizer) {
         var userRated = self.myRatingOfTheUser
-        //var oldRate = self.myRatingOfTheUser
         let view = sender.view
-        //let cardPosition = sender.view?.frame.origin
-        let position = (sender.view?.frame.midY)! //(cardPosition?.y)!
+        let position = (sender.view?.frame.midY)!
         let translation = sender.translation(in: self.view)
         let onePart = containerView.frame.height / CGFloat(screenParts)
         
@@ -236,11 +281,11 @@ class UsersViewController: UIViewController {
                 break;
             
             case UIGestureRecognizerState.ended:
-                print("👤 ⭐️: \(self.myRatingOfTheUser) Like 👤: \(likeUserFlag)")
+                print("👤 ⭐️: \(self.myRatingOfTheUser) ⚠️ Like 👤: \(likeUserFlag)")
                 print("------> Ended <------")
             
                 view?.frame.origin = CGPoint(x:(displayPic_originalPosition?.x)!, y:(displayPic_originalPosition?.y)!)
-                updateRating(rating: userRated)
+                updateRating(rating: userRated, likeUser: likeUserFlag)
                 getUsersList()
                 
                 break;
