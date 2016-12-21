@@ -35,6 +35,7 @@ class RatingControl: UIView {
             button.setImage(emptyStarImage, for: .normal)
             button.setImage(filledStarImage, for: .selected)
             button.setImage(filledStarImage, for: [.highlighted, .selected])
+            button.backgroundColor = UIColor.clear
             
             button.adjustsImageWhenHighlighted = false
             

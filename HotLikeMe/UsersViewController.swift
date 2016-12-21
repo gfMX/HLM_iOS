@@ -13,9 +13,15 @@ class UsersViewController: UIViewController {
     var user = FIRAuth.auth()?.currentUser
     
     var shuffledFlag = false
+    var likeUserFlag = false
     var userIds = [String]()
     var currentUser: Int = 0
     let defaults = UserDefaults.standard
+    var myRatingOfTheUser = 0
+    
+    let screenParts = 13
+    var screenSize = UIScreen.main.bounds
+    var displayPic_originalPosition: CGPoint!
     
     @IBOutlet weak var containerView: UIView!
     
@@ -37,7 +43,6 @@ class UsersViewController: UIViewController {
         } else {
             print("👤 Logged")
         }
-        
         getUsersList()
     }
     
@@ -59,6 +64,10 @@ class UsersViewController: UIViewController {
     func getUsersList(){
         let lookingFor = defaults.string(forKey: "defLookingfor")
         let ref = FIRDatabase.database().reference()
+        displayPic_originalPosition = user_displayPic.frame.origin
+        
+        print("Display Pic Original Position: \(displayPic_originalPosition)")
+        print("Screen Size: \(screenSize.size)")
         
         print("Looking For: \(lookingFor)")
         
@@ -70,7 +79,7 @@ class UsersViewController: UIViewController {
                     self.userIds = value?.allKeys as! [String]
                     self.shuffledFlag = false
                     self.currentUser = 0
-                    print("Users leave/arrive at the area")
+                    print("👥 leave/arrive at the area")
                     //print("Data: \(self.userIds)")
                 }
                 
@@ -129,11 +138,11 @@ class UsersViewController: UIViewController {
                 ref.observeSingleEvent(of: .value, with: { (snapshot) in
                     // Get user value
                     let value = snapshot.value as? NSDictionary
-                    let myRatingOfTheUser = value?.value(forKey: (self.user?.uid)!) ?? 0
-                    self.user_ratingBar.rating = myRatingOfTheUser as! Int
+                    self.myRatingOfTheUser = value?.value(forKey: (self.user?.uid)!) as! Int? ?? 0
+                    self.user_ratingBar.rating = self.myRatingOfTheUser 
                     
                     //print("All values: \(value)")
-                    print("⭐️ Current 👤 Rating: \(myRatingOfTheUser) ⭐️")
+                    print("⭐️ Current 👤 Rating: \(self.myRatingOfTheUser) ⭐️")
                 })
                 
             }) { (error) in
@@ -142,29 +151,112 @@ class UsersViewController: UIViewController {
         }
     }
     
+    func updateRating(rating: Int){
+        let user = FIRAuth.auth()?.currentUser
+        
+        if user != nil {
+            let currentUserId = FireConnection.getCurrentUserId()
+            let dbRef = FIRDatabase.database().reference()
+            FireConnection.setGlobalUserRating(rating: rating)
+            
+            dbRef.child("users").child(currentUserId).child("user_rate").child((user?.uid)!).setValue(rating)
+            print("👤 Rated 👍: \(rating) ⭐️")
+        }
+    }
+    
     // MARK: Actions
     
     @IBAction func dragCard(_ sender: UIPanGestureRecognizer) {
-        //var rotationAngle: CGFloat = 0
+        var userRated = self.myRatingOfTheUser
+        //var oldRate = self.myRatingOfTheUser
+        let view = sender.view
+        //let cardPosition = sender.view?.frame.origin
+        let position = (sender.view?.frame.midY)! //(cardPosition?.y)!
         let translation = sender.translation(in: self.view)
-        if let view = sender.view {
-            view.center = CGPoint(x:view.center.x + translation.x,
-                                  y:view.center.y + translation.y)
+        let onePart = containerView.frame.height / CGFloat(screenParts)
+        
+        switch sender.state {
+            case UIGestureRecognizerState.began:
+                print("------> Began: \(position) <------")
+                //oldRate = self.myRatingOfTheUser
+                break;
             
-            /*
-            let dx = view.center.x + translation.x
-            let dy = view.center.y + translation.y
+            case UIGestureRecognizerState.changed:
+                containerView.sendSubview(toBack: view!)
+                
+                view?.center = CGPoint(x:(view?.center.x)! + translation.x,
+                                       y:(view?.center.y)! + translation.y)
+
+                if (position) < onePart {
+                    userRated = 5
+                    //print("Part 1 \(userRated)")
+                } else if (position) < onePart * 2 {
+                    userRated = 4
+                    //print("Part 2 \(userRated)")
+                } else if (position) < onePart * 3 {
+                    userRated = 3
+                    //print("Part 3 \(userRated)")
+                } else if (position) < onePart * 4 {
+                    userRated = 2
+                    //print("Part 4 \(userRated)")
+                } else if (position) < onePart * 5 {
+                    userRated = 1
+                    likeUserFlag = true
+                    //print("Part 5 \(userRated)")
+                } else if (position) < onePart * 6 {
+                    print("Part 6 Neutral ZONE")
+                    //Mid part No hcange on users
+                } else if (position) < onePart * 7 {
+                    userRated = 1
+                    likeUserFlag = false
+                    //print("Part 7 \(userRated)")
+                } else if (position) < onePart * 8 {
+                    userRated = 2
+                    //print("Part 8 \(userRated)")
+                } else if (position) < onePart * 9 {
+                    userRated = 3
+                    //print("Part 9 \(userRated)")
+                } else if (position) < onePart * 10 {
+                    userRated = 4
+                    //print("Part 10 \(userRated)")
+                } else if (position) < onePart * 11 {
+                    userRated = 5
+                    //print("Part 11 \(userRated)")
+                } else if (position) < onePart * 12 {
+                    //print("Part 12")
+                    //Not in use
+                } else if (position) < onePart * 13 {
+                    //print("Part 13 \(userRated)")
+                    //Not in use
+                }
+                
+                self.user_ratingBar.rating = userRated
+                self.myRatingOfTheUser = userRated
+
+                break;
             
-            let angle = atan2(dx, dy)
-            view.transform = CGAffineTransform(rotationAngle: angle)
-            */
+            case UIGestureRecognizerState.ended:
+                print("👤 ⭐️: \(self.myRatingOfTheUser) Like 👤: \(likeUserFlag)")
+                print("------> Ended <------")
+            
+                view?.frame.origin = CGPoint(x:(displayPic_originalPosition?.x)!, y:(displayPic_originalPosition?.y)!)
+                updateRating(rating: userRated)
+                getUsersList()
+                
+                break;
+            
+            default:
+                //Nothing to do here
+                break;
         }
+        
         sender.setTranslation(CGPoint.zero, in: self.view)
+        
     }
     
     @IBAction func reloadUser(_ sender: UIBarButtonItem) {
         getUsersList()
-        print("Asking for a new 👤")
+        print("❓ for a new 👤")
     }
     
 }

@@ -78,7 +78,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         imageHLMProfile.layer.borderWidth = 10
         imageHLMProfile.layer.masksToBounds = false
         imageHLMProfile.layer.borderColor = UIColor.lightGray.cgColor
-        imageHLMProfile.layer.cornerRadius = imageHLMProfile.frame.height/1.7
+        imageHLMProfile.layer.cornerRadius = imageHLMProfile.frame.height/2
         imageHLMProfile.clipsToBounds = true
         
         text_description.delegate = self
