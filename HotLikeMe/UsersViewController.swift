@@ -8,15 +8,20 @@
 
 import UIKit
 import Firebase
+import Toast_Swift
 
 class UsersViewController: UIViewController {
     var user = FIRAuth.auth()?.currentUser
+    
+    var flagOne = false
+    var flagTwo = false
     
     var shuffledFlag = false
     var likeUserFlag = false
     var userIds = [String]()
     var currentUser: Int = 0
     let defaults = UserDefaults.standard
+    var oldRating = 0
     var myRatingOfTheUser = 0
     
     let screenParts = 13
@@ -62,6 +67,8 @@ class UsersViewController: UIViewController {
     */
     
     func getUsersList(){
+        resetFlags()
+        
         let lookingFor = defaults.string(forKey: "defLookingfor")
         let ref = FIRDatabase.database().reference()
         displayPic_originalPosition = user_displayPic.frame.origin
@@ -141,6 +148,7 @@ class UsersViewController: UIViewController {
                     // Get user value
                     let value = snapshot.value as? NSDictionary
                     self.myRatingOfTheUser = value?.value(forKey: (self.user?.uid)!) as! Int? ?? 0
+                    self.oldRating = self.myRatingOfTheUser
                     self.user_ratingBar.rating = self.myRatingOfTheUser 
                     
                     //print("All values: \(value)")
@@ -164,15 +172,15 @@ class UsersViewController: UIViewController {
             dbRef.child("users").child(currentUserId).child("user_rate").child((user?.uid)!).setValue(rating)
             if likeUser {
                 dbRef.child("users").child((user?.uid)!).child("like_user").child(currentUserId).setValue(likeUser)
-                checkIfWeLike(currentUserId: currentUserId)
             } else{
                  dbRef.child("users").child((user?.uid)!).child("like_user").child(currentUserId).setValue(nil)
             }
             print("👤 Rated 👍:  ⭐️\(rating) ⚠️ Like: \(likeUser)")
+            checkIfWeLike(currentUserId: currentUserId, like: likeUser)
         }
     }
     
-    func checkIfWeLike(currentUserId: String){
+    func checkIfWeLike(currentUserId: String, like: Bool){
         let user = FIRAuth.auth()?.currentUser
         
         if user != nil {
@@ -181,17 +189,21 @@ class UsersViewController: UIViewController {
             
             dbRef.child("users").child(currentUserId).child("like_user").observeSingleEvent(of: .value, with: { (snapshot) in
                 //let value = snapshot.value as? NSDictionary
-                if snapshot.hasChild((user?.uid)!){
+                let weLike: Bool!
+                if like && snapshot.hasChild((user?.uid)!){
+                    weLike = true
                     print("We like! ✅")
-                    self.checkChat(currentUserId: currentUserId)
                 } else {
+                    weLike = false
                     print("We don't Like 🚷")
                 }
+                print("👥 like each other: \(weLike)")
+                 self.checkChat(currentUserId: currentUserId, weLike: weLike)
             })
         }
     }
     
-    func checkChat(currentUserId: String){
+    func checkChat(currentUserId: String, weLike: Bool){
         let user = FIRAuth.auth()?.currentUser
         
         if user != nil {
@@ -199,14 +211,26 @@ class UsersViewController: UIViewController {
             
             dbRef.child("users").child((user?.uid)!).child("my_chats").observeSingleEvent(of: .value, with: { (snapshot) in
                 let value = snapshot.value as? NSDictionary
-                if !snapshot.hasChild((user?.uid)!){
+                if weLike && !snapshot.hasChild(currentUserId){
                     let ucid = UUID().uuidString
                     let chatUid = "chat_" + ucid
                     dbRef.child("users").child(currentUserId).child("my_chats").child((user?.uid)!).setValue(chatUid)
                     dbRef.child("users").child((user?.uid)!).child("my_chats").child(currentUserId).setValue(chatUid)
-                } else {
+                } else if weLike && snapshot.hasChild(currentUserId){
                     print("💬 exists with ID: \(value?.value(forKey: currentUserId))")
+                } else if !weLike && snapshot.hasChild(currentUserId){
+                    //If chat exists but Users don't like each other anymore 🚷
+                    let currentChatId = value?.value(forKey: currentUserId) as! String
+                    print("💬 exists with ID: \(currentChatId) but we don't like anymore 🚷")
+                    dbRef.child("users").child(currentUserId).child("my_chats").child((user?.uid)!).setValue(nil)
+                    dbRef.child("users").child((user?.uid)!).child("my_chats").child(currentUserId).setValue(nil)
+                    
+                    dbRef.child("chats").child(currentChatId).setValue(nil)
+                    dbRef.child("chats_resume").child(currentChatId).setValue(nil)
+                    print("💬 was ❌")
                 }
+                //After ✅✅ get New 👤 on View
+                self.getUsersList()
             })
         }
     }
@@ -234,44 +258,45 @@ class UsersViewController: UIViewController {
 
                 if (position) < onePart {
                     userRated = 5
-                    //print("Part 1 \(userRated)")
                 } else if (position) < onePart * 2 {
                     userRated = 4
-                    //print("Part 2 \(userRated)")
                 } else if (position) < onePart * 3 {
                     userRated = 3
-                    //print("Part 3 \(userRated)")
                 } else if (position) < onePart * 4 {
                     userRated = 2
-                    //print("Part 4 \(userRated)")
                 } else if (position) < onePart * 5 {
                     userRated = 1
                     likeUserFlag = true
-                    //print("Part 5 \(userRated)")
+                    if !flagOne {
+                        self.view.makeToast("I'll like to get in Touch"/*, duration: 2.0, position: .bottom*/)
+                        flagOne = true
+                        flagTwo = false
+                    }
                 } else if (position) < onePart * 6 {
                     print("Part 6 Neutral ZONE")
+                    userRated = self.oldRating
+                    //Drag the image to the center: Not implemented yet
+
                     //Mid part No hcange on users
                 } else if (position) < onePart * 7 {
                     userRated = 1
                     likeUserFlag = false
-                    //print("Part 7 \(userRated)")
+                    if !flagTwo {
+                        self.view.makeToast("I don't want to get in Touch"/*, duration: 2.0, position: .bottom*/)
+                        flagOne = false
+                        flagTwo = true
+                    }
                 } else if (position) < onePart * 8 {
                     userRated = 2
-                    //print("Part 8 \(userRated)")
                 } else if (position) < onePart * 9 {
                     userRated = 3
-                    //print("Part 9 \(userRated)")
                 } else if (position) < onePart * 10 {
                     userRated = 4
-                    //print("Part 10 \(userRated)")
                 } else if (position) < onePart * 11 {
                     userRated = 5
-                    //print("Part 11 \(userRated)")
                 } else if (position) < onePart * 12 {
-                    //print("Part 12")
                     //Not in use
                 } else if (position) < onePart * 13 {
-                    //print("Part 13 \(userRated)")
                     //Not in use
                 }
                 
@@ -286,7 +311,7 @@ class UsersViewController: UIViewController {
             
                 view?.frame.origin = CGPoint(x:(displayPic_originalPosition?.x)!, y:(displayPic_originalPosition?.y)!)
                 updateRating(rating: userRated, likeUser: likeUserFlag)
-                getUsersList()
+                //getUsersList()
                 
                 break;
             
@@ -297,6 +322,11 @@ class UsersViewController: UIViewController {
         
         sender.setTranslation(CGPoint.zero, in: self.view)
         
+    }
+    
+    func resetFlags(){
+        flagOne = false
+        flagTwo = false
     }
     
     @IBAction func reloadUser(_ sender: UIBarButtonItem) {
