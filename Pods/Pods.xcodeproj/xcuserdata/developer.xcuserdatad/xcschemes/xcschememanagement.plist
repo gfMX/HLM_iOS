@@ -69,15 +69,20 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Toast-Swift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>107A9565F9DF88517DFD3E28C05B2B96</key>
+		<key>0ECE5248D2A887F9AE8D1ACFD623BF7A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2A63F7F4D7C6E7F295DCFA758153A0CE</key>
+		<key>107A9565F9DF88517DFD3E28C05B2B96</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -102,17 +107,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>671F6BF07BE491158098385260F6A60B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>7335E9C9689F3B8A16F063A884748533</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>75121227FB014228BC201929A20FB05A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>BC723ABAEB95400F52C78BF3C7067385</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BF846D6D1991B97114CC0494F4843170</key>
 		<dict>
 			<key>primary</key>
 			<true/>

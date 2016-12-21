@@ -17,6 +17,9 @@ target 'HotLikeMe' do
 	#JSQMessagesViewController
 	pod 'JSQMessagesViewController'
     
+    #Toast-Swift for iOS
+    pod 'Toast-Swift', '~> 2.0.0'
+    
     #RNCryptor
     pod 'RNCryptor'
 
