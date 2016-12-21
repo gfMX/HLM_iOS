@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import CoreLocation
 import Toast_Swift
 
 class UsersViewController: UIViewController {
@@ -24,6 +25,8 @@ class UsersViewController: UIViewController {
     var oldRating = 0
     var myRatingOfTheUser = 0
     
+    var myCurrentLocation: CLLocation!
+    
     let screenParts = 13
     var screenSize = UIScreen.main.bounds
     var displayPic_originalPosition: CGPoint!
@@ -38,7 +41,7 @@ class UsersViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        getUsersList()
         // Do any additional setup after loading the view.
     }
 
@@ -48,7 +51,6 @@ class UsersViewController: UIViewController {
         } else {
             print("👤 Logged")
         }
-        getUsersList()
     }
     
     override func didReceiveMemoryWarning() {

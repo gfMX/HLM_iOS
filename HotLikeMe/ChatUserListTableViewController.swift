@@ -137,6 +137,8 @@ class ChatUserListTableViewController: UITableViewController {
     }
     
     func getActiveChats(){
+        self.view.makeToast("Loading Messages", duration: 1.0, position: .center)
+        
         ref.child("users").child(user.uid).child("my_chats").observe(FIRDataEventType.value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             //print("👥 on My Chats: \(value?.allKeys)")
@@ -165,18 +167,20 @@ class ChatUserListTableViewController: UITableViewController {
             let password = Helper.genPassword(keyString: cid)
             // End of password generation!
             
-                self.ref1.child("users").child(uid).child("preferences").observeSingleEvent(of: .value, with: {(snapshot) in
+            self.ref1.child("users").child(uid).child("preferences").observeSingleEvent(of: .value, with: {(snapshot) in
                 let value2 = snapshot.value as? NSDictionary
                 
                 let user_name = value2?.value(forKey: "alias") as! String
                 let user_pic = value2?.value(forKey: "profile_pic_storage") as! String
+                var user_message: String!
+                var user_picUrl: String!
                 
                 print ("Storage Pic: \(user_pic)")
                 
-                    self.ref.child("chats_resume").child(cid).observeSingleEvent(of:.value, with: {(snapshot) in
-                    let value = snapshot.value as? NSDictionary
+                    self.ref.child("chats_resume").child(cid).observe(FIRDataEventType.value, with: {(snapshot) in
+                        let value = snapshot.value as? NSDictionary
                     
-                    let user_message = (value?.value(forKey: "text") as? String) ?? "No message found"
+                        user_message = (value?.value(forKey: "text") as? String) ?? "No message found"
                         
                         ///////////////////////////////////////////////////////////////
                         //Testing Zone
@@ -194,8 +198,6 @@ class ChatUserListTableViewController: UITableViewController {
                         ///////////////////////////////////////////////////////////////
                         
                     //SecureMessage.decrypt(str: user_message)
-                        
-                    var user_picUrl: String!
                     
                     FireConnection.storageReference.child(uid).child("/images/image_" + user_pic + ".jpg").downloadURL { (URL, error) -> Void in
                         if (error != nil) {
@@ -207,13 +209,13 @@ class ChatUserListTableViewController: UITableViewController {
                         let user = Users(uid: uid, chatid: cid, name: user_name, photo: user_picUrl, message: user_message)!
                         self.users.append(user)
                         
-                        self.tableView.reloadData()
+                        //self.tableView.reloadData()
                         
-                        /*
-                         if i == self.listUsers.count - 1 {
-                            self.tableView.reloadData()
+                        if i == self.listUsers.count - 1 {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                self.tableView.reloadData()
+                            }
                         }
-                        */
                         
                     }
                 })

@@ -34,7 +34,7 @@
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hCW-5p-f3N">
                                                 <rect key="frame" x="299" y="4" width="58" height="60"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" image="9B53572B-8EF1-4AE1-BCB2-A7AE04220A0D" translatesAutoresizingMaskIntoConstraints="NO" id="L1f-8P-nkA">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" image="192472E4-FF6E-454A-91E5-68854136EA61" translatesAutoresizingMaskIntoConstraints="NO" id="L1f-8P-nkA">
                                                 <rect key="frame" x="68" y="56" width="240" height="240"/>
                                                 <accessibility key="accessibilityConfiguration">
                                                     <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
@@ -276,27 +276,27 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XqN-VZ-x8v">
-                                <rect key="frame" x="16" y="84" width="343" height="511"/>
+                                <rect key="frame" x="16" y="84" width="343" height="563"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EAV-ni-bET">
-                                        <rect key="frame" x="12" y="28" width="319" height="29"/>
+                                        <rect key="frame" x="12" y="13" width="319" height="29"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" placeholderIntrinsicWidth="220" placeholderIntrinsicHeight="45" translatesAutoresizingMaskIntoConstraints="NO" id="fGi-Hl-SVT" customClass="RatingControl" customModule="HotLikeMe" customModuleProvider="target">
-                                        <rect key="frame" x="67" y="400" width="220" height="45"/>
+                                        <rect key="frame" x="67" y="455" width="220" height="45"/>
                                     </view>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="User description" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t3R-LK-MlA">
-                                        <rect key="frame" x="12" y="453" width="319" height="46"/>
+                                        <rect key="frame" x="12" y="508" width="319" height="46"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="320" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="IMz-yW-nVc">
-                                        <rect key="frame" x="12" y="65" width="319" height="319"/>
+                                        <rect key="frame" x="12" y="50" width="319" height="395"/>
                                         <gestureRecognizers/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="319" id="teD-7v-42s"/>
+                                            <constraint firstAttribute="height" constant="395" id="teD-7v-42s"/>
                                         </constraints>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="FAn-uW-fIY" appends="YES" id="UKg-Ml-kfW"/>
@@ -308,13 +308,13 @@
                                     <constraint firstItem="fGi-Hl-SVT" firstAttribute="leading" secondItem="XqN-VZ-x8v" secondAttribute="leading" constant="67" id="3nn-vG-Mea"/>
                                     <constraint firstItem="IMz-yW-nVc" firstAttribute="leading" secondItem="t3R-LK-MlA" secondAttribute="leading" id="Hr9-t0-ByJ"/>
                                     <constraint firstItem="IMz-yW-nVc" firstAttribute="trailing" secondItem="t3R-LK-MlA" secondAttribute="trailing" id="IEw-Vf-xEX"/>
-                                    <constraint firstItem="fGi-Hl-SVT" firstAttribute="top" secondItem="IMz-yW-nVc" secondAttribute="bottom" constant="16" id="IIh-Gh-ZFp"/>
+                                    <constraint firstItem="fGi-Hl-SVT" firstAttribute="top" secondItem="IMz-yW-nVc" secondAttribute="bottom" constant="10" id="IIh-Gh-ZFp"/>
                                     <constraint firstItem="IMz-yW-nVc" firstAttribute="leading" secondItem="EAV-ni-bET" secondAttribute="leading" id="Iug-Ys-irJ"/>
                                     <constraint firstAttribute="trailing" secondItem="EAV-ni-bET" secondAttribute="trailing" constant="12" id="Mo7-r3-ueJ"/>
-                                    <constraint firstAttribute="bottom" secondItem="t3R-LK-MlA" secondAttribute="bottom" constant="12" id="OpP-ku-x0L"/>
+                                    <constraint firstAttribute="bottom" secondItem="t3R-LK-MlA" secondAttribute="bottom" constant="9" id="OpP-ku-x0L"/>
                                     <constraint firstItem="IMz-yW-nVc" firstAttribute="top" secondItem="EAV-ni-bET" secondAttribute="bottom" constant="8" id="Pxc-eN-gG0"/>
                                     <constraint firstItem="IMz-yW-nVc" firstAttribute="trailing" secondItem="EAV-ni-bET" secondAttribute="trailing" id="RU6-aO-pFC"/>
-                                    <constraint firstItem="EAV-ni-bET" firstAttribute="top" secondItem="XqN-VZ-x8v" secondAttribute="top" constant="28" id="UyZ-Yz-gs2"/>
+                                    <constraint firstItem="EAV-ni-bET" firstAttribute="top" secondItem="XqN-VZ-x8v" secondAttribute="top" constant="13" id="UyZ-Yz-gs2"/>
                                     <constraint firstItem="EAV-ni-bET" firstAttribute="leading" secondItem="XqN-VZ-x8v" secondAttribute="leading" constant="12" id="VPt-BF-qtf"/>
                                     <constraint firstItem="t3R-LK-MlA" firstAttribute="top" secondItem="fGi-Hl-SVT" secondAttribute="bottom" constant="8" symbolic="YES" id="mQn-0Y-sSa"/>
                                 </constraints>
@@ -324,7 +324,7 @@
                         <constraints>
                             <constraint firstItem="XqN-VZ-x8v" firstAttribute="trailing" secondItem="Wdx-Eq-8dQ" secondAttribute="trailingMargin" id="0Fc-So-dEV"/>
                             <constraint firstItem="XqN-VZ-x8v" firstAttribute="leading" secondItem="Wdx-Eq-8dQ" secondAttribute="leadingMargin" id="Hri-L0-pkm"/>
-                            <constraint firstItem="Hoq-na-1cc" firstAttribute="top" secondItem="XqN-VZ-x8v" secondAttribute="bottom" constant="72" id="nFk-Aa-LrZ"/>
+                            <constraint firstItem="Hoq-na-1cc" firstAttribute="top" secondItem="XqN-VZ-x8v" secondAttribute="bottom" constant="20" id="nFk-Aa-LrZ"/>
                             <constraint firstItem="XqN-VZ-x8v" firstAttribute="top" secondItem="vg6-A9-PzZ" secondAttribute="bottom" constant="20" id="tyO-eQ-9es"/>
                         </constraints>
                     </view>
@@ -350,7 +350,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="940" y="771"/>
+            <point key="canvasLocation" x="940" y="770.46476761619192"/>
         </scene>
         <!--Select Profile Image-->
         <scene sceneID="Gbg-Jp-v7q">
@@ -479,7 +479,7 @@
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Last message" translatesAutoresizingMaskIntoConstraints="NO" id="udW-dc-1sn">
                                             <rect key="frame" x="97" y="37" width="270" height="45"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="gHr-RB-XrV">
@@ -612,7 +612,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="9B53572B-8EF1-4AE1-BCB2-A7AE04220A0D" width="540" height="540">
+        <image name="192472E4-FF6E-454A-91E5-68854136EA61" width="540" height="540">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

@@ -43,10 +43,11 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
     override func viewDidAppear(_ animated: Bool) {
         let timeInterval = (defaults.double(forKey: "defSyncFrequency") * 60)
         if defaults.bool(forKey: "defVisible"){
-            print ("Requesting Location")
+            print ("Requesting Location 📡")
+            self.determineMyCurrentLocation()
             timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(self.determineMyCurrentLocation), userInfo: nil, repeats: true);
         } else {
-            print("Default config for Visible not Found or Not Enabled")
+            print("❌ Default config for Visible not Found or Not Enabled")
         }
         print("Defaults: \(defaults)")
     }
@@ -90,6 +91,7 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let userLocation:CLLocation = locations[0] as CLLocation
+        FireConnection.setCurrentLocation(location: userLocation)
         
         // Call stopUpdatingLocation() to stop listening for location updates,
         // other wise this function will be called every time when user location changes.
@@ -113,7 +115,7 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
         /*
         if !defaults.bool(forKey: "defVisible"){
             timer.invalidate()
-            print ("Requesting Location Stoped")
+            print ("⚠️ Requesting Location 📡 Stoped")
         }
         */
     }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 import Firebase
 
 class FireConnection {
@@ -17,6 +18,7 @@ class FireConnection {
     
     static var fireUser: FIRUser!
     static let sharedInstance = FireConnection()
+    static var myLocation: CLLocation!
     static var databaseReference: FIRDatabaseReference!
     static var storageReference: FIRStorageReference!
     //static var visibleViews = 1
@@ -57,5 +59,11 @@ class FireConnection {
     }
     static func getCurrentUserId() -> String {
         return FireConnection.currentUserID
+    }
+    static func setCurrentLocation(location: CLLocation){
+        FireConnection.myLocation = location
+    }
+    static func getCurrentLocation() -> CLLocation{
+        return FireConnection.myLocation
     }
 }
