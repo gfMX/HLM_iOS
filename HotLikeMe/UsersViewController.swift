@@ -75,7 +75,7 @@ class UsersViewController: UIViewController {
         
         let lookingFor = defaults.string(forKey: "defLookingfor")!
         let gpsEnabled = defaults.bool(forKey: "defGPS")
-        //let showUsersNearby = defaults.bool(forKey: "defVisible")
+        let showMe = defaults.bool(forKey: "defVisible")
         let maxDistance = defaults.double(forKey: "defSyncDistance")
         let ref = FIRDatabase.database().reference()
         displayPic_originalPosition = user_displayPic.frame.origin
@@ -95,21 +95,22 @@ class UsersViewController: UIViewController {
                 // MARK: GPS Disaster 📡
                 // Check if Location is required an looking for Users Nearby
                 
-                if !gpsEnabled || !CLLocationCoordinate2DIsValid(FireConnection.getCurrentLocation().coordinate){
+                if !gpsEnabled || !showMe || FireConnection.getCurrentLocation() == nil {
                     self.userIds = self.userIdsRaw
+                    print("⚠️👀 Showing \(self.userIds.count) 👥")
                     self.shuffledFlag = false
                     self.currentUser = 0
                     self.getTheUser()
                 } else {
                     let myCurrentLocation = FireConnection.getCurrentLocation()
                     let userReference = FIRDatabase.database().reference().child("users")
-                    for i in 0 ..< (value?.count)! {
+                    for i in 0 ..< nCount! {
                         userReference.child(self.userIdsRaw[i]).child("location_last").observeSingleEvent(of: .value, with: {(snapshot) in
                             //print("Snapshot: \(snapshot)")
                             
-                            let value = snapshot.value as? NSDictionary!
-                            let latitude = value?.value(forKey: "loc_latitude")
-                            let longitude = value?.value(forKey: "loc_longitude")
+                            let value2 = snapshot.value as? NSDictionary!
+                            let latitude = value2?.value(forKey: "loc_latitude")
+                            let longitude = value2?.value(forKey: "loc_longitude")
                             
                             self.myCurrentLocation = FireConnection.getCurrentLocation()
                             
@@ -123,9 +124,11 @@ class UsersViewController: UIViewController {
                                 print("Distance to the 👤: \(distanceToCurrentUser)")
                                 
                                 if distanceToCurrentUser < maxDistance {
-                                    print("👤 is Reachable ✅")
-                                    self.userIds.append(self.userIdsRaw[i])
-                                    print("👤 Visible: \(self.userIdsRaw[i])")
+                                    if self.userIdsRaw[i] != self.user?.uid {
+                                        print("👤 is Reachable ✅")
+                                        self.userIds.append(self.userIdsRaw[i])
+                                        print("👤 Visible: \(self.userIdsRaw[i])")
+                                    }
                                 }
                                 
                             } else {
@@ -145,8 +148,6 @@ class UsersViewController: UIViewController {
                         })
                     }
                 }
-                //self.shuffledFlag = false
-                //self.currentUser = 0
                 print("👥 leave/arrive at the area")
                 
             }) { (error) in

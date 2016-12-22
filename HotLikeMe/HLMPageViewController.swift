@@ -38,18 +38,19 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
                                animated: true,
                                completion: nil)
         }
+        //NotificationCenter.default.addObserver(self, selector: #selector(self.determineMyCurrentLocation), name: NSNotification.Name(rawValue: "defGPS"), object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         let timeInterval = (defaults.double(forKey: "defSyncFrequency") * 60)
-        if defaults.bool(forKey: "defVisible"){
+        //if defaults.bool(forKey: "defVisible"){
             print ("Requesting Location 📡")
             self.determineMyCurrentLocation()
             timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(self.determineMyCurrentLocation), userInfo: nil, repeats: true);
-        } else {
-            print("❌ Default config for Visible not Found or Not Enabled")
-        }
-        print("Defaults: \(defaults)")
+        //} else {
+          //  print("❌ Default config for Visible not Found or Not Enabled")
+        //}
+        //print("Defaults: \(defaults)")
     }
 
     private func newColoredViewController(color: String) -> UIViewController {
@@ -61,7 +62,6 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
     /*
     // MARK: - Navigation
@@ -76,16 +76,20 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
     // MARK: - GPS Location
     
     func determineMyCurrentLocation() {
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        
-        if CLLocationManager.locationServicesEnabled() && defaults.bool(forKey: "defGPS") {
-            locationManager.startUpdatingLocation()
-            //locationManager.startUpdatingHeading()
+        if defaults.bool(forKey: "defVisible"){
+            locationManager = CLLocationManager()
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestWhenInUseAuthorization()
+            
+            if CLLocationManager.locationServicesEnabled() && defaults.bool(forKey: "defGPS") {
+                locationManager.startUpdatingLocation()
+                //locationManager.startUpdatingHeading()
+            } else {
+                print("📡 Location request Stopped by the User")
+            }
         } else {
-            print("Location request Stopped by the User")
+              print("📡 ❌ enabled!")
         }
     }
     
@@ -112,12 +116,12 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
         print("location Accuracy: \(userLocation.horizontalAccuracy) Timestamp: \(userLocation.timestamp)")
         
         manager.stopUpdatingLocation()
-        /*
-        if !defaults.bool(forKey: "defVisible"){
+
+        /* if !defaults.bool(forKey: "defVisible"){
             timer.invalidate()
             print ("⚠️ Requesting Location 📡 Stoped")
-        }
-        */
+        } */
+        
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
