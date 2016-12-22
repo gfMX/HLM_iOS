@@ -71,17 +71,19 @@ class UsersViewController: UIViewController {
     func getUsersList(){
         resetFlags()
         
-        let lookingFor = defaults.string(forKey: "defLookingfor")
+        let lookingFor = defaults.string(forKey: "defLookingfor")!
+        let gpsEnabled = defaults.bool(forKey: "defGPS")
         let ref = FIRDatabase.database().reference()
         displayPic_originalPosition = user_displayPic.frame.origin
         
         print("Display Pic Original Position: \(displayPic_originalPosition)")
         print("Screen Size: \(screenSize.size)")
         
-        print("Looking For: \(lookingFor)")
+        print("👀 For: \(lookingFor) GPS 📡: \(gpsEnabled)")
+        print("--------------------------------")
         
         if user != nil {
-            ref.child("groups").child(lookingFor!).observeSingleEvent(of: .value, with: { (snapshot) in
+            ref.child("groups").child(lookingFor).observeSingleEvent(of: .value, with: { (snapshot) in
                 // Get user value
                 let value = snapshot.value as? NSDictionary
                 if value?.count != self.userIds.count{
@@ -100,6 +102,7 @@ class UsersViewController: UIViewController {
                     
                     self.getUserDetails(currentUser: self.currentUser)
                     
+                    //Check if more 👥 are 👀, if not, set count to Zero
                     if self.currentUser + 1 < self.userIds.count {
                         self.currentUser += 1
                     } else {
