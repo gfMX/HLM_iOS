@@ -20,6 +20,7 @@ class UsersViewController: UIViewController {
     var shuffledFlag = false
     var likeUserFlag = false
     var userIds = [String]()
+    var userIdsRaw = [String]()
     var currentUser: Int = 0
     let defaults = UserDefaults.standard
     var oldRating = 0
@@ -70,51 +71,108 @@ class UsersViewController: UIViewController {
     
     func getUsersList(){
         resetFlags()
+        userIds.removeAll()
         
         let lookingFor = defaults.string(forKey: "defLookingfor")!
         let gpsEnabled = defaults.bool(forKey: "defGPS")
+        //let showUsersNearby = defaults.bool(forKey: "defVisible")
+        let maxDistance = defaults.double(forKey: "defSyncDistance")
         let ref = FIRDatabase.database().reference()
         displayPic_originalPosition = user_displayPic.frame.origin
         
         print("Display Pic Original Position: \(displayPic_originalPosition)")
         print("Screen Size: \(screenSize.size)")
         
-        print("👀 For: \(lookingFor) GPS 📡: \(gpsEnabled)")
-        print("--------------------------------")
+        print("👀 For: \(lookingFor) GPS 📡: \(gpsEnabled) Distance 🛣: \(maxDistance)")
+        print("-------------------------------------------------")
         
         if user != nil {
             ref.child("groups").child(lookingFor).observeSingleEvent(of: .value, with: { (snapshot) in
-                // Get user value
                 let value = snapshot.value as? NSDictionary
-                if value?.count != self.userIds.count{
-                    self.userIds = value?.allKeys as! [String]
+                let nCount = value?.count
+                self.userIdsRaw = value?.allKeys as! [String]
+                
+                // MARK: GPS Disaster 📡
+                // Check if Location is required an looking for Users Nearby
+                
+                if !gpsEnabled || !CLLocationCoordinate2DIsValid(FireConnection.getCurrentLocation().coordinate){
+                    self.userIds = self.userIdsRaw
                     self.shuffledFlag = false
                     self.currentUser = 0
-                    print("👥 leave/arrive at the area")
-                    //print("Data: \(self.userIds)")
+                    self.getTheUser()
+                } else {
+                    let myCurrentLocation = FireConnection.getCurrentLocation()
+                    let userReference = FIRDatabase.database().reference().child("users")
+                    for i in 0 ..< (value?.count)! {
+                        userReference.child(self.userIdsRaw[i]).child("location_last").observeSingleEvent(of: .value, with: {(snapshot) in
+                            //print("Snapshot: \(snapshot)")
+                            
+                            let value = snapshot.value as? NSDictionary!
+                            let latitude = value?.value(forKey: "loc_latitude")
+                            let longitude = value?.value(forKey: "loc_longitude")
+                            
+                            self.myCurrentLocation = FireConnection.getCurrentLocation()
+                            
+                            if latitude != nil && longitude != nil{
+                                print("Getting 👤 position ✅📡")
+                                let remoteLocation = CLLocation.init(latitude: latitude as! CLLocationDegrees, longitude: longitude as! CLLocationDegrees)
+                                print("📡-----------------------:⚠️:User Location:⚠️:-----------------------📡")
+                                print("👤 ID: \(self.userIdsRaw[i]) \n📡 Remote: \(remoteLocation) \n📡 Myself: \(myCurrentLocation)")
+                                
+                                let distanceToCurrentUser = remoteLocation.distance(from: self.myCurrentLocation)
+                                print("Distance to the 👤: \(distanceToCurrentUser)")
+                                
+                                if distanceToCurrentUser < maxDistance {
+                                    print("👤 is Reachable ✅")
+                                    self.userIds.append(self.userIdsRaw[i])
+                                    print("👤 Visible: \(self.userIdsRaw[i])")
+                                }
+                                
+                            } else {
+                                print("👤 Not reachable, ❌📡")
+                            }
+                            
+                            if i == nCount! - 1 {
+                                print("⚠️👀 Showing \(self.userIds.count) 👥")
+                                self.shuffledFlag = false
+                                self.currentUser = 0
+                                self.getTheUser()
+                            }
+                        
+                            
+                        }, withCancel: {(Error) in
+                            print("📡 Something went wrong ❌: \(Error.localizedDescription)")
+                        })
+                    }
                 }
+                //self.shuffledFlag = false
+                //self.currentUser = 0
+                print("👥 leave/arrive at the area")
                 
-                if self.userIds.count > 0 {
-                    if !self.shuffledFlag {
-                        self.userIds.shuffle()
-                        self.shuffledFlag = true
-                    }
-                    
-                    self.getUserDetails(currentUser: self.currentUser)
-                    
-                    //Check if more 👥 are 👀, if not, set count to Zero
-                    if self.currentUser + 1 < self.userIds.count {
-                        self.currentUser += 1
-                    } else {
-                        self.currentUser = 0
-                    }
-                    print("Next 👤: \(self.currentUser) Total 👥: \(self.userIds.count)")
-                } else{
-                    print("There are no 👥 Around")
-                }
             }) { (error) in
                 print(error.localizedDescription)
             }
+        }
+    }
+    
+    func getTheUser(){
+        if self.userIds.count > 0 {
+            if !self.shuffledFlag {
+                self.userIds.shuffle()
+                self.shuffledFlag = true
+            }
+            
+            self.getUserDetails(currentUser: self.currentUser)
+            
+            //Check if more 👥 are 👀, if not, set count to Zero
+            if self.currentUser + 1 < self.userIds.count {
+                self.currentUser += 1
+            } else {
+                self.currentUser = 0
+            }
+            print("Next 👤: \(self.currentUser) Total 👥: \(self.userIds.count)")
+        } else{
+            print("There are no 👥 Around")
         }
     }
     
@@ -235,7 +293,7 @@ class UsersViewController: UIViewController {
                     print("💬 was ❌")
                 }
                 //After ✅✅ get New 👤 on View
-                self.getUsersList()
+                self.getTheUser()
             })
         }
     }
@@ -312,7 +370,7 @@ class UsersViewController: UIViewController {
             
             case UIGestureRecognizerState.ended:
                 print("👤 ⭐️: \(self.myRatingOfTheUser) ⚠️ Like 👤: \(likeUserFlag)")
-                print("------> Ended <------")
+                print("-------> Ended <-------")
             
                 view?.frame.origin = CGPoint(x:(displayPic_originalPosition?.x)!, y:(displayPic_originalPosition?.y)!)
                 updateRating(rating: userRated, likeUser: likeUserFlag)

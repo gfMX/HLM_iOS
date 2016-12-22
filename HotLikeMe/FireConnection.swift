@@ -18,7 +18,7 @@ class FireConnection {
     
     static var fireUser: FIRUser!
     static let sharedInstance = FireConnection()
-    static var myLocation: CLLocation!
+    static var myLocation: CLLocation! = nil
     static var databaseReference: FIRDatabaseReference!
     static var storageReference: FIRStorageReference!
     //static var visibleViews = 1
