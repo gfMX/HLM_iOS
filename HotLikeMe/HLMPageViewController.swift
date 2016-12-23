@@ -59,6 +59,10 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
             instantiateViewController(withIdentifier: "HLM\(color)")
     }
     
+    deinit {
+        defaults.removeObserver(self, forKeyPath: "defGPS")
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -103,7 +107,7 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
                 print("📡 Location request Stopped by the User")
             }
         } else {
-              print("📡 ❌ enabled!")
+              print("📡 ❌ Not enabled!")
         }
     }
     
