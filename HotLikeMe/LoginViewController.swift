@@ -56,6 +56,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         super.viewDidLoad()
         
         FBSDKProfile.enableUpdates(onAccessTokenChange: true)
+        facebookAccessToken = FBSDKAccessToken.current() ?? nil
         
         fireUser = FireConnection.fireUser
         
@@ -69,10 +70,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
 
         loginButton.readPermissions = ["public_profile", "email"]
         loginButton.delegate = self
-        /*
-        let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(imageTapped(img:)))
-        imageHLMProfile.addGestureRecognizer(tapGestureRecognizer)
-        */
+
         imageHLMProfile.isUserInteractionEnabled = true
         
         imageHLMProfile.layer.borderWidth = 10
@@ -86,8 +84,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         
         switch_userVisible.addTarget(self, action: #selector(switchUserVisibleChanged), for: UIControlEvents.valueChanged)
         switch_gps.addTarget(self, action: #selector(switchGPSEnabledChanged), for: UIControlEvents.valueChanged)
-   
-        //updateUI()
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -105,6 +102,10 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     
     func updateUI(){
         facebookAccessToken = FBSDKAccessToken.current() ?? nil
+        
+        if facebookAccessToken != nil {
+            self.button_uploadImages.isEnabled = true
+        }
         
         FIRAuth.auth()?.addStateDidChangeListener { auth, user in
             if let user = user {
@@ -133,6 +134,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                                       Getting details from Facebook
                  ***************************************************************************/
                 if self.facebookAccessToken != nil {
+                    
                     let graphRequest:FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"first_name,email, picture.type(large),gender"])
                     graphRequest.start(completionHandler: { (connection, result, error) -> Void in
                         let data:[String:AnyObject] = result as! [String : AnyObject]
@@ -151,6 +153,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                         dbRef.child("users").child(self.fireUser.uid).child("preferences").child("gender").setValue(gender)
                         self.defaults.set(gender, forKey: "defGender")
                     })
+                } else {
+                    self.button_uploadImages.isEnabled = false
                 }
                 
                 /***************************************************************************
@@ -318,7 +322,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                     print("❌ Loggin into Firebase")
                 } else{
                     print("✅ Logged into Firebase")
-                    
                 }
                 self.updateUI()
             }

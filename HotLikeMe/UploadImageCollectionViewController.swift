@@ -15,6 +15,7 @@ private let reuseIdentifier = "cellView"
 class UploadImageCollectionViewController: UICollectionViewController {
     
     let imageLimit = 120
+    var timer: Timer!
     var nsImageId:NSArray = []
     var nsImageData:NSArray = []
     var indexOfSelectedImages = [IndexPath]()
@@ -191,7 +192,8 @@ class UploadImageCollectionViewController: UICollectionViewController {
         graphRequest.start(completionHandler: { (connection, result, error) -> Void in
             if error != nil {
                 //handle error
-                print("graphrequest error")
+                print("❌ graphrequest error")
+                self.view.makeToast("Please Log In to Facebook Again to Upload Pictures", duration: 5.0, position: .center)
             } else {
                 //print(result ?? "Failed to get result")
                 let nsResult = result as! NSDictionary
@@ -300,10 +302,6 @@ class UploadImageCollectionViewController: UICollectionViewController {
     func clearVars(){
         imImageSelected.removeAll()
         imThumbSelected.removeAll()
-    }
-    
-    @IBAction func goBack(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func uploadImages(_ sender: UIBarButtonItem) {
