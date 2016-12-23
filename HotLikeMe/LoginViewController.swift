@@ -170,6 +170,12 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                     let fireSyncDistance = (value?.value(forKey: "sync_freq") as? Int) ?? 5
                     let fireDistance = (value?.value(forKey: "sync_distance") as? Int) ?? 5000
                     
+                    if boolVisible {
+                        self.switch_gps.isEnabled = true
+                    } else {
+                        self.switch_gps.isEnabled = false
+                    }
+                    
                     print (value ?? "No values found")
                     print ("Description: " + textDescription!)
                     print ("Visible: " + boolVisible.description)
@@ -394,9 +400,12 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
             databaseRef.child("users").child(fireUser.uid).child("preferences").child("visible").setValue(sender.isOn)
             self.defaults.set(sender.isOn, forKey: "defVisible")
             if sender.isOn {
+                //switch_gps.setOn(false, animated: true)
+                switch_gps.isEnabled = true
                 databaseRef.child("groups").child(gender!).child(fireUser.uid).setValue(true)
                 databaseRef.child("groups").child("both").child(fireUser.uid).setValue(true)
             } else {
+                switch_gps.isEnabled = false
                 databaseRef.child("groups").child(gender!).child(fireUser.uid).setValue(nil)
                 databaseRef.child("groups").child("both").child(fireUser.uid).setValue(nil)
             }
