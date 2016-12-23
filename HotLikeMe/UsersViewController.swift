@@ -95,14 +95,17 @@ class UsersViewController: UIViewController {
                 // MARK: GPS Disaster 📡
                 // Check if Location is required an looking for Users Nearby
                 
-                if !gpsEnabled || !showMe || FireConnection.getCurrentLocation() == nil {
+                if !gpsEnabled || !showMe || FireConnection.myLocation == nil {
+                    if gpsEnabled && FireConnection.myLocation == nil {
+                        self.view.makeToast("Reload the List in a few Moments, we're still waiting for your current position", duration: 0.5, position: .center)
+                    }
                     self.userIds = self.userIdsRaw
                     print("⚠️👀 Showing \(self.userIds.count) 👥")
                     self.shuffledFlag = false
                     self.currentUser = 0
                     self.getTheUser()
                 } else {
-                    let myCurrentLocation = FireConnection.getCurrentLocation()
+                    let myCurrentLocation = FireConnection.myLocation
                     let userReference = FIRDatabase.database().reference().child("users")
                     for i in 0 ..< nCount! {
                         userReference.child(self.userIdsRaw[i]).child("location_last").observeSingleEvent(of: .value, with: {(snapshot) in

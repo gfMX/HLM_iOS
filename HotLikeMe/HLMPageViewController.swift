@@ -14,7 +14,7 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
     
     var timer: Timer!
     var orderedViewControllersCount = 1
-    var locationManager:CLLocationManager!
+    var locationManager: CLLocationManager!
     
     let defaults = UserDefaults.standard
     
@@ -38,19 +38,20 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
                                animated: true,
                                completion: nil)
         }
-        //NotificationCenter.default.addObserver(self, selector: #selector(self.determineMyCurrentLocation), name: NSNotification.Name(rawValue: "defGPS"), object: nil)
+        
+        defaults.addObserver(
+            self,
+            forKeyPath: "defGPS",
+            options: NSKeyValueObservingOptions.new,
+            context: nil)
+    
     }
     
     override func viewDidAppear(_ animated: Bool) {
         let timeInterval = (defaults.double(forKey: "defSyncFrequency") * 60)
-        //if defaults.bool(forKey: "defVisible"){
-            print ("Requesting Location 📡")
-            self.determineMyCurrentLocation()
-            timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(self.determineMyCurrentLocation), userInfo: nil, repeats: true);
-        //} else {
-          //  print("❌ Default config for Visible not Found or Not Enabled")
-        //}
-        //print("Defaults: \(defaults)")
+        print ("Requesting Location 📡")
+        self.determineMyCurrentLocation()
+        timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(self.determineMyCurrentLocation), userInfo: nil, repeats: true);
     }
 
     private func newColoredViewController(color: String) -> UIViewController {
@@ -73,8 +74,21 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
     }
     */
     
-    // MARK: - GPS Location
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        print("⚠️ Switch changed \(keyPath)⚠️")
+        
+        switch keyPath!  {
+        case "defGPS":
+            self.determineMyCurrentLocation()
+            break
+        default:
+            print("Something else happened")
+            break
+            
+        }
+    }
     
+    // MARK: - GPS Location
     func determineMyCurrentLocation() {
         if defaults.bool(forKey: "defVisible"){
             locationManager = CLLocationManager()
@@ -116,11 +130,6 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
         print("location Accuracy: \(userLocation.horizontalAccuracy) Timestamp: \(userLocation.timestamp)")
         
         manager.stopUpdatingLocation()
-
-        /* if !defaults.bool(forKey: "defVisible"){
-            timer.invalidate()
-            print ("⚠️ Requesting Location 📡 Stoped")
-        } */
         
     }
     
@@ -129,6 +138,7 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
     }
 
 }
+
 
 // MARK: UIPageViewControllerDataSource
 extension HLMPageViewController: UIPageViewControllerDataSource {
