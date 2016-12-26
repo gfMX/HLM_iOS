@@ -26,8 +26,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     @IBOutlet weak var loginButton: FBSDKLoginButton!
     @IBOutlet weak var switch_userVisible: UISwitch!
     @IBOutlet weak var switch_gps: UISwitch!
-
-    @IBOutlet weak var button_moreSettings: UIButton!
     
     @IBOutlet weak var text_description: UITextView!
     @IBOutlet weak var text_displayName: UITextField!
@@ -71,11 +69,10 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         loginButton.delegate = self
 
         imageHLMProfile.isUserInteractionEnabled = true
-        
         imageHLMProfile.layer.borderWidth = 10
         imageHLMProfile.layer.masksToBounds = false
         imageHLMProfile.layer.borderColor = UIColor.lightGray.cgColor
-        imageHLMProfile.layer.cornerRadius = imageHLMProfile.frame.height/2
+        imageHLMProfile.layer.cornerRadius = 90 //imageHLMProfile.frame.width/2
         imageHLMProfile.clipsToBounds = true
         
         text_description.delegate = self
@@ -267,7 +264,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                 self.switch_userVisible.isHidden = false
                 self.button_uploadImages.isHidden = false
                 
-                self.button_moreSettings.isHidden = false
                 self.label_lookingFor.isHidden = false
                 self.label_distanceToLook.isHidden = false
                 self.label_updateTime.isHidden = false
@@ -291,8 +287,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                 self.switch_gps.isHidden = true
                 self.switch_userVisible.isHidden = true
                 self.button_uploadImages.isHidden = true
-                
-                self.button_moreSettings.isHidden = true
+
                 self.label_lookingFor.isHidden = true
                 self.label_distanceToLook.isHidden = true
                 self.label_updateTime.isHidden = true
@@ -547,8 +542,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         
     }
     */
-    @IBAction func scrollToSettings(_ sender: UIButton) {
-        
-    }
     
 }
+
+// MARK: Extensions

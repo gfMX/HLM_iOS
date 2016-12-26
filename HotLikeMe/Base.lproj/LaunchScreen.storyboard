@@ -23,13 +23,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to HotLikeMe, here you will find New Experiences, New People and New Friends..." lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pUi-bP-8ak">
-                                <rect key="frame" x="16" y="294" width="343" height="79"/>
+                                <rect key="frame" x="16" y="299" width="343" height="68"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HotLikeMe" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xCx-tg-Whb">
-                                <rect key="frame" x="16" y="265" width="343" height="21"/>
+                                <rect key="frame" x="16" y="255" width="343" height="36"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -37,20 +37,19 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="xCx-tg-Whb" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="I8h-Rd-kuP"/>
-                            <constraint firstItem="pUi-bP-8ak" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="QHG-Fj-Iaw"/>
-                            <constraint firstItem="xCx-tg-Whb" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="Xpv-4S-ls9"/>
-                            <constraint firstItem="xCx-tg-Whb" firstAttribute="trailing" secondItem="pUi-bP-8ak" secondAttribute="trailing" id="bE3-Hr-8ik"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="pUi-bP-8ak" secondAttribute="bottom" constant="294" id="mat-rL-ZKn"/>
-                            <constraint firstItem="pUi-bP-8ak" firstAttribute="top" secondItem="xCx-tg-Whb" secondAttribute="bottom" constant="8" id="nOe-Xa-VJI"/>
-                            <constraint firstItem="xCx-tg-Whb" firstAttribute="leading" secondItem="pUi-bP-8ak" secondAttribute="leading" id="xGK-T3-QW0"/>
-                            <constraint firstItem="xCx-tg-Whb" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="245" id="zgB-fb-5Ee"/>
+                            <constraint firstItem="xCx-tg-Whb" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="H7k-Mt-aLx"/>
+                            <constraint firstItem="xCx-tg-Whb" firstAttribute="trailing" secondItem="pUi-bP-8ak" secondAttribute="trailing" id="JBh-Ew-hxx"/>
+                            <constraint firstItem="pUi-bP-8ak" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="QK0-dj-oD4"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="pUi-bP-8ak" secondAttribute="bottom" constant="300" id="Tmj-bC-ldv"/>
+                            <constraint firstItem="pUi-bP-8ak" firstAttribute="top" secondItem="xCx-tg-Whb" secondAttribute="bottom" constant="8" id="ew5-FV-mfW"/>
+                            <constraint firstItem="xCx-tg-Whb" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="fhi-if-q2U"/>
+                            <constraint firstItem="xCx-tg-Whb" firstAttribute="leading" secondItem="pUi-bP-8ak" secondAttribute="leading" id="prq-jt-7ea"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
 </document>

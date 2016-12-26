@@ -13,6 +13,7 @@ import CoreLocation
 class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
     
     var timer: Timer!
+    var timeInterval: Double = 2500
     var orderedViewControllersCount = 1
     var locationManager: CLLocationManager!
     
@@ -48,7 +49,9 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        let timeInterval = (defaults.double(forKey: "defSyncFrequency") * 60)
+        if (defaults.double(forKey: "defSyncFrequency") * 60) > 1000{
+            timeInterval = (defaults.double(forKey: "defSyncFrequency") * 60)
+        }
         print ("Requesting Location 📡")
         self.determineMyCurrentLocation()
         timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(self.determineMyCurrentLocation), userInfo: nil, repeats: true);
