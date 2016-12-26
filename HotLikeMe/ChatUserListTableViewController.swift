@@ -137,8 +137,6 @@ class ChatUserListTableViewController: UITableViewController {
     }
     
     func getActiveChats(){
-        self.view.makeToast("Loading Messages", duration: 1.0, position: .center)
-        
         ref.child("users").child(user.uid).child("my_chats").observe(FIRDataEventType.value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             //print("👥 on My Chats: \(value?.allKeys)")
@@ -147,6 +145,7 @@ class ChatUserListTableViewController: UITableViewController {
             print("👥 list: \(self.listUsers)")
             print("💬 list: \(self.listChats)")
             if self.users.count != self.listUsers.count{
+                self.view.makeToast("Loading Messages", duration: 1.0, position: .center)
                 self.getUserChatDetails()
                 print("Getting 👥 List")
             } else {

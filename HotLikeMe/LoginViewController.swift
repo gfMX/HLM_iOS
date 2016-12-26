@@ -57,7 +57,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         
         FBSDKProfile.enableUpdates(onAccessTokenChange: true)
         facebookAccessToken = FBSDKAccessToken.current() ?? nil
-        
         fireUser = FireConnection.fireUser
         
         lookingData = ["Both", "Girls", "Boys"]
@@ -84,6 +83,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         
         switch_userVisible.addTarget(self, action: #selector(switchUserVisibleChanged), for: UIControlEvents.valueChanged)
         switch_gps.addTarget(self, action: #selector(switchGPSEnabledChanged), for: UIControlEvents.valueChanged)
+        
+        //NotificationCenter.default.addObserver(self, selector:#selector(LoginViewController.updateUI), name: NSNotification.Name.FBSDKAccessTokenDidChange, object: nil)
 
     }
     
@@ -105,6 +106,9 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         
         if facebookAccessToken != nil {
             self.button_uploadImages.isEnabled = true
+        } else {
+            try! FIRAuth.auth()!.signOut()
+            print("👤 Logged Out, No Access Token")
         }
         
         FIRAuth.auth()?.addStateDidChangeListener { auth, user in
@@ -306,16 +310,14 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     }
     
     func loginButton(_ loginButton: FBSDKLoginButton, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
-        print("👤 Logged In")
-        if ((error) != nil)
-        {
+        print("👤 Log process")
+        if ((error) != nil){
             // Process error
             print("❌:" + error.localizedDescription)
-        }
-        else if result.isCancelled {
+        } else if result.isCancelled {
             // Handle cancellations
-        }
-        else {
+            print("Login Cancelled ❌")
+        } else {
             let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
             FIRAuth.auth()?.signIn(with: credential) { (user, error) in
                 if (error != nil){
@@ -332,7 +334,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         try! FIRAuth.auth()!.signOut()
         print("👤 Logged Out")
     }
-
     
     // MARK: - Navigation
     /*
@@ -343,6 +344,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     }
     */
     
+    @available(iOS 10.0, *)
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
         if fireUser != nil {
             

@@ -293,7 +293,6 @@ class UploadImageCollectionViewController: UICollectionViewController {
                     }
                 }
                 uploadTask.resume()
-                
             }
         }
         
