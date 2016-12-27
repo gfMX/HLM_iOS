@@ -22,28 +22,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to HotLikeMe, here you will find New Experiences, New People and New Friends..." lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pUi-bP-8ak">
-                                <rect key="frame" x="16" y="299" width="343" height="68"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HotLikeMe" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xCx-tg-Whb">
+                                <rect key="frame" x="16" y="315" width="343" height="36"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HotLikeMe" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xCx-tg-Whb">
-                                <rect key="frame" x="16" y="255" width="343" height="36"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to HotLikeMe, here you will find New Experiences, New People and New Friends..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pUi-bP-8ak">
+                                <rect key="frame" x="16" y="359" width="343" height="82"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="82" id="SrJ-aO-dnf"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="xCx-tg-Whb" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="H7k-Mt-aLx"/>
-                            <constraint firstItem="xCx-tg-Whb" firstAttribute="trailing" secondItem="pUi-bP-8ak" secondAttribute="trailing" id="JBh-Ew-hxx"/>
-                            <constraint firstItem="pUi-bP-8ak" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="QK0-dj-oD4"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="pUi-bP-8ak" secondAttribute="bottom" constant="300" id="Tmj-bC-ldv"/>
-                            <constraint firstItem="pUi-bP-8ak" firstAttribute="top" secondItem="xCx-tg-Whb" secondAttribute="bottom" constant="8" id="ew5-FV-mfW"/>
-                            <constraint firstItem="xCx-tg-Whb" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="fhi-if-q2U"/>
-                            <constraint firstItem="xCx-tg-Whb" firstAttribute="leading" secondItem="pUi-bP-8ak" secondAttribute="leading" id="prq-jt-7ea"/>
+                            <constraint firstItem="xCx-tg-Whb" firstAttribute="centerX" secondItem="pUi-bP-8ak" secondAttribute="centerX" id="2DR-zk-15K"/>
+                            <constraint firstItem="pUi-bP-8ak" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="5Dq-wB-H8e"/>
+                            <constraint firstItem="xCx-tg-Whb" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="h8R-Tg-8sI"/>
+                            <constraint firstItem="pUi-bP-8ak" firstAttribute="top" secondItem="xCx-tg-Whb" secondAttribute="bottom" constant="8" symbolic="YES" id="q9N-Zj-LcN"/>
+                            <constraint firstItem="xCx-tg-Whb" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="rbf-aM-cyq"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="pUi-bP-8ak" secondAttribute="bottom" constant="226" id="uhS-wD-f71"/>
                         </constraints>
                     </view>
                 </viewController>

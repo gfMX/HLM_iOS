@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import RNCryptor
+import Toast_Swift
 import JSQMessagesViewController
 
 @objc(ChatHLMViewController)
@@ -103,6 +104,10 @@ class ChatHLMViewController: JSQMessagesViewController {
         finishSendingMessage()
         
         print("✉️ Sent!")
+    }
+    
+    override func didPressAccessoryButton(_ sender: UIButton) {
+        self.view.makeToast("Sorry we are working to implement File Sharing", duration: 2.5, position: .center)
     }
     
     private func observeMessages() {

@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import RNCryptor
+import Toast_Swift
 
 class ChatUserListTableViewController: UITableViewController {
 
@@ -19,6 +20,8 @@ class ChatUserListTableViewController: UITableViewController {
     var listUsers = [String]()
     var listChats = [String]()
     var users = [Users]()
+    
+    var deleteUserIndexPath: IndexPath? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,6 +83,12 @@ class ChatUserListTableViewController: UITableViewController {
  
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        
+        /*
+        if indexPath.item == 0 {
+            self.view.makeToast("If you delete an User from the list, all conversations will be lost", duration: 5.0, position: .center)
+        }
+        */
         // Return false if you do not want the specified item to be editable.
         return true
     }
@@ -90,10 +99,52 @@ class ChatUserListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            self.deleteUserIndexPath = indexPath
+            
+            let alert = UIAlertController(title: "Delete \(users[indexPath.item].name)", message: "Are you sure you want to permanently delete the Selected User, all Conversations an any contact with her/him will be lost.", preferredStyle: .actionSheet)
+            
+            let DeleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: handleDeleteUser)
+            let CancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: cancelDeleteUser)
+            
+            alert.addAction(DeleteAction)
+            alert.addAction(CancelAction)
+            
+            // Support display in iPad
+            alert.popoverPresentationController?.sourceView = self.view
+            self.present(alert, animated: true, completion: nil)
+            //users.remove(at: indexPath.item)
+            //tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
+    }
+    
+    func handleDeleteUser(alertAction: UIAlertAction!) -> Void {
+        print("Deleting ❌ 👤")
+        if let indexPath = self.deleteUserIndexPath {
+            
+            let dbRef = FIRDatabase.database().reference()
+            dbRef.child("users").child(user.uid).child("like_user").child(users[indexPath.item].uid).setValue(nil)
+            dbRef.child("users").child(user.uid).child("my_chats").child(users[indexPath.item].uid).setValue(nil)
+            dbRef.child("users").child(users[indexPath.item].uid).child("my_chats").child(user.uid).setValue(nil)
+            dbRef.child("chats_resume").child(users[indexPath.item].chatid).setValue(nil)
+            dbRef.child("chats").child(users[indexPath.item].chatid).setValue(nil)
+            
+            print("👤: \(self.users[indexPath.item].name) Deleted ❌")
+            self.tableView.beginUpdates()
+            
+            users.remove(at: indexPath.item)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            self.deleteUserIndexPath = nil
+            
+            self.tableView.endUpdates()
+        }
+    }
+    
+    func cancelDeleteUser(alertAction: UIAlertAction!) {
+        self.deleteUserIndexPath = nil
     }
     
 
