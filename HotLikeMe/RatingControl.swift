@@ -26,10 +26,13 @@ class RatingControl: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
+        print("Rating bar says Hello: ⭐️⭐️⭐️⭐️⭐️")
+        
         let filledStarImage = UIImage(named: "filledStar")
         let emptyStarImage = UIImage(named: "emptyStar")
         
         for _ in 0..<starCount {
+            //print("Populating ⭐️")
             let button = UIButton()
             
             button.setImage(emptyStarImage, for: .normal)
