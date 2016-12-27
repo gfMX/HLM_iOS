@@ -103,7 +103,6 @@ class ChatUserListTableViewController: UITableViewController {
             self.deleteUserIndexPath = indexPath
             
             let alert = UIAlertController(title: "Delete \(users[indexPath.item].name)", message: "Are you sure you want to permanently delete the Selected User, all Conversations an any contact with her/him will be lost.", preferredStyle: .actionSheet)
-            
             let DeleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: handleDeleteUser)
             let CancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: cancelDeleteUser)
             

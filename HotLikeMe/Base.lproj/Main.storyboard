@@ -34,7 +34,7 @@
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hCW-5p-f3N">
                                                 <rect key="frame" x="299" y="4" width="58" height="60"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" image="CD8330B0-04A8-489F-8882-F7AB2D09D09F" translatesAutoresizingMaskIntoConstraints="NO" id="L1f-8P-nkA">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" image="4F9193D1-8A68-466A-8655-3AC095C90D14" translatesAutoresizingMaskIntoConstraints="NO" id="L1f-8P-nkA">
                                                 <rect key="frame" x="68" y="56" width="240" height="240"/>
                                                 <accessibility key="accessibilityConfiguration">
                                                     <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
@@ -273,7 +273,7 @@
                                         <rect key="frame" x="16" y="0.0" width="343" height="806"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" placeholderIntrinsicWidth="225" placeholderIntrinsicHeight="45" translatesAutoresizingMaskIntoConstraints="NO" id="fGi-Hl-SVT" customClass="RatingControl" customModule="HotLikeMe" customModuleProvider="target">
-                                                <rect key="frame" x="59" y="414" width="225" height="45"/>
+                                                <rect key="frame" x="57.992156862735719" y="414" width="225.20522875813322" height="45"/>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EAV-ni-bET">
                                                 <rect key="frame" x="0.0" y="0.0" width="343" height="40"/>
@@ -288,7 +288,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="User description" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t3R-LK-MlA">
-                                                <rect key="frame" x="0.0" y="467" width="343" height="60"/>
+                                                <rect key="frame" x="-0.96209150326774628" y="467" width="343.11372549014015" height="60"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <accessibility key="accessibilityConfiguration">
                                                     <accessibilityTraits key="traits" notEnabled="YES"/>
@@ -299,8 +299,8 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
-                                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="320" image="4B9DED99-2AFF-454B-89E0-EEF45090C40E" translatesAutoresizingMaskIntoConstraints="NO" id="IMz-yW-nVc">
-                                                <rect key="frame" x="11" y="48" width="320" height="345"/>
+                                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="320" image="90D4CCBF-DB73-4547-BE45-3A73D587109E" translatesAutoresizingMaskIntoConstraints="NO" id="IMz-yW-nVc">
+                                                <rect key="frame" x="10.828758169932945" y="48" width="319.53202614373873" height="345"/>
                                                 <gestureRecognizers/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="345" id="wO4-VI-NKs"/>
@@ -500,7 +500,7 @@
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Last message" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="udW-dc-1sn">
                                             <rect key="frame" x="97" y="37" width="270" height="45"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="gHr-RB-XrV">
@@ -633,7 +633,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="4B9DED99-2AFF-454B-89E0-EEF45090C40E" width="540" height="540">
+        <image name="4F9193D1-8A68-466A-8655-3AC095C90D14" width="540" height="540">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -20128,7 +20128,7 @@ ABHWqQAR1qwAEdaxABHWuQAR1rwAEdbOABHW0QAR1tYAAAAAAAAEAQAAAAAAAABBAAAAAAAAAAAAAAAA
 ABHW2A
 </mutableData>
         </image>
-        <image name="CD8330B0-04A8-489F-8882-F7AB2D09D09F" width="540" height="540">
+        <image name="90D4CCBF-DB73-4547-BE45-3A73D587109E" width="540" height="540">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
