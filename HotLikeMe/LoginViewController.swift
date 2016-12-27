@@ -53,6 +53,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        hideAll()
+        
         FBSDKProfile.enableUpdates(onAccessTokenChange: true)
         facebookAccessToken = FBSDKAccessToken.current() ?? nil
         fireUser = FireConnection.fireUser
@@ -253,47 +255,14 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                 }
                 
                 //Updating from Firebase end!
+                self.showAll()
                 
-                self.imageFaceProfile.isHidden = false
-                self.text_displayName.isHidden = false
-                self.label_displayName.isHidden = false
-                
-                self.label_userVisible.isHidden = false
-                self.label_gps.isHidden = false
-                self.switch_gps.isHidden = false
-                self.switch_userVisible.isHidden = false
-                self.button_uploadImages.isHidden = false
-                
-                self.label_lookingFor.isHidden = false
-                self.label_distanceToLook.isHidden = false
-                self.label_updateTime.isHidden = false
-                self.lookingDistancePicker.isHidden = false
-                self.label_description.isHidden = false
-                self.text_description.isHidden = false
             } else {
                 
                 /***********************************************
                 // MARK: Update UI: No user signed.
                 ************************************************/
-                
-                self.imageHLMProfile.image = #imageLiteral(resourceName: "defaultPhoto")
-                self.imageFaceProfile.image = nil
-                self.imageFaceProfile.isHidden = true
-                self.text_displayName.isHidden = true
-                self.label_displayName.isHidden = true
-                
-                self.label_userVisible.isHidden = true
-                self.label_gps.isHidden = true
-                self.switch_gps.isHidden = true
-                self.switch_userVisible.isHidden = true
-                self.button_uploadImages.isHidden = true
-
-                self.label_lookingFor.isHidden = true
-                self.label_distanceToLook.isHidden = true
-                self.label_updateTime.isHidden = true
-                self.lookingDistancePicker.isHidden = true
-                self.label_description.isHidden = true
-                self.text_description.isHidden = true
+                self.hideAll()
             }
         }
     }
@@ -521,6 +490,46 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         }
     
         self.view.endEditing(true)
+    }
+    func showAll(){
+        self.imageFaceProfile.isHidden = false
+        self.text_displayName.isHidden = false
+        self.label_displayName.isHidden = false
+        
+        self.label_userVisible.isHidden = false
+        self.label_gps.isHidden = false
+        self.switch_gps.isHidden = false
+        self.switch_userVisible.isHidden = false
+        self.button_uploadImages.isHidden = false
+        
+        self.label_lookingFor.isHidden = false
+        self.label_distanceToLook.isHidden = false
+        self.label_updateTime.isHidden = false
+        self.lookingDistancePicker.isHidden = false
+        self.label_description.isHidden = false
+        self.text_description.isHidden = false
+    }
+    
+    func hideAll(){
+        self.imageHLMProfile.image = #imageLiteral(resourceName: "defaultPhoto")
+        self.imageFaceProfile.image = nil
+        
+        self.imageFaceProfile.isHidden = true
+        self.text_displayName.isHidden = true
+        self.label_displayName.isHidden = true
+        
+        self.label_userVisible.isHidden = true
+        self.label_gps.isHidden = true
+        self.switch_gps.isHidden = true
+        self.switch_userVisible.isHidden = true
+        self.button_uploadImages.isHidden = true
+        
+        self.label_lookingFor.isHidden = true
+        self.label_distanceToLook.isHidden = true
+        self.label_updateTime.isHidden = true
+        self.lookingDistancePicker.isHidden = true
+        self.label_description.isHidden = true
+        self.text_description.isHidden = true
     }
     
     /*
