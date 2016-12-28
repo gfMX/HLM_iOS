@@ -113,9 +113,9 @@ class ChatUserListTableViewController: UITableViewController {
             
             // Support display in iPad
             alert.popoverPresentationController?.sourceView = self.view
+            
             self.present(alert, animated: true, completion: nil)
-            //users.remove(at: indexPath.item)
-            //tableView.deleteRows(at: [indexPath], with: .fade)
+
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -199,18 +199,14 @@ class ChatUserListTableViewController: UITableViewController {
             
             //print("👥 list: \(self.listUsers)")
             //print("💬 list: \(self.listChats)")
-            //if self.users.count != self.listUsers.count{
-                self.view.makeToast("Loading Messages", duration: 1.0, position: .center)
-                self.getUserChatDetails()
-                print("Getting 👥 List")
-            /*} else {
-                print("List OK")
-            } */
+            self.view.makeToast("Loading Messages", duration: 1.0, position: .center)
+            self.getUserChatDetails()
+            print("Getting 👥 List")
+
         })
     }
     
     func getUserChatDetails(){
-        //users.removeAll()
         flagDataLoaded = false
         
         for i in 0 ..< users.count {
@@ -238,13 +234,9 @@ class ChatUserListTableViewController: UITableViewController {
                         user_message = (value?.value(forKey: "text") as? String) ?? "No message found"
                         self.listMessages[i] = user_message
                         print("User Message: \(user_message)")
-                        //self.tableView.reloadData()
                         
                         if self.flagDataLoaded {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-                                /* if self.user != nil {
-                                    self.getActiveChats()
-                                } */
                                 self.tableView.reloadData()
                             }
                         }
@@ -275,8 +267,6 @@ class ChatUserListTableViewController: UITableViewController {
                         
                         let user = Users(uid: uid, chatid: cid, name: user_name, photo: user_picUrl, message: user_message)!
                         self.users[i] = (user)
-                        
-                        //self.tableView.reloadData()
                         
                         if i == self.listUsers.count - 1 {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
