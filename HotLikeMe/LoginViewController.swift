@@ -71,11 +71,13 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         loginButton.delegate = self
 
         imageHLMProfile.isUserInteractionEnabled = true
-        imageHLMProfile.layer.borderWidth = 10
-        imageHLMProfile.layer.masksToBounds = false
-        imageHLMProfile.layer.borderColor = UIColor.lightGray.cgColor
-        imageHLMProfile.layer.cornerRadius = 90 //imageHLMProfile.frame.width/2
-        imageHLMProfile.clipsToBounds = true
+        imageHLMProfile.image = imageHLMProfile.image?.circleMask
+        
+        //imageHLMProfile.layer.borderWidth = 10
+        //imageHLMProfile.layer.masksToBounds = false
+        //imageHLMProfile.layer.borderColor = UIColor.lightGray.cgColor
+        //imageHLMProfile.layer.cornerRadius = 90 //imageHLMProfile.layer.frame.width/2 //90
+        //imageHLMProfile.clipsToBounds = true
         
         text_description.delegate = self
         text_displayName.delegate = self
@@ -128,8 +130,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                 }
                 
                 if profilePicURL != nil {
-                    Helper.loadImageFromUrl(url: (profilePicURL?.absoluteString)!, view: self.imageHLMProfile)
-                    self.imageHLMProfile.contentMode = UIViewContentMode.scaleAspectFill;
+                    Helper.loadImageFromUrl(url: (profilePicURL?.absoluteString)!, view: self.imageHLMProfile, type: "circle")
                 }
                 
                  let dbRef = FIRDatabase.database().reference()
@@ -150,7 +151,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                         //print("Now the data: \(data)")
                         
                         self.labelWelcome.text = "Welcome, \(strFirstName)"
-                        Helper.loadImageFromUrl(url: strPictureURL, view: self.imageFaceProfile)
+                        Helper.loadImageFromUrl(url: strPictureURL, view: self.imageFaceProfile, type: "circle")
                         self.imageFaceProfile.contentMode = UIViewContentMode.scaleAspectFit
                         
                         dbRef.child("users").child(self.fireUser.uid).child("preferences").child("gender").setValue(gender)
@@ -511,7 +512,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     }
     
     func hideAll(){
-        self.imageHLMProfile.image = #imageLiteral(resourceName: "defaultPhoto")
+        self.imageHLMProfile.image = #imageLiteral(resourceName: "defaultPhoto").circleMask
         self.imageFaceProfile.image = nil
         
         self.imageFaceProfile.isHidden = true
@@ -532,26 +533,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         self.text_description.isHidden = true
     }
     
-    /*
-    func imageTapped(img: AnyObject){
-        if fireUser != nil {
-            self.performSegue(withIdentifier: "HLMProfilePic", sender: self)
-        } else {
-            print("Missing credentials to Access Fire Images")
-        }
-    }
-    */
-    /*
-    @IBAction func funcUploadImages(_ sender: UIButton) {
-        if fireUser != nil && facebookAccessToken != nil {
-            self.performSegue(withIdentifier: "HLMUploadImages", sender:self)
-        } else {
-            print("Missing credentials to Access Facebook Images")
-        }
-        
-    }
-    */
-    
 }
 
-// MARK: Extensions
+

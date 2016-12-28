@@ -79,7 +79,7 @@ class UploadImageCollectionViewController: UICollectionViewController {
         // Configure the cell
     
     
-        Helper.loadImageFromUrl(url: nsImageData[indexPath.item] as! String, view: cell.imageView)
+        Helper.loadImageFromUrl(url: nsImageData[indexPath.item] as! String, view: cell.imageView, type: "square")
         cell.imageView.contentMode = UIViewContentMode.scaleAspectFill;
         cell.layer.cornerRadius = 8
         

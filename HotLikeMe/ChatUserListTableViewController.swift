@@ -72,7 +72,7 @@ class ChatUserListTableViewController: UITableViewController {
         // Configure the cell...
         cell.chat_userName.text = users[indexPath.item].name
         cell.chat_lastMessage.text = listMessages[indexPath.item] //users[indexPath.item].message
-        Helper.loadImageFromUrl(url: users[indexPath.item].photo, view: cell.chat_userImage)
+        Helper.loadImageFromUrl(url: users[indexPath.item].photo, view: cell.chat_userImage, type: "square")
         cell.chat_userImage.layer.masksToBounds = false
         cell.chat_userImage.clipsToBounds = true
         cell.chat_userImage.layer.borderColor = UIColor.lightGray.cgColor
@@ -183,9 +183,11 @@ class ChatUserListTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let userChat = users[(indexPath as NSIndexPath).row]
-        print("User Name: \(userChat.name)")
-        self.performSegue(withIdentifier: "HLMChat", sender: userChat)
+        if user != nil{
+            let userChat = users[(indexPath as NSIndexPath).row]
+            print("User Name: \(userChat.name)")
+            self.performSegue(withIdentifier: "HLMChat", sender: userChat)
+        }
     }
     
     func getActiveChats(){

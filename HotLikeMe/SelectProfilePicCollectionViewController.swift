@@ -74,7 +74,7 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
     
         // Configure the cell
         if !thumbUrls[indexPath.item].contains(" "){
-            Helper.loadImageFromUrl(url: thumbUrls[indexPath.item], view: cell.imageThumb)
+            Helper.loadImageFromUrl(url: thumbUrls[indexPath.item], view: cell.imageThumb, type: "square")
         }
         cell.imageThumb.contentMode = UIViewContentMode.scaleAspectFill;
         cell.backgroundColor = UIColor.lightGray
@@ -95,7 +95,7 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
     
     // Uncomment this method to specify if the specified item should be selected
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        print(indexPath.item)
+        //print(indexPath.item)
         //print(imageUrls[indexPath.item])
     
         currentPicStorage = thumbsStorage[indexPath.item]
@@ -136,9 +136,7 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
             let value = snapshot.value as? NSDictionary
             //print (value ?? "No values found")
             self.thumbsStorage = value?.allKeys as! [String]
-            //let username = value?["alias"] as! String
             print("Thumbs found: " + (self.thumbsStorage.count.description))
-            //print(thumbsStorage)
             
             
             let nCount = self.thumbsStorage.count
@@ -149,7 +147,6 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
             print ("Size of Arrays: " + self.thumbUrls.count.description + " " + self.imageUrls.count.description)
             
             self.getFirePicsUrls(storage: self.thumbsStorage)
-            //self.collectionView?.reloadData()
             
         }) { (error) in
             print(error.localizedDescription)
@@ -205,7 +202,7 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
         newImageView.contentMode = .scaleAspectFit
         newImageView.isUserInteractionEnabled = true
         
-        Helper.loadImageFromUrl(url: newUrl, view: newImageView)
+        Helper.loadImageFromUrl(url: newUrl, view: newImageView, type: "square")
         blurEffectView.addSubview(newImageView)
         
         let btnOk: UIButton = UIButton(frame: CGRect(x: 10, y: (self.view.frame.height-70), width: 100, height: 50))
@@ -257,13 +254,61 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
             }
         }
         
-         self.view.viewWithTag(23)?.removeFromSuperview()
-        
+        self.view.viewWithTag(23)?.removeFromSuperview()
+        self.currentPicStorage = nil
+        self.currentPicURL = nil
     }
     
     func buttonActionCancel(sender: UIButton){
         self.view.viewWithTag(23)?.removeFromSuperview()
+        self.currentPicStorage = nil
+        self.currentPicURL = nil
     }
+    
+    func handleDeletePicture(alertAction: UIAlertAction!) -> Void {
+        if currentPicStorage != nil{
+            print("Deleting ❌ 🌉")
+            // Create a reference to the file to delete
+            let deleteRef = FireConnection.storageReference.child(user.uid).child("images")
+            // Delete the file
+            deleteRef.child("thumbs").child("thumb_" + self.currentPicStorage! + ".jpg").delete { (error) -> Void in
+                if (error != nil) {
+                    // Uh-oh, an error occurred!
+                    print("⚠️ We couldn't delete the Thumb 🌉")
+                } else {
+                    // File deleted successfully
+                    deleteRef.child("image_" + self.currentPicStorage! + ".jpg").delete { (error) -> Void in
+                        if (error != nil) {
+                            // Uh-oh, an error occurred!
+                            print("⚠️ We couldn't delete the Image 🌉")
+                        } else {
+                            // File deleted successfully
+                            print("We delete ❌ the 🌉")
+                            self.view.makeToast("Image deleted Successfully", duration: 2.0, position: .center)
+                            
+                            let ref = FIRDatabase.database().reference()
+                            ref.child("users").child(self.user.uid).child("images").child(self.currentPicStorage).setValue(nil)
+                            ref.child("users").child(self.user.uid).child("thumbs").child(self.currentPicStorage).setValue(nil)
+                            
+                            //Request for the Updated list
+                            self.getFirePics()
+                            
+                            self.currentPicStorage = nil
+                            self.currentPicURL = nil
+                        }
+                    } // End of delete Image
+                }
+            } // End of First delete (Thumb)
+        }
+        
+        self.view.viewWithTag(23)?.removeFromSuperview()
+    }
+    
+    func cancelDeletePicture(alertAction: UIAlertAction!) {
+        print("Cancelled")
+        
+    }
+
 
     @IBAction func goBack(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
@@ -271,7 +316,21 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
     }
     
     @IBAction func deleteImage(_ sender: UIBarButtonItem) {
-        
+        print("Pic Selected to delete: \(currentPicStorage)")
+        if currentPicStorage != nil{
+            let alert = UIAlertController(title: "Delete Picture", message: "Are you sure you want to permanently delete the Selected Picture? This action cannot be undone.", preferredStyle: .actionSheet)
+            let DeleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: handleDeletePicture)
+            let CancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: cancelDeletePicture)
+            
+            alert.addAction(DeleteAction)
+            alert.addAction(CancelAction)
+            
+            // Support display in iPad
+            alert.popoverPresentationController?.sourceView = self.view
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            self.view.makeToast("Please first select a Picture and then Press this Icon to Delete It", duration: 3.0, position: .center)
+        }
     }
 
 }

@@ -12,7 +12,7 @@ import UIKit
 
 class Helper{
     
-    static func loadImageFromUrl(url: String, view: UIImageView){
+    static func loadImageFromUrl(url: String, view: UIImageView, type: String){
         
         // Create Url from string
         //print("HELPER -> URL: " + url)
@@ -26,7 +26,11 @@ class Helper{
                 
                 // execute in UI thread
                 DispatchQueue.main.async(execute: { () -> Void in
-                    view.image = UIImage(data: data)
+                    if type == "circle"{
+                        view.image = UIImage(data: data)?.circleMask
+                    } else {
+                        view.image = UIImage(data: data)
+                    }
                 })
             }
         }
@@ -35,7 +39,7 @@ class Helper{
         task.resume()
     }
     /***************************************************************************
-                                Encryption Zone
+                                   Encryption
      ***************************************************************************/
     
     // MARK: Encryption
@@ -92,3 +96,22 @@ class Helper{
                             End of Encryption Zone
      ***************************************************************************/
 }
+
+extension UIImage {
+    var circleMask: UIImage {
+        let square = size.width < size.height ? CGSize(width: size.width, height: size.width) : CGSize(width: size.height, height: size.height)
+        let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: square))
+        imageView.contentMode = UIViewContentMode.scaleAspectFill
+        imageView.image = self
+        imageView.layer.cornerRadius = square.width/2
+        imageView.layer.borderColor = UIColor.lightGray.cgColor
+        imageView.layer.borderWidth = 15
+        imageView.layer.masksToBounds = true
+        UIGraphicsBeginImageContext(imageView.bounds.size)
+        imageView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let result = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return result!
+    }
+}
+

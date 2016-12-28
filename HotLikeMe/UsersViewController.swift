@@ -205,7 +205,7 @@ class UsersViewController: UIViewController {
                     if (error != nil) {
                         print ("An ❌ ocurred!")
                     } else {
-                        Helper.loadImageFromUrl(url: (URL?.absoluteString)!, view: self.user_displayPic)
+                        Helper.loadImageFromUrl(url: (URL?.absoluteString)!, view: self.user_displayPic, type: "square")
                         self.user_displayPic.contentMode = UIViewContentMode.scaleAspectFit;
                     }
                 }
