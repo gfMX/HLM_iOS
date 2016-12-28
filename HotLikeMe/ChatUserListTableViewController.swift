@@ -72,14 +72,17 @@ class ChatUserListTableViewController: UITableViewController {
         // Configure the cell...
         cell.chat_userName.text = users[indexPath.item].name
         cell.chat_lastMessage.text = listMessages[indexPath.item] //users[indexPath.item].message
-        Helper.loadImageFromUrl(url: users[indexPath.item].photo, view: cell.chat_userImage, type: "square")
+        Helper.loadImageFromUrl(url: users[indexPath.item].photo, view: cell.chat_userImage, type: "circle")
+        
+        /*
         cell.chat_userImage.layer.masksToBounds = false
         cell.chat_userImage.clipsToBounds = true
         cell.chat_userImage.layer.borderColor = UIColor.lightGray.cgColor
         cell.chat_userImage.layer.borderWidth = 5
         cell.chat_userImage.layer.cornerRadius = cell.chat_userImage.frame.height / 2
         cell.chat_userImage.contentMode = UIViewContentMode.scaleAspectFill
-
+        */
+        
         return cell
     }
  

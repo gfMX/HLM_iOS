@@ -97,6 +97,8 @@ class Helper{
      ***************************************************************************/
 }
 
+// MARK: Extensions
+
 extension UIImage {
     var circleMask: UIImage {
         let square = size.width < size.height ? CGSize(width: size.width, height: size.width) : CGSize(width: size.height, height: size.height)
@@ -105,7 +107,7 @@ extension UIImage {
         imageView.image = self
         imageView.layer.cornerRadius = square.width/2
         imageView.layer.borderColor = UIColor.lightGray.cgColor
-        imageView.layer.borderWidth = 15
+        imageView.layer.borderWidth = 10
         imageView.layer.masksToBounds = true
         UIGraphicsBeginImageContext(imageView.bounds.size)
         imageView.layer.render(in: UIGraphicsGetCurrentContext()!)

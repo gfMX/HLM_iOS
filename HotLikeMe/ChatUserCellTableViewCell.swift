@@ -18,6 +18,7 @@ class ChatUserCellTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        chat_userImage.image = chat_userImage.image?.circleMask
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
