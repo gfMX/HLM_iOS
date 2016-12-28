@@ -82,7 +82,7 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
     */
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        print("⚠️ Switch changed \(keyPath!)⚠️")
+        print("⚠️ Switch changed \(keyPath!) ⚠️")
         
         switch keyPath!  {
         case "defGPS":

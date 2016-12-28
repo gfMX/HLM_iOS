@@ -298,4 +298,9 @@ class ChatUserListTableViewController: UITableViewController {
         listChats.removeAll()
         listUsers.removeAll()
     }
+    
+    // MARK: DeInit
+    deinit {
+        //self.ref.child("chats_resume").removeAllObservers()
+    }
 }
