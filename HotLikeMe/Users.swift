@@ -38,10 +38,10 @@ class Users: NSObject, NSCoding {
         self.message = message
         
         super.init()
-        
+        /*
         if name.isEmpty || photo.isEmpty || uid.isEmpty {
             return nil
-        }
+        } */
     }
     
     // MARK: NSCoding

@@ -19,8 +19,10 @@ class ChatUserListTableViewController: UITableViewController {
     
     var listUsers = [String]()
     var listChats = [String]()
+    var listMessages = [String]()
     var users = [Users]()
     
+    var flagDataLoaded = false
     var deleteUserIndexPath: IndexPath? = nil
     
     override func viewDidLoad() {
@@ -69,7 +71,7 @@ class ChatUserListTableViewController: UITableViewController {
 
         // Configure the cell...
         cell.chat_userName.text = users[indexPath.item].name
-        cell.chat_lastMessage.text = users[indexPath.item].message
+        cell.chat_lastMessage.text = listMessages[indexPath.item] //users[indexPath.item].message
         Helper.loadImageFromUrl(url: users[indexPath.item].photo, view: cell.chat_userImage)
         cell.chat_userImage.layer.masksToBounds = false
         cell.chat_userImage.clipsToBounds = true
@@ -189,25 +191,29 @@ class ChatUserListTableViewController: UITableViewController {
     func getActiveChats(){
         ref.child("users").child(user.uid).child("my_chats").observe(FIRDataEventType.value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
-            //print("👥 on My Chats: \(value?.allKeys)")
+            print("👥 on My Chats: \(value?.count)")
             self.listUsers = value?.allKeys as! [String]
             self.listChats = value?.allValues as! [String]
-            print("👥 list: \(self.listUsers)")
-            print("💬 list: \(self.listChats)")
-            if self.users.count != self.listUsers.count{
+            self.listMessages = Array<String>(repeating: "", count: (value?.count)!)
+            self.users = Array<Users>(repeating: Users(uid: "", chatid: "", name: "", photo: "", message: "")!, count: (value?.count)!)
+            
+            //print("👥 list: \(self.listUsers)")
+            //print("💬 list: \(self.listChats)")
+            //if self.users.count != self.listUsers.count{
                 self.view.makeToast("Loading Messages", duration: 1.0, position: .center)
                 self.getUserChatDetails()
                 print("Getting 👥 List")
-            } else {
+            /*} else {
                 print("List OK")
-            }
+            } */
         })
     }
     
     func getUserChatDetails(){
-        users.removeAll()
+        //users.removeAll()
+        flagDataLoaded = false
         
-        for i in 0 ..< listUsers.count {
+        for i in 0 ..< users.count {
             
             let uid = self.listUsers[i]
             let cid = self.listChats[i]
@@ -230,6 +236,18 @@ class ChatUserListTableViewController: UITableViewController {
                         let value = snapshot.value as? NSDictionary
                     
                         user_message = (value?.value(forKey: "text") as? String) ?? "No message found"
+                        self.listMessages[i] = user_message
+                        print("User Message: \(user_message)")
+                        //self.tableView.reloadData()
+                        
+                        if self.flagDataLoaded {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                                /* if self.user != nil {
+                                    self.getActiveChats()
+                                } */
+                                self.tableView.reloadData()
+                            }
+                        }
                         
                         ///////////////////////////////////////////////////////////////
                         //Testing Zone
@@ -256,13 +274,14 @@ class ChatUserListTableViewController: UITableViewController {
                         }
                         
                         let user = Users(uid: uid, chatid: cid, name: user_name, photo: user_picUrl, message: user_message)!
-                        self.users.append(user)
+                        self.users[i] = (user)
                         
                         //self.tableView.reloadData()
                         
                         if i == self.listUsers.count - 1 {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                                 self.tableView.reloadData()
+                                self.flagDataLoaded = true
                             }
                         }
                         
