@@ -285,10 +285,6 @@ class ChatUserListTableViewController: UITableViewController {
         } // End of the function
     }
     
-    func loadChat(){
-        
-    }
-    
     func noInternetAlert(){
         if currentReachabilityStatus == .notReachable{
             //print("Network Not Reachable")
@@ -320,6 +316,4 @@ class ChatUserListTableViewController: UITableViewController {
         }
         self.tableView.reloadData()
     }
-    
-  
 }
