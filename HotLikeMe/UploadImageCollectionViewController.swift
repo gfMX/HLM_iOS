@@ -77,8 +77,7 @@ class UploadImageCollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ThumbCollectionViewCell
     
         // Configure the cell
-    
-    
+
         Helper.loadImageFromUrl(url: nsImageData[indexPath.item] as! String, view: cell.imageView, type: "square")
         cell.imageView.contentMode = UIViewContentMode.scaleAspectFill;
         cell.layer.cornerRadius = 8

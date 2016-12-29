@@ -42,6 +42,10 @@ class ChatUserListTableViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         user = FIRAuth.auth()?.currentUser
         
+        if currentReachabilityStatus == .notReachable{
+            noInternetAlert()
+        }
+        
         if user != nil {
             getActiveChats()
         }
@@ -74,26 +78,12 @@ class ChatUserListTableViewController: UITableViewController {
         cell.chat_lastMessage.text = listMessages[indexPath.item] //users[indexPath.item].message
         Helper.loadImageFromUrl(url: users[indexPath.item].photo, view: cell.chat_userImage, type: "circle")
         
-        /*
-        cell.chat_userImage.layer.masksToBounds = false
-        cell.chat_userImage.clipsToBounds = true
-        cell.chat_userImage.layer.borderColor = UIColor.lightGray.cgColor
-        cell.chat_userImage.layer.borderWidth = 5
-        cell.chat_userImage.layer.cornerRadius = cell.chat_userImage.frame.height / 2
-        cell.chat_userImage.contentMode = UIViewContentMode.scaleAspectFill
-        */
-        
         return cell
     }
  
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        
-        /*
-        if indexPath.item == 0 {
-            self.view.makeToast("If you delete an User from the list, all conversations will be lost", duration: 5.0, position: .center)
-        }
-        */
+
         // Return false if you do not want the specified item to be editable.
         return true
     }
@@ -107,7 +97,7 @@ class ChatUserListTableViewController: UITableViewController {
             
             self.deleteUserIndexPath = indexPath
             
-            let alert = UIAlertController(title: "Delete \(users[indexPath.item].name)", message: "Are you sure you want to permanently delete the Selected User, all Conversations an any contact with her/him will be lost.", preferredStyle: .actionSheet)
+            let alert = UIAlertController(title: "Delete Chat with: \(users[indexPath.item].name)", message: "Are you sure you want to permanently delete the Selected User, all Conversations an any contact with her/him will be lost.", preferredStyle: .actionSheet)
             let DeleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: handleDeleteUser)
             let CancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: cancelDeleteUser)
             
@@ -186,10 +176,17 @@ class ChatUserListTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if user != nil{
-            let userChat = users[(indexPath as NSIndexPath).row]
-            print("User Name: \(userChat.name)")
-            self.performSegue(withIdentifier: "HLMChat", sender: userChat)
+        if user != nil && currentReachabilityStatus != .notReachable {
+            if users[(indexPath as NSIndexPath).row].uid != ""{
+                let userChat = users[(indexPath as NSIndexPath).row]
+                print("User Name: \(userChat.name)")
+                self.performSegue(withIdentifier: "HLMChat", sender: userChat)
+            } else {
+                print("⚠️ Something went wrong ❌")
+                self.view.makeToast("Sorry, please try again, we're having a delay...", duration: 2.0, position: .center)
+            }
+        } else {
+            noInternetAlert()
         }
     }
     
@@ -204,7 +201,9 @@ class ChatUserListTableViewController: UITableViewController {
             
             //print("👥 list: \(self.listUsers)")
             //print("💬 list: \(self.listChats)")
-            self.view.makeToast("Loading Messages", duration: 1.0, position: .center)
+            if !self.flagDataLoaded {
+                self.view.makeToast("Loading Messages", duration: 1.0, position: .center)
+            }
             self.getUserChatDetails()
             print("Getting 👥 List")
 
@@ -231,14 +230,14 @@ class ChatUserListTableViewController: UITableViewController {
                 var user_message: String!
                 var user_picUrl: String!
                 
-                print ("Storage Pic: \(user_pic)")
+                //print ("Storage Pic: \(user_pic)")
                 
                     self.ref.child("chats_resume").child(cid).observe(FIRDataEventType.value, with: {(snapshot) in
                         let value = snapshot.value as? NSDictionary
                     
                         user_message = (value?.value(forKey: "text") as? String) ?? "No message found"
                         self.listMessages[i] = user_message
-                        print("User Message: \(user_message)")
+                        print("User Message: \(user_message!)")
                         
                         if self.flagDataLoaded {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
@@ -283,15 +282,26 @@ class ChatUserListTableViewController: UITableViewController {
                     }
                 })
             })
-        }
-        // End of the function
+        } // End of the function
     }
     
-    @IBAction func refreshUserList(_ sender: UIBarButtonItem) {
-        if user != nil {
-            getActiveChats()
+    func loadChat(){
+        
+    }
+    
+    func noInternetAlert(){
+        if currentReachabilityStatus == .notReachable{
+            //print("Network Not Reachable")
+            
+            let alert = UIAlertController(title: "No Internet Connection", message: "Please check your Internet Connection and Try again.", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+                print("Alert Dismissed")
+            })
+            alert.addAction(ok)
+            
+            alert.popoverPresentationController?.sourceView = self.view
+            self.present(alert, animated: true, completion: nil)
         }
-        self.tableView.reloadData()
     }
     
     func clearVars(){
@@ -303,4 +313,13 @@ class ChatUserListTableViewController: UITableViewController {
     deinit {
         //self.ref.child("chats_resume").removeAllObservers()
     }
+    
+    @IBAction func refreshUserList(_ sender: UIBarButtonItem) {
+        if user != nil {
+            getActiveChats()
+        }
+        self.tableView.reloadData()
+    }
+    
+  
 }

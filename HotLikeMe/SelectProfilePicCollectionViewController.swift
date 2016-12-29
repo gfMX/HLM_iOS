@@ -244,13 +244,26 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
             print("New URL for Profile Pic" + (newURL?.absoluteString)!)
             changeRequest.photoURL = newURL
             changeRequest.commitChanges { error in
+                var textDisplayPic:String!
+                
                 if let error = error {
-                    print("Display Picture couldn't be updated!")
+                    textDisplayPic = "Display Picture couldn't be updated!"
                     print(error)
                 } else {
-                    print ("Display Picture Updated!")
+                    textDisplayPic = "Display Picture Changed!"
                     self.dismiss(animated: true, completion: nil)
                 }
+                
+                print(textDisplayPic!)
+                let alert = UIAlertController(title: "Profile Picture", message: textDisplayPic, preferredStyle: .alert)
+                let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+                    print("Alert Dismissed")
+                })
+                alert.addAction(ok)
+                
+                alert.popoverPresentationController?.sourceView = self.view
+                self.present(alert, animated: true, completion: nil)
+
             }
         }
         
@@ -306,13 +319,10 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
     
     func cancelDeletePicture(alertAction: UIAlertAction!) {
         print("Cancelled")
-        
     }
-
 
     @IBAction func goBack(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
-        
     }
     
     @IBAction func deleteImage(_ sender: UIBarButtonItem) {

@@ -47,6 +47,19 @@ class UsersViewController: UIViewController {
     }
 
     override func viewDidAppear(_ animated: Bool) {
+        if currentReachabilityStatus == .notReachable{
+            //print("Network Not Reachable")
+            
+            let alert = UIAlertController(title: "No Internet Connection", message: "Please check your Internet Connection and Try again..", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+                print("Alert Dismissed")
+            })
+            alert.addAction(ok)
+            
+            alert.popoverPresentationController?.sourceView = self.view
+            self.present(alert, animated: true, completion: nil)
+        }
+        
         if user == nil {
             user = FIRAuth.auth()?.currentUser
         } else {

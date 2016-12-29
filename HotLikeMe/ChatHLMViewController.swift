@@ -45,7 +45,7 @@ class ChatHLMViewController: JSQMessagesViewController {
         
         messageRef = FIRDatabase.database().reference().child("chats").child((userChat?.chatid)!) //"chat_0958f70a-3500-48dc-a687-aa472f48504c"
         lastMessageRef = FIRDatabase.database().reference().child("chats_resume").child((userChat?.chatid)!)
-        print("DB Reference: \(messageRef.description())")
+        //print("DB Reference: \(messageRef.description())")
         
         let currentDate = Date()
         
@@ -137,7 +137,7 @@ class ChatHLMViewController: JSQMessagesViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("Number of ✉️ on chat: \(messages.count)")
+        //print("Number of ✉️ on chat: \(messages.count)")
         return messages.count
     }
     

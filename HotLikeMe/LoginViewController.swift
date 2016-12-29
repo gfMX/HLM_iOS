@@ -15,7 +15,7 @@ import Firebase
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource{
     
-    @IBOutlet weak var scrollView: UIView!
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
     
     
@@ -48,12 +48,20 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     var lookingTime = [String]()
     var lookingDistance = [String]()
     
+    var kbHeight: CGFloat!
     let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.hideKeyboard()
         hideAll()
+        
+        if currentReachabilityStatus != .notReachable{
+            print("Internet OK")
+        } else {
+            print("No Network Connection")
+        }
         
         FBSDKProfile.enableUpdates(onAccessTokenChange: true)
         facebookAccessToken = FBSDKAccessToken.current() ?? nil
@@ -78,20 +86,48 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         
         switch_userVisible.addTarget(self, action: #selector(switchUserVisibleChanged), for: UIControlEvents.valueChanged)
         switch_gps.addTarget(self, action: #selector(switchGPSEnabledChanged), for: UIControlEvents.valueChanged)
-        
-        //NotificationCenter.default.addObserver(self, selector:#selector(LoginViewController.updateUI), name: NSNotification.Name.FBSDKAccessTokenDidChange, object: nil)
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        if currentReachabilityStatus == .notReachable{
+            //print("Network Not Reachable")
+            
+            let alert = UIAlertController(title: "No Internet Connection", message: "Please check your Internet Connection and Try again..", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+                print("Alert Dismissed")
+            })
+            alert.addAction(ok)
+            
+            alert.popoverPresentationController?.sourceView = self.view
+            self.present(alert, animated: true, completion: nil)
+        }
+        
         updateUI()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    deinit {
+        
     }
     
     // MARK: General Functions
@@ -131,7 +167,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                 /***************************************************************************
                                       Getting details from Facebook
                  ***************************************************************************/
-                if self.facebookAccessToken != nil {
+                if self.facebookAccessToken != nil  && self.currentReachabilityStatus != .notReachable {
                     
                     let graphRequest:FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"first_name,email, picture.type(large),gender"])
                     graphRequest.start(completionHandler: { (connection, result, error) -> Void in
@@ -302,13 +338,17 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     }
     */
     
-    @available(iOS 10.0, *)
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        // Nahh
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        //print("⚠️ User Display Name First Responder resigned")
         if fireUser != nil {
             
             print("Display Name Changed!")
             let fireRef = FireConnection.databaseReference.child("users").child(fireUser.uid).child("preferences").child("alias")
-                fireRef.setValue(textField.text)
+            fireRef.setValue(textField.text)
             
             //Update Firebase Profile: DisplayName
             let user = FIRAuth.auth()?.currentUser
@@ -326,16 +366,13 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
             }
             
         }
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool
-    {
         textField.resignFirstResponder()
         return true;
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         print("Description Begin editing")
+        
     }
     /*
     func textViewDidChange(_ textView: UITextView) {
@@ -343,17 +380,12 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     }
     */
     func textViewDidEndEditing(_ textView: UITextView) {
-        print("Description Changed")
         if fireUser != nil {
-            
-            print("Display Name Changed!")
+            print("👤 Description Changed!")
             let fireRef = FireConnection.databaseReference.child("users").child(fireUser.uid).child("preferences").child("description")
             fireRef.setValue(textView.text)
-        
         }
-        
     }
-    
     
     func switchUserVisibleChanged(sender: UISwitch){
         print("👤 Visible: " + sender.isOn.description)
@@ -485,6 +517,33 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     
         self.view.endEditing(true)
     }
+    
+    // MARK: Keyboard Settings
+    
+    func keyboardWillShow(notification: NSNotification) {
+        if let userInfo = notification.userInfo {
+            if let keyboardSize =  (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+                kbHeight = keyboardSize.height
+                self.animateTextField(up: true)
+            }
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        self.animateTextField(up: false)
+    }
+    
+    func animateTextField(up: Bool) {
+        let movement = (up ? -kbHeight : kbHeight)
+        if movement != nil {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.view.frame = self.view.frame.offsetBy(dx: 0, dy: (movement!))
+            })
+        }
+    }
+    
+    // MARK: Show & Hide
+    
     func showAll(){
         self.imageFaceProfile.isHidden = false
         self.text_displayName.isHidden = false
