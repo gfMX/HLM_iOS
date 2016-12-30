@@ -31,6 +31,7 @@ class UsersViewController: UIViewController {
     let screenParts = 13
     var screenSize = UIScreen.main.bounds
     var displayPic_originalPosition: CGPoint!
+    var displayPic_originalCenter: CGPoint!
     
     @IBOutlet weak var containerView: UIView!
     
@@ -92,6 +93,7 @@ class UsersViewController: UIViewController {
         let maxDistance = defaults.double(forKey: "defSyncDistance")
         let ref = FIRDatabase.database().reference()
         displayPic_originalPosition = user_displayPic.frame.origin
+        displayPic_originalCenter = user_displayPic.center
         
         print("Display Pic Original Position: \(displayPic_originalPosition)")
         print("Screen Size: \(screenSize.size)")
@@ -178,7 +180,7 @@ class UsersViewController: UIViewController {
                 self.userIds.shuffle()
                 self.shuffledFlag = true
             }
-            
+            resetFlags()
             self.getUserDetails(currentUser: self.currentUser)
             
             //Check if more 👥 are 👀, if not, set count to Zero
@@ -318,9 +320,13 @@ class UsersViewController: UIViewController {
     // MARK: Actions
     
     @IBAction func dragCard(_ sender: UIPanGestureRecognizer) {
+        
         var userRated = self.myRatingOfTheUser
         let view = sender.view
-        let position = (sender.view?.frame.midY)!
+        let position = (view?.frame.midY)!
+        let positionX = (view?.frame.midX)!
+        let positionMidX = containerView.frame.midX
+        let positionMidY = containerView.frame.midY
         let translation = sender.translation(in: self.view)
         let onePart = containerView.frame.height / CGFloat(screenParts)
         
@@ -348,7 +354,18 @@ class UsersViewController: UIViewController {
                     userRated = 1
                     likeUserFlag = true
                     if !flagOne {
-                        self.view.makeToast("I'll like to get in Touch"/*, duration: 2.0, position: .bottom*/)
+                        
+                        var style = ToastStyle()
+                        style.messageColor = UIColor.white
+                        //style.backgroundColor = UIColor.cyan
+                        
+                        self.view.makeToast("I'll like to get in Touch", duration: 2.0, position: .bottom, title: "LIKE", image: UIImage(named: "ic_like"), style:style) { (didTap: Bool) -> Void in
+                            if didTap {
+                                print("completion from tap")
+                            } else {
+                                print("completion without tap")
+                            }
+                        }
                         flagOne = true
                         flagTwo = false
                     }
@@ -362,7 +379,18 @@ class UsersViewController: UIViewController {
                     userRated = 1
                     likeUserFlag = false
                     if !flagTwo {
-                        self.view.makeToast("I don't want to get in Touch"/*, duration: 2.0, position: .bottom*/)
+
+                        var style = ToastStyle()
+                        style.messageColor = UIColor.white
+                        //style.backgroundColor = UIColor.magenta
+
+                        self.view.makeToast("I don't want to get in Touch", duration: 2.0, position: CGPoint(x: positionMidX, y:125), title: "NOP", image: UIImage(named: "ic_dislike"), style:style) { (didTap: Bool) -> Void in
+                            if didTap {
+                                print("completion from tap")
+                            } else {
+                                print("completion without tap")
+                            }
+                        }
                         flagOne = false
                         flagTwo = true
                     }
@@ -389,9 +417,29 @@ class UsersViewController: UIViewController {
                 print("👤 ⭐️: \(self.myRatingOfTheUser) ⚠️ Like 👤: \(likeUserFlag)")
                 print("-------> Ended <-------")
             
-                view?.frame.origin = CGPoint(x:(displayPic_originalPosition?.x)!, y:(displayPic_originalPosition?.y)!)
+                UIView.animate(withDuration: 2.0, delay: 0,
+                               usingSpringWithDamping: 0.9,
+                               initialSpringVelocity: 0.5,
+                               options: [], animations: {
+                                if position > positionMidY{
+                                    view?.center.y += self.containerView.bounds.height
+                                } else {
+                                    view?.center.y -= self.containerView.bounds.height
+                                }
+                                if positionX > positionMidX{
+                                    view?.center.x += self.containerView.bounds.width * 2
+                                } else {
+                                    view?.center.x -= self.containerView.bounds.width * 2
+                                    //tan(self.containerView.bounds.width * .pi / 180) //self.containerView.bounds.height/1.5
+                                }
+              
+                }, completion: nil)
+                
+                //view?.center = displayPic_originalCenter!
+                //view?.frame.origin = CGPoint(x:(displayPic_originalPosition?.x)!, y:(displayPic_originalPosition?.y)!)
+                print("New Position: \(view?.frame.origin)")
+                
                 updateRating(rating: userRated, likeUser: likeUserFlag)
-                //getUsersList()
                 
                 break;
             
@@ -416,29 +464,3 @@ class UsersViewController: UIViewController {
     
 }
 
-
-// MARK: Estensions
-
-extension MutableCollection where Indices.Iterator.Element == Index {
-    /// Shuffles the contents of this collection.
-    mutating func shuffle() {
-        let c = count
-        guard c > 1 else { return }
-        
-        for (firstUnshuffled , unshuffledCount) in zip(indices, stride(from: c, to: 1, by: -1)) {
-            let d: IndexDistance = numericCast(arc4random_uniform(numericCast(unshuffledCount)))
-            guard d != 0 else { continue }
-            let i = index(firstUnshuffled, offsetBy: d)
-            swap(&self[firstUnshuffled], &self[i])
-        }
-    }
-}
-
-extension Sequence {
-    /// Returns an array with the contents of this sequence, shuffled.
-    func shuffled() -> [Iterator.Element] {
-        var result = Array(self)
-        result.shuffle()
-        return result
-    }
-}

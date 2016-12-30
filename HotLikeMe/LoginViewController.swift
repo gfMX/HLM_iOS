@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import UserNotifications
+import UserNotificationsUI
 import FacebookCore
 import FacebookLogin
 import FBSDKLoginKit
@@ -151,6 +153,16 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                 }
                 self.fireUser = FireConnection.fireUser
                 print(self.fireUser.uid)
+                
+                if #available(iOS 10.0, *) {
+                    let center = UNUserNotificationCenter.current()
+                    center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
+                        // Enable or disable features based on authorization
+                    }
+                } else {
+                    // Fallback on earlier versions
+                }
+                
                 
                 let profilePicURL = self.fireUser.photoURL ?? nil
                 let profilleName = self.fireUser.displayName ?? nil

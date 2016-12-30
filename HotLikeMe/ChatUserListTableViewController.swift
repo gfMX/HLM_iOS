@@ -11,6 +11,10 @@ import Firebase
 import RNCryptor
 import Toast_Swift
 
+import AVFoundation
+import UserNotifications
+import UserNotificationsUI
+
 class ChatUserListTableViewController: UITableViewController {
 
     var ref:FIRDatabaseReference!
@@ -48,6 +52,7 @@ class ChatUserListTableViewController: UITableViewController {
         
         if user != nil {
             getActiveChats()
+            
         }
     }
 
@@ -239,6 +244,20 @@ class ChatUserListTableViewController: UITableViewController {
                         self.listMessages[i] = user_message
                         print("User Message: \(user_message!)")
                         
+                        //Only triggers after data loaded first time
+                        let state = UIApplication.shared.applicationState
+                        if state == .background {
+                            // background
+                        }
+                        if state == .active && self.flagDataLoaded {
+                            // foreground
+                            print("🔈 Playing Sound, New Message 🔈")
+                            let systemSoundID: SystemSoundID = 1007
+                            AudioServicesPlaySystemSound (systemSoundID)
+                        }
+                       
+                        self.newMessageArrived(sender: user_name, message: user_message)
+                        
                         if self.flagDataLoaded {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
                                 self.tableView.reloadData()
@@ -284,6 +303,26 @@ class ChatUserListTableViewController: UITableViewController {
             })
         } // End of the function
     }
+    
+    func newMessageArrived(sender: String, message: String){
+        if #available(iOS 10.0, *) {
+            let content = UNMutableNotificationContent()
+            
+            content.title = NSString.localizedUserNotificationString(forKey: sender, arguments: nil)
+            content.body = NSString.localizedUserNotificationString(forKey: message, arguments: nil)
+            
+            content.sound = UNNotificationSound.default()
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+            
+            // Schedule the notification.
+            let request = UNNotificationRequest(identifier: "HotLikeMe_\(sender)", content: content, trigger: trigger)
+            let center = UNUserNotificationCenter.current()
+            center.add(request, withCompletionHandler: nil)
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+    
     
     func noInternetAlert(){
         if currentReachabilityStatus == .notReachable{
