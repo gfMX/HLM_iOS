@@ -241,15 +241,16 @@ class ChatUserListTableViewController: UITableViewController {
                         let value = snapshot.value as? NSDictionary
                     
                         user_message = (value?.value(forKey: "text") as? String) ?? "No message found"
+                        let user_id = (value?.value(forKey: "userId") as? String) ?? "No message found"
                         self.listMessages[i] = user_message
-                        print("User Message: \(user_message!)")
+                        print("User Message: \(user_message!), User Id: \(user_id)")
                         
                         //Only triggers after data loaded first time
                         let state = UIApplication.shared.applicationState
                         if state == .background {
                             // background
                         }
-                        if state == .active && self.flagDataLoaded {
+                        if state == .active && self.flagDataLoaded && user_id != self.user.uid {
                             // foreground
                             print("🔈 Playing Sound, New Message 🔈")
                             let systemSoundID: SystemSoundID = 1007
@@ -312,7 +313,7 @@ class ChatUserListTableViewController: UITableViewController {
             content.body = NSString.localizedUserNotificationString(forKey: message, arguments: nil)
             
             content.sound = UNNotificationSound.default()
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.5, repeats: false)
             
             // Schedule the notification.
             let request = UNNotificationRequest(identifier: "HotLikeMe_\(sender)", content: content, trigger: trigger)
@@ -322,8 +323,7 @@ class ChatUserListTableViewController: UITableViewController {
             // Fallback on earlier versions
         }
     }
-    
-    
+  
     func noInternetAlert(){
         if currentReachabilityStatus == .notReachable{
             //print("Network Not Reachable")
