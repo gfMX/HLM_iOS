@@ -13,6 +13,7 @@ import CoreLocation
 class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
     
     var timer: Timer!
+    var flagTimerLaunch = true
     var timeInterval: Double = 2500
     var orderedViewControllersCount = 1
     var locationManager: CLLocationManager!
@@ -39,22 +40,29 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
                                animated: true,
                                completion: nil)
         }
+        /*
+        defaults.addObserver(
+            self,
+            forKeyPath: "defGPS",
+            options: NSKeyValueObservingOptions.new,
+            context: nil)
+        */
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         
         defaults.addObserver(
             self,
             forKeyPath: "defGPS",
             options: NSKeyValueObservingOptions.new,
             context: nil)
-    
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        if (defaults.double(forKey: "defSyncFrequency") * 60) > 1000{
+        
+        /*if (defaults.double(forKey: "defSyncFrequency") * 60 ) > 1{
             timeInterval = (defaults.double(forKey: "defSyncFrequency") * 60)
-        }
-        print ("Requesting Location 📡")
-        self.determineMyCurrentLocation()
-        timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(self.determineMyCurrentLocation), userInfo: nil, repeats: true);
+        }*/
+        
+        //self.determineMyCurrentLocation() //Maybe not needed, is in the Observer already: checking... Move the line below!!
+        //timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(self.determineMyCurrentLocation), userInfo: nil, repeats: true);
     }
 
     private func newColoredViewController(color: String) -> UIViewController {
@@ -86,7 +94,25 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
         
         switch keyPath!  {
         case "defGPS":
-            self.determineMyCurrentLocation()
+            if defaults.bool(forKey: "defGPS") && flagTimerLaunch {
+                flagTimerLaunch = false
+                
+                if (defaults.double(forKey: "defSyncFrequency") * 60 ) > 1{
+                    timeInterval = (defaults.double(forKey: "defSyncFrequency") * 60)
+                }
+                
+                print("Starting GPS Timer 🕛 & 📡 GPS Request, with Interval of: \(timeInterval) segs.")
+                self.determineMyCurrentLocation()
+                timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(self.determineMyCurrentLocation), userInfo: nil, repeats: true);
+                
+                //Avoid multiple Requests for Location at the same Time
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.flagTimerLaunch = true
+                }
+            } else if !defaults.bool(forKey: "defGPS") && timer != nil && timer.isValid {
+                timer.invalidate()
+                print("Stopping GPS Timer 🕛")
+            }
             break
         default:
             print("Something else happened")
@@ -97,6 +123,7 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
     
     // MARK: - GPS Location
     func determineMyCurrentLocation() {
+        print ("Requesting Location 📡")
         if defaults.bool(forKey: "defVisible"){
             locationManager = CLLocationManager()
             locationManager.delegate = self
@@ -121,7 +148,7 @@ class HLMPageViewController: UIPageViewController, CLLocationManagerDelegate {
         // Call stopUpdatingLocation() to stop listening for location updates,
         // other wise this function will be called every time when user location changes.
         
-    if FireConnection.fireUser != nil {
+        if FireConnection.fireUser != nil {
             //print("Location Updated")
             let fireReference = FireConnection.databaseReference.child("users").child(FireConnection.fireUser.uid).child("location_last")
             

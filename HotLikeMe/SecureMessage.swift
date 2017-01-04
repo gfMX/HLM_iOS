@@ -41,7 +41,6 @@ class SecureMessage {
             
             //let buffInt8 = bytes.map{ Int8(bitPattern: $0)}
             //let str = String(cString:buffInt8)
-            
             //print("Buffer: \(str)")
             
             return bytes

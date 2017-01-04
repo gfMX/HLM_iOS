@@ -119,10 +119,10 @@ class ChatHLMViewController: JSQMessagesViewController {
            
             let messageData = snapshot.value as! NSDictionary
             
-            if let id = messageData["userId"] as! String!, let name = messageData["name"] as! String!, let photoUrl = messageData["photoUrl"] as! String!, let timeStamp = messageData["timeStamp"] as! String!, let text = messageData["text"] as! String!, text.characters.count > 0 {
+            if let id = messageData["userId"] as! String!, let name = messageData["name"] as! String!, let photoUrl = messageData["photoUrl"] as! String!, let _ = messageData["timeStamp"] as! String!, let text = messageData["text"] as! String!, text.characters.count > 0 {
                 
                 let date = Date()
-                print("Time stamp: \(timeStamp)")
+                //print("Time stamp: \(timeStamp)")
                 
                 self.addMessage(withId: id, name: name, text: text, photoUrl: photoUrl, date: date)
                 self.finishReceivingMessage()

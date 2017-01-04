@@ -49,16 +49,7 @@ class UsersViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         if currentReachabilityStatus == .notReachable{
-            //print("Network Not Reachable")
-            
-            let alert = UIAlertController(title: "No Internet Connection", message: "Please check your Internet Connection and Try again..", preferredStyle: .alert)
-            let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
-                print("Alert Dismissed")
-            })
-            alert.addAction(ok)
-            
-            alert.popoverPresentationController?.sourceView = self.view
-            self.present(alert, animated: true, completion: nil)
+            Helper.checkInternetReachability(view: self)
         }
         
         if user == nil {
@@ -87,7 +78,7 @@ class UsersViewController: UIViewController {
         resetFlags()
         userIds.removeAll()
         
-        let lookingFor = defaults.string(forKey: "defLookingfor")!
+        let lookingFor = defaults.string(forKey: "defLookingfor") ?? "both"
         let gpsEnabled = defaults.bool(forKey: "defGPS")
         let showMe = defaults.bool(forKey: "defVisible")
         let maxDistance = defaults.double(forKey: "defSyncDistance")

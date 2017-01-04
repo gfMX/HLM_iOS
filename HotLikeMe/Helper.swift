@@ -96,6 +96,20 @@ class Helper{
     /***************************************************************************
                             End of Encryption Zone
      ***************************************************************************/
+    
+    static func checkInternetReachability(view: UIViewController){
+        //if currentReachabilityStatus == .notReachable{
+            //print("Network Not Reachable")
+            let alert = UIAlertController(title: "No Internet Connection", message: "Please check your Internet Connection and Try again..", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+                print("Alert Dismissed")
+            })
+            alert.addAction(ok)
+            
+            alert.popoverPresentationController?.sourceView = view.view
+            view.present(alert, animated: true, completion: nil)
+        //}
+    }
 }
 
 /**********************************
@@ -162,7 +176,7 @@ extension Sequence {
 }
 
 protocol Utilities {
-    // Not sure of this...
+    // ...
 }
 
 extension NSObject:Utilities{

@@ -47,12 +47,14 @@ class ChatUserListTableViewController: UITableViewController {
         user = FIRAuth.auth()?.currentUser
         
         if currentReachabilityStatus == .notReachable{
-            noInternetAlert()
+            Helper.checkInternetReachability(view: self)
         }
         
         if user != nil {
             getActiveChats()
             
+            //Set Badge to Zero on launch
+            //UIApplication.shared.applicationIconBadgeNumber = 0
         }
     }
 
@@ -191,7 +193,9 @@ class ChatUserListTableViewController: UITableViewController {
                 self.view.makeToast("Sorry, please try again, we're having a delay...", duration: 2.0, position: .center)
             }
         } else {
-            noInternetAlert()
+            if currentReachabilityStatus == .notReachable {
+                Helper.checkInternetReachability(view: self)
+            }
         }
     }
     
@@ -247,9 +251,18 @@ class ChatUserListTableViewController: UITableViewController {
                         
                         //Only triggers after data loaded first time
                         let state = UIApplication.shared.applicationState
+                        
                         if state == .background {
+                            print("Working on background ")
                             // background
+                            //self.newMessageArrived(sender: user_name, message: user_message)
+                        } else if state == .inactive {
+                            // inactive
+                            print("Going to sleep 💤")
+                        } else if state == .active {
+                            // active
                         }
+                        
                         if state == .active && self.flagDataLoaded && user_id != self.user.uid {
                             // foreground
                             print("🔈 Playing Sound, New Message 🔈")
@@ -257,7 +270,7 @@ class ChatUserListTableViewController: UITableViewController {
                             AudioServicesPlaySystemSound (systemSoundID)
                         }
                        
-                        self.newMessageArrived(sender: user_name, message: user_message)
+                        self.newMessageArrived(sender: user_name, message: user_message, senderId: user_id)
                         
                         if self.flagDataLoaded {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
@@ -305,13 +318,15 @@ class ChatUserListTableViewController: UITableViewController {
         } // End of the function
     }
     
-    func newMessageArrived(sender: String, message: String){
+    func newMessageArrived(sender: String, message: String, senderId: String){
         if #available(iOS 10.0, *) {
+            //print("Doing things for iOS 10 ⚠️")
+            
             let content = UNMutableNotificationContent()
             
             content.title = NSString.localizedUserNotificationString(forKey: sender, arguments: nil)
             content.body = NSString.localizedUserNotificationString(forKey: message, arguments: nil)
-            
+            content.badge = (UIApplication.shared.applicationIconBadgeNumber + 1) as NSNumber
             content.sound = UNNotificationSound.default()
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.5, repeats: false)
             
@@ -321,21 +336,21 @@ class ChatUserListTableViewController: UITableViewController {
             center.add(request, withCompletionHandler: nil)
         } else {
             // Fallback on earlier versions
-        }
-    }
-  
-    func noInternetAlert(){
-        if currentReachabilityStatus == .notReachable{
-            //print("Network Not Reachable")
-            
-            let alert = UIAlertController(title: "No Internet Connection", message: "Please check your Internet Connection and Try again.", preferredStyle: .alert)
-            let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
-                print("Alert Dismissed")
-            })
-            alert.addAction(ok)
-            
-            alert.popoverPresentationController?.sourceView = self.view
-            self.present(alert, animated: true, completion: nil)
+            //print("Doing things for iOS 9! ⚠️")
+
+            if UIApplication.shared.applicationState == .background && user.uid != senderId{
+                print("We have Notifications 🗞")
+                
+                let localNotification = UILocalNotification()
+                localNotification.fireDate = NSDate(timeIntervalSinceNow: 0.5) as Date
+                localNotification.alertTitle = sender
+                localNotification.alertBody = message
+                localNotification.timeZone = NSTimeZone.default
+                
+                localNotification.applicationIconBadgeNumber = UIApplication.shared.applicationIconBadgeNumber + 1
+                
+                UIApplication.shared.scheduleLocalNotification(localNotification)
+            }
         }
     }
     

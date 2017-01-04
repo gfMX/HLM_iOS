@@ -41,7 +41,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     @IBOutlet weak var label_description: UILabel!
     @IBOutlet weak var lookingDistancePicker: UIPickerView!
     
-    
     var user: FBSDKProfile!
     var fireUser: FIRUser!
     var facebookAccessToken: FBSDKAccessToken!
@@ -58,12 +57,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         
         self.hideKeyboard()
         hideAll()
-        
-        if currentReachabilityStatus != .notReachable{
-            print("Internet OK")
-        } else {
-            print("No Network Connection")
-        }
         
         FBSDKProfile.enableUpdates(onAccessTokenChange: true)
         facebookAccessToken = FBSDKAccessToken.current() ?? nil
@@ -102,16 +95,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         super.viewDidAppear(animated)
         
         if currentReachabilityStatus == .notReachable{
-            //print("Network Not Reachable")
-            
-            let alert = UIAlertController(title: "No Internet Connection", message: "Please check your Internet Connection and Try again..", preferredStyle: .alert)
-            let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
-                print("Alert Dismissed")
-            })
-            alert.addAction(ok)
-            
-            alert.popoverPresentationController?.sourceView = self.view
-            self.present(alert, animated: true, completion: nil)
+            Helper.checkInternetReachability(view: self)
         }
         
         updateUI()
@@ -153,16 +137,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                 }
                 self.fireUser = FireConnection.fireUser
                 print(self.fireUser.uid)
-                
-                if #available(iOS 10.0, *) {
-                    let center = UNUserNotificationCenter.current()
-                    center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
-                        // Enable or disable features based on authorization
-                    }
-                } else {
-                    // Fallback on earlier versions
-                }
-                
                 
                 let profilePicURL = self.fireUser.photoURL ?? nil
                 let profilleName = self.fireUser.displayName ?? nil
@@ -330,6 +304,20 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                     print("❌ Loggin into Firebase")
                 } else{
                     print("✅ Logged into Firebase")
+                    
+                    // Request Permissions for Notifiacions -> Currently the Request is on AppDelegate
+                    if #available(iOS 10.0, *) {
+                        let center = UNUserNotificationCenter.current()
+                        center.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
+                            // Enable or disable features based on authorization
+                        }
+                    } else {
+                        // Fallback on earlier versions
+                        if(UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:)))) {
+                            UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil))
+                        }
+                    }
+                    
                 }
                 self.updateUI()
             }
