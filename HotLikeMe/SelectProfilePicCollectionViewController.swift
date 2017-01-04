@@ -42,6 +42,10 @@ class SelectProfilePicCollectionViewController: UICollectionViewController {
         }
     }
 
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        collectionView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
